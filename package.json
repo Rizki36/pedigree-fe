@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "@tanstack/react-router": "^1.70.1",
+    "@tanstack/router-zod-adapter": "^1.76.1",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

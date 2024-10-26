@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import { Link, Outlet } from "@tanstack/react-router";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 
 const TanStackRouterDevtools =
 	process.env.NODE_ENV === "production"
@@ -13,15 +14,20 @@ const TanStackRouterDevtools =
 				})),
 			);
 
-export const Route = createRootRoute({
+interface MyRouterContext {
+	isAuthenticated: boolean;
+}
+
+export const Route = createRootRouteWithContext<MyRouterContext>()({
+	notFoundComponent: () => <div>Not Found</div>,
 	component: () => (
 		<React.Fragment>
 			<div className="p-2 flex gap-2">
 				<Link to="/" className="[&.active]:font-bold">
 					Home
 				</Link>{" "}
-				<Link to="/about" className="[&.active]:font-bold">
-					About
+				<Link to="/animals" className="[&.active]:font-bold">
+					Animals
 				</Link>
 			</div>
 

@@ -13,23 +13,37 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AnimalsIndexImport } from './routes/animals/index'
 
 // Create Virtual Routes
 
-const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
+const LoginIndexLazyImport = createFileRoute('/login/')()
+const AnimalsAnimalIdIndexLazyImport = createFileRoute('/animals/$animalId/')()
 
 // Create/Update Routes
-
-const AboutLazyRoute = AboutLazyImport.update({
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const LoginIndexLazyRoute = LoginIndexLazyImport.update({
+  path: '/login/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/login/index.lazy').then((d) => d.Route))
+
+const AnimalsIndexRoute = AnimalsIndexImport.update({
+  path: '/animals/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/animals/index.lazy').then((d) => d.Route))
+
+const AnimalsAnimalIdIndexLazyRoute = AnimalsAnimalIdIndexLazyImport.update({
+  path: '/animals/$animalId/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/animals/$animalId/index.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -42,11 +56,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutLazyImport
+    '/animals/': {
+      id: '/animals/'
+      path: '/animals'
+      fullPath: '/animals'
+      preLoaderRoute: typeof AnimalsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/animals/$animalId/': {
+      id: '/animals/$animalId/'
+      path: '/animals/$animalId'
+      fullPath: '/animals/$animalId'
+      preLoaderRoute: typeof AnimalsAnimalIdIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -56,37 +84,47 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  '/animals': typeof AnimalsIndexRoute
+  '/login': typeof LoginIndexLazyRoute
+  '/animals/$animalId': typeof AnimalsAnimalIdIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  '/animals': typeof AnimalsIndexRoute
+  '/login': typeof LoginIndexLazyRoute
+  '/animals/$animalId': typeof AnimalsAnimalIdIndexLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
-  '/about': typeof AboutLazyRoute
+  '/animals/': typeof AnimalsIndexRoute
+  '/login/': typeof LoginIndexLazyRoute
+  '/animals/$animalId/': typeof AnimalsAnimalIdIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/animals' | '/login' | '/animals/$animalId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/animals' | '/login' | '/animals/$animalId'
+  id: '__root__' | '/' | '/animals/' | '/login/' | '/animals/$animalId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
-  AboutLazyRoute: typeof AboutLazyRoute
+  AnimalsIndexRoute: typeof AnimalsIndexRoute
+  LoginIndexLazyRoute: typeof LoginIndexLazyRoute
+  AnimalsAnimalIdIndexLazyRoute: typeof AnimalsAnimalIdIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
-  AboutLazyRoute: AboutLazyRoute,
+  AnimalsIndexRoute: AnimalsIndexRoute,
+  LoginIndexLazyRoute: LoginIndexLazyRoute,
+  AnimalsAnimalIdIndexLazyRoute: AnimalsAnimalIdIndexLazyRoute,
 }
 
 export const routeTree = rootRoute
@@ -102,14 +140,22 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/animals/",
+        "/login/",
+        "/animals/$animalId/"
       ]
     },
     "/": {
       "filePath": "index.lazy.tsx"
     },
-    "/about": {
-      "filePath": "about.lazy.tsx"
+    "/animals/": {
+      "filePath": "animals/index.tsx"
+    },
+    "/login/": {
+      "filePath": "login/index.lazy.tsx"
+    },
+    "/animals/$animalId/": {
+      "filePath": "animals/$animalId/index.lazy.tsx"
     }
   }
 }
