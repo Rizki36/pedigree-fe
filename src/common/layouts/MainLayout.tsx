@@ -13,6 +13,9 @@ import { IoChevronDown } from "react-icons/io5";
 import { BiCollapseHorizontal, BiExpandHorizontal } from "react-icons/bi";
 import { PiCodesandboxLogo, PiCow } from "react-icons/pi";
 import { cn } from "@/lib/utils";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { FiSearch } from "react-icons/fi";
 
 const menus = [
 	{
@@ -49,7 +52,7 @@ const Sidebar: FC<{
 			)}
 		>
 			<div className="mt-2.5 text-center mb-6 text-2xl font-semibold text-teal-600">
-				{!collapse ? "Pedigree" : " "}
+				{!collapse ? "Pedigree" : "P"}
 			</div>
 
 			<div
@@ -144,7 +147,17 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
 				})}
 			>
 				<div className="bg-neutral-50 border-b px-4 py-2 w-[calc(100%+48px)] ml-[-24px] flex justify-between items-center">
-					<div>{/*  */}</div>
+					<div className="ml-3">
+						<div className="relative opacity-40 transition-all hover:opacity-100 ease-in-out">
+							<Input
+								placeholder="Search your animals"
+								className="w-[300px] rounded-3xl"
+							/>
+							<Button className="absolute right-0 top-0" variant="link">
+								<FiSearch />
+							</Button>
+						</div>
+					</div>
 					<div className="flex items-center">
 						<LanguageSwitcher />
 
