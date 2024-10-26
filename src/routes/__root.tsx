@@ -22,15 +22,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 	notFoundComponent: () => <div>Not Found</div>,
 	component: () => (
 		<React.Fragment>
-			<div className="p-2 flex gap-2">
-				<Link to="/" className="[&.active]:font-bold">
-					Home
-				</Link>{" "}
-				<Link to="/animals" className="[&.active]:font-bold">
-					Animals
-				</Link>
-			</div>
-
 			<Outlet />
 
 			<React.Suspense>

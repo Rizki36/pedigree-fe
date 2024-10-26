@@ -1,5 +1,7 @@
+import MainLayout from "../../../../common/layouts/MainLayout";
+
 const AnimalDetail = () => {
-	return <div>AnimalDetail</div>;
+	return <MainLayout>AnimalDetail</MainLayout>;
 };
 
 export default AnimalDetail;
