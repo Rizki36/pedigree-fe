@@ -25,7 +25,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 			<Outlet />
 
 			<React.Suspense>
-				<TanStackRouterDevtools />
+				<TanStackRouterDevtools position="bottom-right" />
 			</React.Suspense>
 		</React.Fragment>
 	),
