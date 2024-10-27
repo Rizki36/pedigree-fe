@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link, Outlet } from "@tanstack/react-router";
+import { Outlet } from "@tanstack/react-router";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 
 const TanStackRouterDevtools =
