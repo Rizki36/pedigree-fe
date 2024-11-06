@@ -13,12 +13,12 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PedigreeIndexImport } from './routes/pedigree/index'
 import { Route as AnimalsIndexImport } from './routes/animals/index'
 
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
-const PedigreeIndexLazyImport = createFileRoute('/pedigree/')()
 const LoginIndexLazyImport = createFileRoute('/login/')()
 const BreedingIndexLazyImport = createFileRoute('/breeding/')()
 const AnimalsAnimalIdIndexLazyImport = createFileRoute('/animals/$animalId/')()
@@ -30,13 +30,6 @@ const IndexLazyRoute = IndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const PedigreeIndexLazyRoute = PedigreeIndexLazyImport.update({
-  path: '/pedigree/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/pedigree/index.lazy').then((d) => d.Route),
-)
-
 const LoginIndexLazyRoute = LoginIndexLazyImport.update({
   path: '/login/',
   getParentRoute: () => rootRoute,
@@ -47,6 +40,13 @@ const BreedingIndexLazyRoute = BreedingIndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/breeding/index.lazy').then((d) => d.Route),
+)
+
+const PedigreeIndexRoute = PedigreeIndexImport.update({
+  path: '/pedigree/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/pedigree/index.lazy').then((d) => d.Route),
 )
 
 const AnimalsIndexRoute = AnimalsIndexImport.update({
@@ -79,6 +79,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnimalsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/pedigree/': {
+      id: '/pedigree/'
+      path: '/pedigree'
+      fullPath: '/pedigree'
+      preLoaderRoute: typeof PedigreeIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/breeding/': {
       id: '/breeding/'
       path: '/breeding'
@@ -91,13 +98,6 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/pedigree/': {
-      id: '/pedigree/'
-      path: '/pedigree'
-      fullPath: '/pedigree'
-      preLoaderRoute: typeof PedigreeIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/animals/$animalId/': {
@@ -115,18 +115,18 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/animals': typeof AnimalsIndexRoute
+  '/pedigree': typeof PedigreeIndexRoute
   '/breeding': typeof BreedingIndexLazyRoute
   '/login': typeof LoginIndexLazyRoute
-  '/pedigree': typeof PedigreeIndexLazyRoute
   '/animals/$animalId': typeof AnimalsAnimalIdIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/animals': typeof AnimalsIndexRoute
+  '/pedigree': typeof PedigreeIndexRoute
   '/breeding': typeof BreedingIndexLazyRoute
   '/login': typeof LoginIndexLazyRoute
-  '/pedigree': typeof PedigreeIndexLazyRoute
   '/animals/$animalId': typeof AnimalsAnimalIdIndexLazyRoute
 }
 
@@ -134,9 +134,9 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
   '/animals/': typeof AnimalsIndexRoute
+  '/pedigree/': typeof PedigreeIndexRoute
   '/breeding/': typeof BreedingIndexLazyRoute
   '/login/': typeof LoginIndexLazyRoute
-  '/pedigree/': typeof PedigreeIndexLazyRoute
   '/animals/$animalId/': typeof AnimalsAnimalIdIndexLazyRoute
 }
 
@@ -145,25 +145,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/animals'
+    | '/pedigree'
     | '/breeding'
     | '/login'
-    | '/pedigree'
     | '/animals/$animalId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/animals'
+    | '/pedigree'
     | '/breeding'
     | '/login'
-    | '/pedigree'
     | '/animals/$animalId'
   id:
     | '__root__'
     | '/'
     | '/animals/'
+    | '/pedigree/'
     | '/breeding/'
     | '/login/'
-    | '/pedigree/'
     | '/animals/$animalId/'
   fileRoutesById: FileRoutesById
 }
@@ -171,18 +171,18 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AnimalsIndexRoute: typeof AnimalsIndexRoute
+  PedigreeIndexRoute: typeof PedigreeIndexRoute
   BreedingIndexLazyRoute: typeof BreedingIndexLazyRoute
   LoginIndexLazyRoute: typeof LoginIndexLazyRoute
-  PedigreeIndexLazyRoute: typeof PedigreeIndexLazyRoute
   AnimalsAnimalIdIndexLazyRoute: typeof AnimalsAnimalIdIndexLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AnimalsIndexRoute: AnimalsIndexRoute,
+  PedigreeIndexRoute: PedigreeIndexRoute,
   BreedingIndexLazyRoute: BreedingIndexLazyRoute,
   LoginIndexLazyRoute: LoginIndexLazyRoute,
-  PedigreeIndexLazyRoute: PedigreeIndexLazyRoute,
   AnimalsAnimalIdIndexLazyRoute: AnimalsAnimalIdIndexLazyRoute,
 }
 
@@ -200,9 +200,9 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/animals/",
+        "/pedigree/",
         "/breeding/",
         "/login/",
-        "/pedigree/",
         "/animals/$animalId/"
       ]
     },
@@ -212,14 +212,14 @@ export const routeTree = rootRoute
     "/animals/": {
       "filePath": "animals/index.tsx"
     },
+    "/pedigree/": {
+      "filePath": "pedigree/index.tsx"
+    },
     "/breeding/": {
       "filePath": "breeding/index.lazy.tsx"
     },
     "/login/": {
       "filePath": "login/index.lazy.tsx"
-    },
-    "/pedigree/": {
-      "filePath": "pedigree/index.lazy.tsx"
     },
     "/animals/$animalId/": {
       "filePath": "animals/$animalId/index.lazy.tsx"
