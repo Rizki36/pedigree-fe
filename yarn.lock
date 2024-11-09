@@ -2329,6 +2329,11 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
+pinch-zoom-pan@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/pinch-zoom-pan/-/pinch-zoom-pan-4.0.2.tgz#0b39c03aedf136d4a5e8f3e5ede7f65eec0bbe32"
+  integrity sha512-MWc++06zbunRxmtBRzd8Z7wdm7NG73tJnG/MGJhDePF6Om0iymsrstmtFs9P0pfRFh/mRoXAR5Ku55z03z+w0w==
+
 pirates@^4.0.1:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.6.tgz#3018ae32ecfcff6c29ba2267cbf21166ac1f36b9"
@@ -2415,6 +2420,13 @@ react-dom@^18.3.1:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
 
+react-family-tree@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-family-tree/-/react-family-tree-3.2.0.tgz#60be2e4edd3fc166f4fb7e2285f922a9457cec6a"
+  integrity sha512-TCoLWPSLoP89CpfzK7vTxA2Ss0Qu6PuusdwjuLHeSrYiQfW6PLYCc8wTidRfKTjH+4FueF5OLMolj7rhh+c3MA==
+  dependencies:
+    relatives-tree "3.2.x"
+
 react-icons@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-5.3.0.tgz#ccad07a30aebd40a89f8cfa7d82e466019203f1c"
@@ -2468,6 +2480,11 @@ readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+relatives-tree@3.2.x:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/relatives-tree/-/relatives-tree-3.2.1.tgz#a04a106cb6460112b798fd3de85af7484b104503"
+  integrity sha512-mm4SSf8BmgMH8jQFwUfjN0MguDlIIvOAjSNC1wN2ppPTaPW8Ud2Tk+5QqFGEJfcMPaU8Kf1f840fPyHkxGpcAg==
 
 resolve-from@^4.0.0:
   version "4.0.0"
