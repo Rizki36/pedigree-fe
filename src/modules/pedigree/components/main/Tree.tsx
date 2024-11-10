@@ -53,7 +53,7 @@ const FamilyNode = ({ node, isRoot, style }: FamilyNodeProps) => {
 const Tree: FC<{
   nodes: MyNode[];
 }> = ({ nodes }) => {
-  const [rootId, setRootId] = useState("0");
+  const [rootId] = useState("0");
 
   return (
     <>
