@@ -75,8 +75,8 @@ const Pedigree = () => {
   return (
     <MainLayout>
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="mt-4 text-3xl">Pedigree Tree</h1>
+        <div className="flex items-center justify-between my-4">
+          <h1 className="text-3xl">Pedigree Tree</h1>
         </div>
         <div className="flex flex-col h-[75vh] overflow-hidden border rounded-2xl px-4 bg-neutral-50 relative">
           <div className="text-sm border-b w-[calc(100%+32px)] ml-[-16px] px-4 flex items-center py-3">
