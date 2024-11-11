@@ -7,10 +7,13 @@ import Panels from "./Panels";
 const Footer: FC<{
   currentStep: number;
   setCurrentStep: (step: number) => void;
+  matchingResult: MatchingResult | undefined;
   handleCheckResult: () => void;
-}> = ({ currentStep, setCurrentStep, handleCheckResult }) => {
+}> = ({ currentStep, setCurrentStep, matchingResult, handleCheckResult }) => {
+  const hasIssues = !!matchingResult?.issues?.length;
+
   return (
-    <div className="flex justify-center mt-[90px]">
+    <div className="flex justify-center mt-[50px]">
       {currentStep === 1 && (
         <Button variant="teal" onClick={handleCheckResult}>
           Next
@@ -25,7 +28,8 @@ const Footer: FC<{
           >
             Back
           </Button>
-          <Button variant="teal">Start Breading</Button>
+          {hasIssues && <Button variant="teal">Still Breading</Button>}
+          {!hasIssues && <Button variant="teal">Start Breading</Button>}
         </>
       )}
     </div>
@@ -67,6 +71,7 @@ const Breading = () => {
         <Footer
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
+          matchingResult={matchingResult}
           handleCheckResult={handleCheckResult}
         />
       </div>

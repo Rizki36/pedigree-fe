@@ -48,9 +48,40 @@ const ResultPanel: FC<{
 }> = ({ matchingResult }) => {
   if (!matchingResult) return <div>Result not found</div>;
 
-  //   const hasIssues = matchingResult.issues.length > 0;
+  const hasIssues = !!matchingResult.issues.length;
 
-  return <div>Coming soon</div>;
+  return (
+    <div className="">
+      <div className="flex mt-[114px] justify-center">
+        <div className="w-[172px] h-[172px] border-4 border-white rounded-full bg-neutral-400" />
+        <div className="ml-[-50px] w-[172px] h-[172px] border-4 border-white rounded-full bg-neutral-400" />
+      </div>
+      <div className="mx-auto text-center mt-6">
+        {hasIssues ? (
+          <>
+            <div className="text-4xl font-medium">
+              Sorry
+              <br />
+              there are some issues
+            </div>
+            <div className="mt-4 w-[475px] mx-auto text-xs">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="text-4xl font-medium">
+              Congratulation <br />
+              it's a match
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
 };
 
 const Panels: FC<{
