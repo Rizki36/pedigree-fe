@@ -9,7 +9,7 @@ const AnimalCard: FC<{
   return (
     <div className="mt-8">
       <div className="w-[346px] border p-6 pb-3 rounded-lg mx-auto">
-        <div className="aspect-video w-full border rounded-sm" />
+        <div className="aspect-video w-full border rounded-sm bg-neutral-400" />
         <div className="text-center mt-3">
           <div className="text-sm">{name}</div>
           <div className="text-xs text-neutral-400">{code}</div>

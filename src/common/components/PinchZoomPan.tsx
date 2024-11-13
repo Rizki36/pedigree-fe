@@ -20,23 +20,35 @@ export const PinchZoomPan = React.memo(function PinchZoomPan({
   style,
   children,
 }: PinchZoomPanProps) {
-  const root = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+
+  console.log(canvasRef.current?.clientWidth);
 
   useEffect(() => {
-    const element = root.current;
-    if (!element) return;
+    const rootElement = rootRef.current;
+    const canvasElement = canvasRef.current;
+    if (!rootElement || !canvasElement) return;
     const canvas = create({
-      element,
+      element: rootElement,
       minZoom: min,
       maxZoom: max,
       captureWheel,
     });
+
+    canvas.update({
+      z: Math.min(
+        rootElement.clientWidth / canvasElement.clientWidth,
+        rootElement.clientHeight / canvasElement.clientHeight,
+      ),
+    });
+
     return canvas.destroy;
   }, [min, max, captureWheel]);
 
   return (
     <div
-      ref={root}
+      ref={rootRef}
       className={clsx(className, "overflow-hidden relative")}
       style={{
         transform: "translateZ(0)",
@@ -52,6 +64,7 @@ export const PinchZoomPan = React.memo(function PinchZoomPan({
         }}
       >
         <div
+          ref={canvasRef}
           style={{
             position: "absolute",
             transform: "translate(-50%, -50%)",
