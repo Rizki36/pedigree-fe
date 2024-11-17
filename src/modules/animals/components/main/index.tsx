@@ -7,10 +7,23 @@ import { Checkbox } from "@/common/components/ui/checkbox";
 import { Route } from "@/routes/animals/index";
 import { useNavigate } from "@tanstack/react-router";
 import { Label } from "@/common/components/ui/label";
+import { useQuery } from "@tanstack/react-query";
+import fetchInstance from "@/lib/fetch-instance";
 
 const Animals = () => {
   const { gender } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
+
+  const { data } = useQuery({
+    queryKey: ["dashboard"],
+    queryFn: () => {
+      return fetchInstance("/v1/animal/list", {
+        method: "GET",
+      }).then((res) => res.json());
+    },
+  });
+
+  console.log(data);
 
   return (
     <MainLayout>
