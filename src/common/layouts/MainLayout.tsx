@@ -11,7 +11,7 @@ import enFlag from "../../assets/flags/en.png";
 import idFlag from "../../assets/flags/id.png";
 import { BiCollapseHorizontal, BiExpandHorizontal } from "react-icons/bi";
 import { PiCodesandboxLogo, PiCow } from "react-icons/pi";
-import { cn } from "@/lib/utils";
+import { cn } from "@/common/lib/utils";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
 import { FiSearch } from "react-icons/fi";

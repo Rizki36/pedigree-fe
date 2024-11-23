@@ -2,7 +2,6 @@ import {
   type ColumnDef,
   flexRender,
   getCoreRowModel,
-  getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -16,36 +15,14 @@ import {
 } from "@/common/components/ui/table";
 import { Button } from "@/common/components/ui/button";
 import { Link } from "@tanstack/react-router";
+import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
+import type { Animal } from "@/common/types";
+import { useMemo, type FC } from "react";
+import { Route } from "@/routes/animals/index";
 
-const data: Payment[] = [
-  {
-    id: "m5gr84i9",
-    name: "Daisy",
-    code: "AAA-001",
-    gender: "male",
-  },
-  {
-    id: "a5gr84i9",
-    name: "Henry",
-    code: "AAA-002",
-    gender: "female",
-  },
-  {
-    id: "b5gr84i9",
-    name: "John",
-    code: "AAA-003",
-    gender: "male",
-  },
-];
+export type DataSource = Animal;
 
-export type Payment = {
-  id: string;
-  name: string;
-  code: string;
-  gender: "male" | "female";
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<DataSource>[] = [
   {
     id: "number",
     header: "#",
@@ -87,12 +64,30 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ];
 
-const DataTableDemo = () => {
+const AnimalsTable: FC = () => {
+  const { gender, search } = Route.useSearch();
+
+  const { data, isLoading } = useAnimalListQuery({
+    query: {
+      search,
+      gender_eq: gender?.length === 1 ? gender[0] : undefined,
+    },
+  });
+
+  const dataSource: DataSource[] = useMemo(() => {
+    if (!data?.docs?.length) return [];
+    return data?.docs.map((item) => ({
+      id: item.id,
+      name: item.name,
+      code: item.code,
+      gender: item.gender,
+    }));
+  }, [data?.docs]);
+
   const table = useReactTable({
-    data,
+    data: dataSource,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
   });
 
   return (
@@ -122,7 +117,8 @@ const DataTableDemo = () => {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {/* Rows */}
+            {!!dataSource.length &&
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -137,8 +133,22 @@ const DataTableDemo = () => {
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
+              ))}
+
+            {/* Loading */}
+            {isLoading && (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Loading...
+                </TableCell>
+              </TableRow>
+            )}
+
+            {/* No results */}
+            {!dataSource.length && !isLoading && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
@@ -176,4 +186,4 @@ const DataTableDemo = () => {
   );
 };
 
-export default DataTableDemo;
+export default AnimalsTable;

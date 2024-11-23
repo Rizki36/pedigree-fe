@@ -7,23 +7,22 @@ import { Checkbox } from "@/common/components/ui/checkbox";
 import { Route } from "@/routes/animals/index";
 import { useNavigate } from "@tanstack/react-router";
 import { Label } from "@/common/components/ui/label";
-import { useQuery } from "@tanstack/react-query";
-import fetchInstance from "@/lib/fetch-instance";
+import { useDebounceCallback } from "usehooks-ts";
 
 const Animals = () => {
-  const { gender } = Route.useSearch();
+  const { gender, search } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
 
-  const { data } = useQuery({
-    queryKey: ["dashboard"],
-    queryFn: () => {
-      return fetchInstance("/v1/animal/list", {
-        method: "GET",
-      }).then((res) => res.json());
-    },
-  });
-
-  console.log(data);
+  const debouncedSetSearch = useDebounceCallback((value: string) => {
+    navigate({
+      search: (prev) => {
+        return {
+          ...prev,
+          search: value || undefined,
+        };
+      },
+    });
+  }, 500);
 
   return (
     <MainLayout>
@@ -39,12 +38,21 @@ const Animals = () => {
           <AnimalsTable />
         </div>
         <div className="bg-white absolute top-0 right-0 border w-[250px] px-2 rounded py-2">
-          <Input placeholder="Search" className="w-full" />
+          <Input
+            name="search"
+            type="text"
+            placeholder="Search"
+            className="w-full"
+            defaultValue={search}
+            onInput={(e) => {
+              debouncedSetSearch(e.currentTarget.value || "");
+            }}
+          />
 
           <div className="my-3 border-t" />
 
           <div className="grid grid-cols-2 gap-2">
-            {(["male", "female"] as const).map((currentGender) => (
+            {(["MALE", "FEMALE"] as const).map((currentGender) => (
               <div key={currentGender}>
                 <Checkbox
                   value={currentGender}

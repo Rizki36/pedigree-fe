@@ -21,7 +21,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useRef, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Route } from "@/routes/pedigree";
-import { cn } from "@/lib/utils";
+import { cn } from "@/common/lib/utils";
 import { toPng } from "html-to-image";
 
 const animals: {
