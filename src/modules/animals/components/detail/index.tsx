@@ -6,7 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/common/components/ui/breadcrumb";
-import MainLayout from "../../../../common/layouts/MainLayout";
+import MainLayout from "@/common/layouts/MainLayout";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/common/components/ui/button";
 import { TbPencil, TbTrash } from "react-icons/tb";

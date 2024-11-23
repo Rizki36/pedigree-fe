@@ -1,15 +1,13 @@
-import fetchInstance from "@/common/lib/fetch-instance";
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import type { Animal } from "../types";
-
-type Response = { docs: Animal[]; limit: number };
+import animalService from "../services/animal";
+import type {
+  GetAnimalListQuery,
+  GetAnimalListResponse,
+} from "../services/animal.type";
 
 type UseAnimalListQueryProps = {
-  query?: {
-    search?: string;
-    gender_eq?: "FEMALE" | "MALE";
-  };
-  options?: UseQueryOptions<Response>;
+  query?: GetAnimalListQuery;
+  options?: UseQueryOptions<GetAnimalListResponse>;
 };
 
 const useAnimalListQuery = ({
@@ -20,10 +18,7 @@ const useAnimalListQuery = ({
     ...options,
     queryKey: ["animal/list", query],
     queryFn: async () => {
-      return fetchInstance<Response>("/v1/animal/list", {
-        method: "GET",
-        query,
-      });
+      return animalService.getAnimalList({ query });
     },
   });
 

@@ -7,8 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 
-import enFlag from "../../assets/flags/en.png";
-import idFlag from "../../assets/flags/id.png";
+import enFlag from "@/assets/flags/en.png";
+import idFlag from "@/assets/flags/id.png";
 import { BiCollapseHorizontal, BiExpandHorizontal } from "react-icons/bi";
 import { PiCodesandboxLogo, PiCow } from "react-icons/pi";
 import { cn } from "@/common/lib/utils";

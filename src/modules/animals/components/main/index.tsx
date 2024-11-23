@@ -1,13 +1,12 @@
-import { Button } from "@/common/components/ui/button";
-import MainLayout from "../../../../common/layouts/MainLayout";
+import MainLayout from "@/common/layouts/MainLayout";
 import AnimalsTable from "./AnimalsTable";
-import { TiPlus } from "react-icons/ti";
 import { Input } from "@/common/components/ui/input";
 import { Checkbox } from "@/common/components/ui/checkbox";
 import { Route } from "@/routes/animals/index";
 import { useNavigate } from "@tanstack/react-router";
 import { Label } from "@/common/components/ui/label";
 import { useDebounceCallback } from "usehooks-ts";
+import AddAnimalDialog from "./AddAnimalDialog";
 
 const Animals = () => {
   const { gender, search } = Route.useSearch();
@@ -30,10 +29,7 @@ const Animals = () => {
         <div className="mr-[280px]">
           <div className="flex items-center justify-between mb-4">
             <h1 className="mt-4 text-3xl">Animals</h1>
-            <Button>
-              <TiPlus />
-              Add Animal
-            </Button>
+            <AddAnimalDialog />
           </div>
           <AnimalsTable />
         </div>
