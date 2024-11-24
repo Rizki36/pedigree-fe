@@ -13,7 +13,7 @@ import { TbPencil, TbTrash } from "react-icons/tb";
 import { MdOutlineOpenInNew } from "react-icons/md";
 import { ChevronLeft, ChevronRight, PlusIcon } from "lucide-react";
 import AchievementTable from "./AchievementTable";
-import { BsGenderMale, BsThreeDots } from "react-icons/bs";
+import { BsGenderFemale, BsGenderMale, BsThreeDots } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,6 +23,8 @@ import {
 import type { FC } from "react";
 import { Badge } from "@/common/components/ui/badge";
 import dayjs from "dayjs";
+import useAnimal from "../../hooks/useAnimal";
+import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
 
 type MateType = {
   id: string;
@@ -47,6 +49,27 @@ const mates: MateType[] = [
 ];
 
 const AnimalDetail = () => {
+  const { animal } = useAnimal();
+  const { data: fatherData } = useAnimalListQuery({
+    query: {
+      id_eq: animal?.fatherId,
+    },
+    options: {
+      enabled: !!animal?.fatherId,
+    },
+  });
+  const father = fatherData?.docs?.[0];
+
+  const { data: motherData } = useAnimalListQuery({
+    query: {
+      id_eq: animal?.motherId,
+    },
+    options: {
+      enabled: !!animal?.motherId,
+    },
+  });
+  const mother = motherData?.docs?.[0];
+
   return (
     <MainLayout>
       <div className="-mt-4 w-[calc(100%+48px)] ml-[-24px] bg-teal-600 px-6 rounded-b-3xl py-4 pb-12">
@@ -62,7 +85,9 @@ const AnimalDetail = () => {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="text-white" />
               <BreadcrumbItem>
-                <BreadcrumbPage className="text-white">AAA-001</BreadcrumbPage>
+                <BreadcrumbPage className="text-white">
+                  {animal?.code ?? "-"}
+                </BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
@@ -102,16 +127,30 @@ const AnimalDetail = () => {
               <div className="grid grid-cols-3 gap-x-2 gap-y-2">
                 <div>
                   <div className="text-neutral-500 text-xs">Code</div>
-                  <div>AAA-001</div>
+                  <div>{animal?.code ?? "-"}</div>
                 </div>
                 <div className="col-span-2">
                   <div className="text-neutral-500 text-xs">Name</div>
                   <div className="space-x-1">
-                    <span>Heli</span>
-                    <Badge variant="secondary" className="gap-x-1 inline-flex">
-                      <BsGenderMale />
-                      Male
-                    </Badge>
+                    <span>{animal?.name ?? "{No name}"}</span>
+                    {animal?.gender === "MALE" && (
+                      <Badge
+                        variant="secondary"
+                        className="gap-x-1 inline-flex"
+                      >
+                        <BsGenderMale />
+                        Male
+                      </Badge>
+                    )}
+                    {animal?.gender === "FEMALE" && (
+                      <Badge
+                        variant="secondary"
+                        className="gap-x-1 inline-flex"
+                      >
+                        <BsGenderFemale />
+                        Female
+                      </Badge>
+                    )}
                     <Badge variant="secondary" className="gap-x-1 inline-flex">
                       Dog
                     </Badge>
@@ -120,15 +159,30 @@ const AnimalDetail = () => {
 
                 <div>
                   <div className="text-neutral-500 text-xs">Date of Birth</div>
-                  <div className="space-x-1">
-                    <span>20 Jan 2023</span>
-                    <Badge variant="secondary">5 Years old</Badge>
-                  </div>
+                  {animal?.dateOfBirth ? (
+                    <div className="space-x-1">
+                      <span>
+                        {dayjs(animal.dateOfBirth).format("DD MMMM YYYY")}
+                      </span>
+                      <Badge variant="secondary">
+                        {dayjs().diff(dayjs(animal.dateOfBirth), "year")} Years
+                        old
+                      </Badge>
+                    </div>
+                  ) : (
+                    <div>Unknown</div>
+                  )}
                 </div>
 
                 <div>
                   <div className="text-neutral-500 text-xs">Died at</div>
-                  <div>Unknown</div>
+                  <div>
+                    {animal?.diedAt ? (
+                      dayjs(animal.diedAt).format("DD MMMM YYYY")
+                    ) : (
+                      <span>Alive</span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -159,41 +213,53 @@ const AnimalDetail = () => {
               <div className="bg-slate-100 px-3 py-2 rounded mb-2">
                 <div className="text-neutral-500 text-xs mb-1 flex items-center justify-between">
                   Father
-                  <Link
-                    to="/animals/$animalId"
-                    params={{
-                      animalId: "xxx",
-                    }}
-                    target="_blank"
-                  >
-                    <MdOutlineOpenInNew />
-                  </Link>
+                  {!!father && (
+                    <Link
+                      to="/animals/$animalId"
+                      params={{
+                        animalId: "xxx",
+                      }}
+                      target="_blank"
+                    >
+                      <MdOutlineOpenInNew />
+                    </Link>
+                  )}
                 </div>
 
-                <div className="flex justify-between">
-                  <span>Helium</span>
-                  <span>AA0-001</span>
-                </div>
+                {father ? (
+                  <div className="flex justify-between">
+                    <span>{father.name ?? "{No name}"}</span>
+                    <span>{father.code ?? "-"}</span>
+                  </div>
+                ) : (
+                  <div>Unknown</div>
+                )}
               </div>
 
               <div className="bg-slate-100 px-3 py-2 rounded">
                 <div className="text-neutral-500 text-xs mb-1 flex items-center justify-between">
                   Mother
-                  <Link
-                    to="/animals/$animalId"
-                    params={{
-                      animalId: "xxx",
-                    }}
-                    target="_blank"
-                  >
-                    <MdOutlineOpenInNew />
-                  </Link>
+                  {!!mother && (
+                    <Link
+                      to="/animals/$animalId"
+                      params={{
+                        animalId: mother?.id,
+                      }}
+                      target="_blank"
+                    >
+                      <MdOutlineOpenInNew />
+                    </Link>
+                  )}
                 </div>
 
-                <div className="flex justify-between">
-                  <span>Janet</span>
-                  <span>AA0-002</span>
-                </div>
+                {mother ? (
+                  <div className="flex justify-between">
+                    <span>{mother.name ?? "{No name}"}</span>
+                    <span>{mother.code ?? "-"}</span>
+                  </div>
+                ) : (
+                  <div>Unknown</div>
+                )}
               </div>
             </section>
 

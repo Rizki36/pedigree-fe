@@ -7,7 +7,7 @@ import type {
 
 type UseAnimalListQueryProps = {
   query?: GetAnimalListQuery;
-  options?: UseQueryOptions<GetAnimalListResponse>;
+  options?: Omit<UseQueryOptions<GetAnimalListResponse>, "queryKey">;
 };
 
 const useAnimalListQuery = ({

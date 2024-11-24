@@ -1,6 +1,7 @@
 import type { Animal } from "../types";
 
 export type GetAnimalListQuery = {
+  id_eq?: string;
   search?: string;
   gender_eq?: "FEMALE" | "MALE";
 };
