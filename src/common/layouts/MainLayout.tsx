@@ -58,7 +58,7 @@ const Sidebar: FC<{
   return (
     <div
       className={cn(
-        "bg-neutral-50 transition-all ease-in-out absolute h-screen border-r border-gray-200",
+        "bg-neutral-50 transition-all ease-in-out fixed h-screen border-r border-gray-200",
         {
           "w-[300px] px-4": !collapse,
           "w-[50px] px-1": collapse,
@@ -191,7 +191,7 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
           </div>
         </div>
 
-        <div className="mt-4">{children}</div>
+        <div className="pt-4 pb-6">{children}</div>
       </div>
     </div>
   );

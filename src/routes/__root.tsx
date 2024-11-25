@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Outlet } from "@tanstack/react-router";
 import { createRootRouteWithContext } from "@tanstack/react-router";
+import { Toaster } from "@/common/components/ui/sonner";
 
 const TanStackRouterDevtools =
   process.env.NODE_ENV === "production"
@@ -23,6 +24,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <React.Fragment>
       <Outlet />
+      <Toaster />
 
       <React.Suspense>
         <TanStackRouterDevtools position="bottom-left" />

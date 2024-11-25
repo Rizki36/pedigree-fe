@@ -10,7 +10,7 @@ import AddAnimalDialog from "./AddAnimalDialog";
 
 const Animals = () => {
   const { gender, search } = Route.useSearch();
-  const navigate = useNavigate({ from: Route.fullPath });
+  const navigate = useNavigate({ from: "/animals" });
 
   const debouncedSetSearch = useDebounceCallback((value: string) => {
     navigate({

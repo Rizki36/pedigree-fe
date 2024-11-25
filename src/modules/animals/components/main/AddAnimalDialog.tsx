@@ -22,6 +22,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useAddAnimalMutation from "@/common/mutations/useAddAnimalMutation";
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { toast } from "sonner";
+import { generateServiceErrorMessage } from "@/common/lib/utils";
 
 const formSchema = z.object({
   code: z.string(),
@@ -29,6 +32,7 @@ const formSchema = z.object({
 });
 
 const AddAnimalDialog = () => {
+  const navigate = useNavigate({ from: "/animals" });
   const [open, setOpen] = useState(false);
 
   const { mutateAsync, isPending } = useAddAnimalMutation({
@@ -49,8 +53,18 @@ const AddAnimalDialog = () => {
       });
 
       setOpen(false);
+
+      await navigate({
+        to: "/animals/$animalId",
+        params: {
+          animalId: res.doc.id,
+        },
+      });
     } catch (error) {
       console.error(error);
+      toast.error("Failed to add animal", {
+        description: generateServiceErrorMessage(error),
+      });
     }
   };
 
