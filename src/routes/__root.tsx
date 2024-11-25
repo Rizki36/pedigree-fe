@@ -24,6 +24,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => (
     <React.Fragment>
       <Outlet />
+
       <Toaster />
 
       <React.Suspense>

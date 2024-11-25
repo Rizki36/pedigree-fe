@@ -9,7 +9,7 @@ import {
 import MainLayout from "@/common/layouts/MainLayout";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/common/components/ui/button";
-import { TbPencil, TbTrash } from "react-icons/tb";
+import { TbPencil } from "react-icons/tb";
 import { MdOutlineOpenInNew } from "react-icons/md";
 import { ChevronLeft, ChevronRight, PlusIcon } from "lucide-react";
 import AchievementTable from "./AchievementTable";
@@ -25,6 +25,7 @@ import { Badge } from "@/common/components/ui/badge";
 import dayjs from "dayjs";
 import useAnimal from "../../hooks/useAnimal";
 import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
+import DeleteAnimalDialog from "./DeleteAnimalDialog";
 
 type MateType = {
   id: string;
@@ -93,14 +94,7 @@ const AnimalDetail = () => {
           </Breadcrumb>
 
           <div className="flex gap-x-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="opacity-50 hover:opacity-100"
-            >
-              <TbTrash className="size-2" />
-              Delete
-            </Button>
+            <DeleteAnimalDialog />
 
             <div className="border border-white/0 hover:border-white/100 rounded-lg opacity-50 hover:opacity-100">
               <Button variant="ghost" size="sm">

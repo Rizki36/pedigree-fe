@@ -23,7 +23,13 @@ const fetchInstance = <T>(endpoint: string, config: Config) => {
   };
 
   if (headers["Content-Type"] === "application/json") {
-    return fetch(url, requestInit).then((res) => res.json()) as Promise<T>;
+    return fetch(url, requestInit).then(async (res) => {
+      if (res.ok) {
+        return (await res.json()) as T;
+      }
+
+      throw await res.json();
+    });
   }
 
   return fetch(url, requestInit) as Promise<T>;

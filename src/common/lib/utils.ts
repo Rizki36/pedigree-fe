@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function generateServiceErrorMessage(error: any) {
-  if (error?.response?.data?.message) {
-    return error.response.data.message;
-  }
+  if (error?.summary) return error.summary;
+  if (error?.message) return error.message;
+
   return "Something went wrong, please try again later";
 }

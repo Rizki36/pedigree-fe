@@ -5,25 +5,25 @@ import {
 } from "@tanstack/react-query";
 import animalService from "../services/animal";
 import type {
-  PostAnimalBody,
-  PostAnimalResponse,
+  DeleteAnimalBody,
+  DeleteAnimalResponse,
 } from "../services/animal.type";
 
-type UseAddAnimalMutationProps = {
-  options?: UseMutationOptions<PostAnimalResponse, unknown, PostAnimalBody>;
+type UseDeleteAnimalMutationProps = {
+  options?: UseMutationOptions<DeleteAnimalResponse, unknown, DeleteAnimalBody>;
 };
 
-const useAddAnimalMutation = ({ options }: UseAddAnimalMutationProps) => {
+const useDeleteAnimalMutation = ({ options }: UseDeleteAnimalMutationProps) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (body) => {
-      return animalService.postAnimal({
+      return animalService.deleteAnimal({
         body,
       });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ["animal/list"],
       });
     },
@@ -31,4 +31,4 @@ const useAddAnimalMutation = ({ options }: UseAddAnimalMutationProps) => {
   });
 };
 
-export default useAddAnimalMutation;
+export default useDeleteAnimalMutation;

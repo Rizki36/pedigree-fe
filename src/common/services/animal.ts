@@ -2,8 +2,10 @@ import fetchInstance from "../lib/fetch-instance";
 import type {
   GetAnimalListQuery,
   GetAnimalListResponse,
-  PostAddAnimalBody,
-  PostAddAnimalResponse,
+  PostAnimalBody,
+  PostAnimalResponse,
+  DeleteAnimalBody,
+  DeleteAnimalResponse,
 } from "./animal.type";
 
 const animalService = {
@@ -17,13 +19,23 @@ const animalService = {
       query,
     });
   },
-  postAddAnimal: async ({
+  postAnimal: async ({
     body,
   }: {
-    body: PostAddAnimalBody;
+    body: PostAnimalBody;
   }) => {
-    return fetchInstance<PostAddAnimalResponse>("/v1/animal", {
+    return fetchInstance<PostAnimalResponse>("/v1/animal", {
       method: "POST",
+      body: JSON.stringify(body),
+    });
+  },
+  deleteAnimal: async ({
+    body,
+  }: {
+    body: DeleteAnimalBody;
+  }) => {
+    return fetchInstance<DeleteAnimalResponse>("/v1/animal", {
+      method: "DELETE",
       body: JSON.stringify(body),
     });
   },
