@@ -6,6 +6,8 @@ import type {
   PostAnimalResponse,
   DeleteAnimalBody,
   DeleteAnimalResponse,
+  UpdateAnimalBody,
+  UpdateAnimalResponse,
 } from "./animal.type";
 
 const animalService = {
@@ -36,6 +38,16 @@ const animalService = {
   }) => {
     return fetchInstance<DeleteAnimalResponse>("/v1/animal", {
       method: "DELETE",
+      body: JSON.stringify(body),
+    });
+  },
+  updateAnimal: async ({
+    body,
+  }: {
+    body: UpdateAnimalBody;
+  }) => {
+    return fetchInstance<UpdateAnimalResponse>("/v1/animal", {
+      method: "PATCH",
       body: JSON.stringify(body),
     });
   },

@@ -43,7 +43,11 @@ export const columns: ColumnDef<DataSource>[] = [
     accessorKey: "gender",
     header: "Gender",
     cell: ({ row }) => (
-      <div>{row.getValue("gender") === "male" ? "Male" : "Female"}</div>
+      <div>
+        {row.getValue("gender") === "MALE" && "Male"}
+        {row.getValue("gender") === "FEMALE" && "Female"}
+        {row.getValue("gender") === null && "-"}
+      </div>
     ),
   },
   {
@@ -76,12 +80,7 @@ const AnimalsTable: FC = () => {
 
   const dataSource: DataSource[] = useMemo(() => {
     if (!data?.docs?.length) return [];
-    return data?.docs.map((item) => ({
-      id: item.id,
-      name: item.name,
-      code: item.code,
-      gender: item.gender,
-    }));
+    return data?.docs;
   }, [data?.docs]);
 
   const table = useReactTable({
@@ -108,7 +107,7 @@ const AnimalsTable: FC = () => {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -128,7 +127,7 @@ const AnimalsTable: FC = () => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -161,27 +160,6 @@ const AnimalsTable: FC = () => {
           </TableBody>
         </Table>
       </div>
-      {/* <div className="flex items-center justify-end space-x-2 py-4">
-				<div className="flex-1 text-sm text-muted-foreground"> </div>
-				<div className="space-x-2">
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={() => table.previousPage()}
-						disabled={!table.getCanPreviousPage()}
-					>
-						Previous
-					</Button>
-					<Button
-						variant="outline"
-						size="sm"
-						onClick={() => table.nextPage()}
-						disabled={!table.getCanNextPage()}
-					>
-						Next
-					</Button>
-				</div>
-			</div> */}
     </div>
   );
 };

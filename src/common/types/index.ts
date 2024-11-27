@@ -4,10 +4,16 @@ export type Animal = {
   id: string;
   code: string;
   name: string;
-  gender?: "MALE" | "FEMALE";
-  fatherId?: string;
-  motherId?: string;
-  note?: string;
-  dateOfBirth?: DateTime;
-  diedAt?: DateTime;
+  gender: "MALE" | "FEMALE" | null;
+  fatherId: string | null;
+  motherId: string | null;
+  animalTypeCode: string;
+  note: string | null;
+  dateOfBirth: DateTime | null;
+  diedAt: DateTime | null;
+};
+
+export type AnimalType = {
+  code: string;
+  name: string;
 };
