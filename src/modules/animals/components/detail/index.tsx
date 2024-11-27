@@ -9,7 +9,6 @@ import {
 import MainLayout from "@/common/layouts/MainLayout";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/common/components/ui/button";
-import { TbPencil } from "react-icons/tb";
 import { ChevronLeft, ChevronRight, PlusIcon } from "lucide-react";
 import AchievementTable from "./AchievementTable";
 import { BsThreeDots } from "react-icons/bs";
@@ -25,6 +24,7 @@ import useAnimal from "../../hooks/useAnimal";
 import DeleteAnimalDialog from "./DeleteAnimalDialog";
 import DetailsSection from "./DetailsSection";
 import ParentSection from "./ParentSection";
+import NoteSection from "./NoteSection";
 
 type MateType = {
   id: string;
@@ -127,19 +127,7 @@ const AnimalDetail = () => {
             </section>
 
             {/* Note section */}
-            <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
-              <div className="mb-3 flex items-center justify-between">
-                Note
-                <Button variant="ghost" size="sm">
-                  <TbPencil />
-                </Button>
-              </div>
-
-              <div className="bg-slate-100 px-3 py-2 rounded">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Consequatur, voluptatibus.
-              </div>
-            </section>
+            <NoteSection animal={animal} />
           </div>
         </div>
       </div>

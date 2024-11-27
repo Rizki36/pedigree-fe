@@ -37,6 +37,7 @@ export type UpdateAnimalBody = {
   diedAt?: string | null;
   fatherId?: string | null;
   motherId?: string | null;
+  note?: string | null;
 };
 export type UpdateAnimalResponse = { doc: Animal };
 // #endregion
