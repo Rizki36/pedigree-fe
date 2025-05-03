@@ -26,7 +26,7 @@ const useUserQuery = () => {
     queryKey: ["user"],
     queryFn: async () => {
       const data = await fetchInstance<{ user: User; authenticated: boolean }>(
-        "/api/auth/me",
+        "/v1/auth/me",
         {
           method: "GET",
         },
@@ -48,14 +48,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = () => {
     // Redirect to Google login
-    window.location.href = `${BASE_URL}/api/auth/google`;
+    window.location.href = `${BASE_URL}/v1/auth/google`;
   };
 
   // Update the logout function
   const logout = async () => {
     try {
       // Call backend to clear cookie/session
-      await fetchInstance("/api/auth/logout", {
+      await fetchInstance("/v1/auth/logout", {
         method: "POST",
       });
     } catch (error) {

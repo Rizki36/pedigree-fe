@@ -14,7 +14,7 @@ import { PiCodesandboxLogo, PiCow } from "react-icons/pi";
 import { cn } from "@/common/lib/utils";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiLogOut } from "react-icons/fi";
 import { ChevronDown } from "lucide-react";
 import { TiFlowMerge } from "react-icons/ti";
 import { BsHouseHeart } from "react-icons/bs";
@@ -149,7 +149,7 @@ const LanguageSwitcher = () => {
 };
 
 const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -193,6 +193,17 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
                 <div>{user?.email}</div>
               </div>
             </div>
+
+            <div className="mx-4 border-l h-5" />
+
+            <Button
+              onClick={logout}
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-1.5 text-neutral-500 hover:text-red-600 transition-colors"
+            >
+              <FiLogOut className="size-4" />
+            </Button>
           </div>
         </div>
 
