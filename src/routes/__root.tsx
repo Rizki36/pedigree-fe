@@ -1,7 +1,8 @@
 import * as React from "react";
-import { Outlet } from "@tanstack/react-router";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import { Toaster } from "@/common/components/ui/sonner";
+import { RouteGuard } from "../components/RouteGuard";
+import type { AuthContextType } from "@/contexts/AuthContext";
 
 const TanStackRouterDevtools =
   process.env.NODE_ENV === "production"
@@ -16,14 +17,13 @@ const TanStackRouterDevtools =
       );
 
 interface MyRouterContext {
-  isAuthenticated: boolean;
+  auth: AuthContextType;
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  notFoundComponent: () => <div>Not Found</div>,
   component: () => (
     <React.Fragment>
-      <Outlet />
+      <RouteGuard />
 
       <Toaster />
 

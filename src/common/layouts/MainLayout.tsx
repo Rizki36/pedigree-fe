@@ -18,6 +18,7 @@ import { FiSearch } from "react-icons/fi";
 import { ChevronDown } from "lucide-react";
 import { TiFlowMerge } from "react-icons/ti";
 import { BsHouseHeart } from "react-icons/bs";
+import { useAuth } from "@/contexts/AuthContext";
 
 const menus = [
   {
@@ -148,6 +149,7 @@ const LanguageSwitcher = () => {
 };
 
 const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
+  const { user } = useAuth();
   const [collapse, setCollapse] = useState(false);
 
   return (
@@ -179,13 +181,16 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
 
             <div className="flex items-center">
               <img
-                src="https://avatar.iran.liara.run/public/46"
+                src={
+                  user?.profilePictureUrl ||
+                  "https://avatar.iran.liara.run/public/46"
+                }
                 alt="Language"
                 className="size-9 rounded-full"
               />
               <div className="text-xs text-neutral-400 ml-2">
-                <div>Rizki Fitra</div>
-                <div>cahrizki.rf@gmail.com</div>
+                <div>{user?.name}</div>
+                <div>{user?.email}</div>
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import React, { StrictMode } from "react";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 const ReactQueryDevtools =
   process.env.NODE_ENV === "production"
@@ -24,24 +25,15 @@ declare module "@tanstack/react-router" {
   }
 }
 
-// TODO: Add auth
-const useAuth = () => {
-  return {
-    isAuthenticated: false,
-  };
-};
-
-// TODO: Add auth provider
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  return <>{children}</>;
-};
-
 const InnerApp = () => {
   const auth = useAuth();
+  
   return (
     <RouterProvider
       router={router}
-      context={{ isAuthenticated: auth.isAuthenticated }}
+      context={{
+        auth,
+      }}
     />
   );
 };

@@ -20,6 +20,7 @@ const fetchInstance = <T>(endpoint: string, config: Config) => {
   const requestInit: RequestInit = {
     ...config,
     headers,
+    credentials: "include", // important to include cookies
   };
 
   if (headers["Content-Type"] === "application/json") {
