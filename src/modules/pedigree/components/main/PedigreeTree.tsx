@@ -4,7 +4,14 @@ import pedigreeService from "@/common/services/pedigree";
 import { AnimalGender } from "@/common/types";
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
-import { useMemo, useState, useCallback, type FC } from "react";
+import {
+  useMemo,
+  useState,
+  useCallback,
+  type FC,
+  createContext,
+  useContext,
+} from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { Loader2 } from "lucide-react";
 
@@ -49,15 +56,39 @@ const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
   );
 };
 
+// Context to track IDs that have already appeared in the current branch
+const VisitedNodesContext = createContext<Set<string>>(new Set());
+
 const Tree: FC<{
   node: TreeNode;
   onNodeUpdate?: (nodeId: string, updatedNodes: TreeNode) => void;
-}> = ({ node, onNodeUpdate }) => {
+  maxDepth?: number; // Optional prop to limit tree depth
+  currentDepth?: number; // Track current depth
+}> = ({ node, onNodeUpdate, maxDepth = 10, currentDepth = 0 }) => {
+  // Get the set of already visited node IDs in this branch
+  const visitedNodes = useContext(VisitedNodesContext);
+
+  // Check if this node has already appeared in the current branch (circular reference)
+  const isCircularReference = node.id ? visitedNodes.has(node.id) : false;
+
+  // Check if we've reached max depth
+  const isMaxDepthReached = currentDepth >= maxDepth;
+
   const filteredNodes = useMemo(() => {
     return node?.nodes?.filter((n) => !!n);
   }, [node?.nodes]);
 
-  const needFetchNodes = node.hasNextNodes && !filteredNodes?.length;
+  // Only allow fetching if:
+  // 1. The node has next nodes
+  // 2. We don't have children already
+  // 3. We haven't reached max depth
+  // 4. This is not a circular reference
+  const needFetchNodes =
+    node.hasNextNodes &&
+    !filteredNodes?.length &&
+    !isMaxDepthReached &&
+    !isCircularReference;
+
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(!needFetchNodes);
   const canOpen = open && !needFetchNodes;
@@ -98,6 +129,40 @@ const Tree: FC<{
       setOpen((prev) => !prev);
     }
   }, [needFetchNodes, loadNextNodes]);
+
+  // If this is a circular reference, show a special indicator
+  if (isCircularReference) {
+    return (
+      <ul className="relative flex flex-col">
+        <div style={{ marginBottom: `${GAP}px` }}>
+          <PedigreeNode node={node} />
+          <div className="text-xs text-red-500 text-center mt-1">
+            ⚠️ Circular reference detected
+          </div>
+        </div>
+      </ul>
+    );
+  }
+
+  // If max depth reached, show a visual indicator
+  if (isMaxDepthReached) {
+    return (
+      <ul className="relative flex flex-col">
+        <div style={{ marginBottom: `${GAP}px` }}>
+          <PedigreeNode node={node} />
+          {node.hasNextNodes && (
+            <div className="text-xs text-gray-500 text-center mt-1">
+              Max depth reached
+            </div>
+          )}
+        </div>
+      </ul>
+    );
+  }
+
+  // Create a new set with this node ID added for child components
+  const newVisitedNodes = new Set(visitedNodes);
+  if (node.id) newVisitedNodes.add(node.id);
 
   return (
     <ul className="relative flex flex-col">
@@ -141,57 +206,65 @@ const Tree: FC<{
 
       {canOpen && (
         <div className="flex flex-row">
-          {node.nodes.map((child, index) => {
-            const currentNodes = node.nodes.filter((n) => !!n);
-            const isLastChild = index === currentNodes.length - 1;
-            const isNoSiblings = currentNodes.length === 1;
+          <VisitedNodesContext.Provider value={newVisitedNodes}>
+            {node.nodes.map((child, index) => {
+              const currentNodes = node.nodes.filter((n) => !!n);
+              const isLastChild = index === currentNodes.length - 1;
+              const isNoSiblings = currentNodes.length === 1;
 
-            if (!child) return null;
+              if (!child) return null;
 
-            return (
-              <li key={child.id} className="relative px-2">
-                {(!isLastChild || isNoSiblings) && (
-                  <div
-                    className={cn("rounded-tl-xl", {
-                      "absolute border-t-2 border-t-neutral-300 left-[50%] w-[50%]":
-                        !isNoSiblings,
-                      "absolute border-l-2 border-l-neutral-300 left-[50%]": true,
-                    })}
-                    style={{
-                      top: `-${GAP / 2}px`,
-                      height: `${GAP}px`,
-                    }}
+              return (
+                <li key={child.id} className="relative px-2">
+                  {(!isLastChild || isNoSiblings) && (
+                    <div
+                      className={cn("rounded-tl-xl", {
+                        "absolute border-t-2 border-t-neutral-300 left-[50%] w-[50%]":
+                          !isNoSiblings,
+                        "absolute border-l-2 border-l-neutral-300 left-[50%]": true,
+                      })}
+                      style={{
+                        top: `-${GAP / 2}px`,
+                        height: `${GAP}px`,
+                      }}
+                    />
+                  )}
+
+                  {!!isLastChild && !isNoSiblings && (
+                    <div
+                      className={cn(
+                        "rounded-tr-xl",
+                        "absolute border-t-2 border-t-neutral-300 right-[50%] w-[50%]",
+                        "absolute border-r-2 border-r-neutral-300 right-[50%]",
+                      )}
+                      style={{
+                        top: `-${GAP / 2}px`,
+                        height: `${GAP}px`,
+                      }}
+                    />
+                  )}
+                  <Tree
+                    node={child}
+                    onNodeUpdate={onNodeUpdate}
+                    maxDepth={maxDepth}
+                    currentDepth={currentDepth + 1}
                   />
-                )}
-
-                {!!isLastChild && !isNoSiblings && (
-                  <div
-                    className={cn(
-                      "rounded-tr-xl",
-                      "absolute border-t-2 border-t-neutral-300 right-[50%] w-[50%]",
-                      "absolute border-r-2 border-r-neutral-300 right-[50%]",
-                    )}
-                    style={{
-                      top: `-${GAP / 2}px`,
-                      height: `${GAP}px`,
-                    }}
-                  />
-                )}
-                <Tree node={child} />
-              </li>
-            );
-          })}
+                </li>
+              );
+            })}
+          </VisitedNodesContext.Provider>
         </div>
       )}
     </ul>
   );
 };
 
-// Now update the PedigreeTree component to handle node updates
+// Update the main PedigreeTree component to pass initial values
 const PedigreeTree: FC<{
   nodes: (TreeNode | null)[];
   setNodes: React.Dispatch<React.SetStateAction<(TreeNode | null)[]>>;
-}> = ({ nodes, setNodes }) => {
+  maxDepth?: number; // Allow setting max depth at top level
+}> = ({ nodes, setNodes, maxDepth = 10 }) => {
   const handleNodeUpdate = useCallback(
     (nodeId: string, updatedNodes: TreeNode) => {
       setNodes((prevNodes) => {
@@ -229,15 +302,21 @@ const PedigreeTree: FC<{
       {nodes.length === 0 ? (
         <div className="text-neutral-400">No data</div>
       ) : (
-        <>
+        <VisitedNodesContext.Provider value={new Set()}>
           {nodes.map((node) => {
             if (!node) return null;
 
             return (
-              <Tree key={node.id} node={node} onNodeUpdate={handleNodeUpdate} />
+              <Tree
+                key={node.id}
+                node={node}
+                onNodeUpdate={handleNodeUpdate}
+                maxDepth={maxDepth}
+                currentDepth={0}
+              />
             );
           })}
-        </>
+        </VisitedNodesContext.Provider>
       )}
     </div>
   );
