@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../modules/auth/contexts/AuthContext";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 

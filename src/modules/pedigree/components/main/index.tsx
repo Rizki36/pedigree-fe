@@ -1,6 +1,4 @@
 import MainLayout from "@/common/layouts/MainLayout";
-import Tree, { type MyNode } from "./Tree";
-import nodes from "./tree.json";
 import { Button } from "@/common/components/ui/button";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { MdOutlineZoomInMap } from "react-icons/md";
@@ -23,6 +21,9 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { Route } from "@/routes/pedigree";
 import { cn } from "@/common/lib/utils";
 import { toPng } from "html-to-image";
+import PedigreeTree from "./PedigreeTree";
+import type { Node } from "./PedigreeTree";
+import { AnimalGender } from "@/common/types";
 
 const animals: {
   id: string;
@@ -45,6 +46,107 @@ const animals: {
     code: "AAA-003",
   },
 ];
+
+export const nodes: Node = {
+  id: "0",
+  name: "John Doe",
+  code: "AAA-001",
+  animalTypeCode: "AAA",
+  dateOfBirth: "2023-01-01",
+  diedAt: null,
+  createdAt: "2023-01-01",
+  updatedAt: "2023-01-01",
+  fatherId: "1",
+  motherId: "2",
+  gender: AnimalGender.MALE,
+  note: "",
+  userId: "",
+  nodes: [
+    {
+      id: "1",
+      name: "Jane Doe",
+      code: "AAA-002",
+      animalTypeCode: "AAA",
+      dateOfBirth: "2023-01-01",
+      diedAt: null,
+      createdAt: "2023-01-01",
+      updatedAt: "2023-01-01",
+      fatherId: null,
+      motherId: null,
+      gender: AnimalGender.MALE,
+      note: "",
+      userId: "",
+      nodes: [
+        {
+          id: "11",
+          name: "John Doe",
+          code: "AAA-001",
+          animalTypeCode: "AAA",
+          dateOfBirth: "2023-01-01",
+          diedAt: null,
+          createdAt: "2023-01-01",
+          updatedAt: "2023-01-01",
+          fatherId: null,
+          motherId: null,
+          gender: AnimalGender.MALE,
+          note: "",
+          userId: "",
+          nodes: [undefined, undefined],
+        },
+        {
+          id: "12",
+          name: "Mary Jane",
+          code: "AAA-003",
+          animalTypeCode: "AAA",
+          dateOfBirth: "2023-01-01",
+          diedAt: null,
+          createdAt: "2023-01-01",
+          updatedAt: "2023-01-01",
+          fatherId: null,
+          motherId: null,
+          gender: AnimalGender.FEMALE,
+          note: "",
+          userId: "",
+          nodes: [undefined, undefined],
+        },
+      ],
+    },
+    {
+      id: "2",
+      name: "Mary Jane",
+      code: "AAA-003",
+      animalTypeCode: "AAA",
+      dateOfBirth: "2023-01-01",
+      diedAt: null,
+      createdAt: "2023-01-01",
+      updatedAt: "2023-01-01",
+      fatherId: null,
+      motherId: null,
+      gender: AnimalGender.FEMALE,
+      note: "",
+      userId: "",
+      nodes: [
+        {
+          id: "21",
+          name: "John Doe",
+          code: "AAA-001",
+          animalTypeCode: "AAA",
+          dateOfBirth: "2023-01-01",
+          diedAt: null,
+          createdAt: "2023-01-01",
+          updatedAt: "2023-01-01",
+          fatherId: null,
+          motherId: null,
+          gender: AnimalGender.MALE,
+          note: "",
+          userId: "",
+          nodes: [undefined, undefined],
+        },
+        undefined,
+      ],
+    },
+  ],
+};
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();
@@ -140,13 +242,13 @@ const Pedigree = () => {
             </Popover>
           </div>
 
-          <div className="h-full relative">
+          <div className="h-full relative w-full overflow-hidden">
             <div className="absolute flex items-center text-xs top-2 -right-1 bg-white px-3 py-2 rounded-xl shadow-lg z-50">
               <MdOutlineZoomInMap className="mr-2" />
               Drag and pinch to zoom
             </div>
-            <div ref={ref} className="h-full">
-              <Tree nodes={nodes as MyNode[]} />
+            <div ref={ref} className="h-full overflow-hidden">
+              <PedigreeTree nodes={nodes} />
             </div>
           </div>
 

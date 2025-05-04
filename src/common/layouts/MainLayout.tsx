@@ -18,7 +18,7 @@ import { FiSearch, FiLogOut } from "react-icons/fi";
 import { ChevronDown } from "lucide-react";
 import { TiFlowMerge } from "react-icons/ti";
 import { BsHouseHeart } from "react-icons/bs";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/modules/auth/contexts/AuthContext";
 
 const menus = [
   {

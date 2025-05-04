@@ -4,7 +4,7 @@ import React, { StrictMode } from "react";
 import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./modules/auth/contexts/AuthContext";
 
 const ReactQueryDevtools =
   process.env.NODE_ENV === "production"

@@ -2936,13 +2936,6 @@ react-dom@^18.3.1:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
 
-react-family-tree@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-family-tree/-/react-family-tree-3.2.0.tgz#60be2e4edd3fc166f4fb7e2285f922a9457cec6a"
-  integrity sha512-TCoLWPSLoP89CpfzK7vTxA2Ss0Qu6PuusdwjuLHeSrYiQfW6PLYCc8wTidRfKTjH+4FueF5OLMolj7rhh+c3MA==
-  dependencies:
-    relatives-tree "3.2.x"
-
 react-hook-form@^7.53.2:
   version "7.53.2"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.53.2.tgz#6fa37ae27330af81089baadd7f322cc987b8e2ac"
@@ -3044,11 +3037,6 @@ regenerator-runtime@^0.14.0:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.14.1.tgz#356ade10263f685dda125100cd862c1db895327f"
   integrity sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==
-
-relatives-tree@3.2.x:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/relatives-tree/-/relatives-tree-3.2.1.tgz#a04a106cb6460112b798fd3de85af7484b104503"
-  integrity sha512-mm4SSf8BmgMH8jQFwUfjN0MguDlIIvOAjSNC1wN2ppPTaPW8Ud2Tk+5QqFGEJfcMPaU8Kf1f840fPyHkxGpcAg==
 
 resolve-from@^4.0.0:
   version "4.0.0"

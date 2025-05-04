@@ -23,8 +23,6 @@ export const PinchZoomPan = React.memo(function PinchZoomPan({
   const rootRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  console.log(canvasRef.current?.clientWidth);
-
   useEffect(() => {
     const rootElement = rootRef.current;
     const canvasElement = canvasRef.current;

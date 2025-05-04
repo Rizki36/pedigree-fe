@@ -1,8 +1,8 @@
 import * as React from "react";
 import { createRootRouteWithContext } from "@tanstack/react-router";
 import { Toaster } from "@/common/components/ui/sonner";
-import { RouteGuard } from "../components/RouteGuard";
-import type { AuthContextType } from "@/contexts/AuthContext";
+import { RouteGuard } from "../modules/auth/components/RouteGuard";
+import type { AuthContextType } from "@/modules/auth/contexts/AuthContext";
 
 const TanStackRouterDevtools =
   process.env.NODE_ENV === "production"
