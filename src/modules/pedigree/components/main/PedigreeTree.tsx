@@ -1,10 +1,12 @@
 import { cn } from "@/common/lib/utils";
 import type { TreeNode } from "@/common/services/pedigree.type";
+import pedigreeService from "@/common/services/pedigree";
 import { AnimalGender } from "@/common/types";
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
-import { useMemo, useState, type FC } from "react";
+import { useMemo, useState, useCallback, type FC } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
+import { Loader2 } from "lucide-react";
 
 type PedigreeNodeProps = {
   node: TreeNode;
@@ -49,18 +51,53 @@ const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
 
 const Tree: FC<{
   node: TreeNode;
-}> = ({ node }) => {
+  onNodeUpdate?: (nodeId: string, updatedNodes: TreeNode) => void;
+}> = ({ node, onNodeUpdate }) => {
   const filteredNodes = useMemo(() => {
     return node?.nodes?.filter((n) => !!n);
   }, [node?.nodes]);
 
   const needFetchNodes = node.hasNextNodes && !filteredNodes?.length;
-
+  const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(!needFetchNodes);
   const canOpen = open && !needFetchNodes;
   const hasChild = !!node.nodes.filter((n) => !!n).length;
 
-  const toggleOpen = () => setOpen((prev) => !prev);
+  const loadNextNodes = useCallback(async () => {
+    if (!needFetchNodes || isLoading) return;
+
+    try {
+      setIsLoading(true);
+      // Use the existing pedigreeService function
+      const response = await pedigreeService.getPedigreeTree({
+        query: { animal_id_eq: node.id!, level: 2 },
+      });
+
+      const nextNodes = response.docs || [];
+
+      // Update nodes locally if no parent callback is provided
+      if (!onNodeUpdate) {
+        node.nodes = nextNodes[0].nodes;
+      } else {
+        // Let parent component handle the update
+        onNodeUpdate(node.id, nextNodes[0]);
+      }
+
+      setOpen(true);
+    } catch (error) {
+      console.error("Failed to load next nodes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [node.id, needFetchNodes, isLoading, onNodeUpdate]);
+
+  const toggleOpen = useCallback(() => {
+    if (needFetchNodes) {
+      loadNextNodes();
+    } else {
+      setOpen((prev) => !prev);
+    }
+  }, [needFetchNodes, loadNextNodes]);
 
   return (
     <ul className="relative flex flex-col">
@@ -83,16 +120,21 @@ const Tree: FC<{
             className={cn(
               "border border-neutral-200 z-20 bg-white rounded-full absolute left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all",
               {
-                "hover:rotate-180": canOpen,
+                "hover:rotate-180": canOpen && !isLoading,
               },
             )}
             style={{
               top: canOpen ? `${HEIGHT + GAP / 2}px` : `${HEIGHT}px`,
             }}
             onClick={toggleOpen}
+            disabled={isLoading}
             aria-label="toggle loading children"
           >
-            <ChevronDown className="size-5" />
+            {isLoading ? (
+              <Loader2 className="size-5 animate-spin" />
+            ) : (
+              <ChevronDown className="size-5" />
+            )}
           </button>
         )}
       </div>
@@ -145,16 +187,56 @@ const Tree: FC<{
   );
 };
 
-const PedigreeTree: FC<{ nodes: TreeNode[] }> = ({ nodes }) => {
+// Now update the PedigreeTree component to handle node updates
+const PedigreeTree: FC<{
+  nodes: (TreeNode | null)[];
+  setNodes: React.Dispatch<React.SetStateAction<(TreeNode | null)[]>>;
+}> = ({ nodes, setNodes }) => {
+  const handleNodeUpdate = useCallback(
+    (nodeId: string, updatedNodes: TreeNode) => {
+      setNodes((prevNodes) => {
+        // Create a deep copy to avoid mutating the original state
+        const newNodes = JSON.parse(JSON.stringify(prevNodes));
+
+        // Helper function to find and update node recursively
+        const updateNodeChildren = (nodes: (TreeNode | null)[]): boolean => {
+          for (let i = 0; i < nodes.length; i++) {
+            if (nodes && !!nodes?.[i] && nodes?.[i]?.id === nodeId) {
+              // @ts-expect-error
+              nodes[i].nodes = updatedNodes.nodes;
+              return true;
+            }
+
+            if (!!nodes?.[i] && !!nodes?.[i]?.nodes?.length) {
+              // @ts-expect-error
+              if (updateNodeChildren(nodes[i].nodes)) {
+                return true;
+              }
+            }
+          }
+          return false;
+        };
+
+        updateNodeChildren(newNodes);
+        return newNodes;
+      });
+    },
+    [],
+  );
+
   return (
     <div className="flex items-center justify-center w-full h-full relative overflow-auto p-6">
       {nodes.length === 0 ? (
         <div className="text-neutral-400">No data</div>
       ) : (
         <>
-          {nodes.map((node) => (
-            <Tree key={node.id} node={node} />
-          ))}
+          {nodes.map((node) => {
+            if (!node) return null;
+
+            return (
+              <Tree key={node.id} node={node} onNodeUpdate={handleNodeUpdate} />
+            );
+          })}
         </>
       )}
     </div>

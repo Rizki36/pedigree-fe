@@ -16,7 +16,7 @@ import {
   CommandList,
 } from "@/common/components/ui/command";
 import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { Route } from "@/routes/pedigree";
 import { cn } from "@/common/lib/utils";
@@ -24,6 +24,7 @@ import { toPng } from "html-to-image";
 import PedigreeTree from "./PedigreeTree";
 import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
 import usePedigreeTreeQuery from "@/common/queries/usePedigreeTreeQuery";
+import type { TreeNode } from "@/common/services/pedigree.type";
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();
@@ -46,7 +47,13 @@ const Pedigree = () => {
       enabled: !!animalId,
     },
   });
-  const pedigreeTree = pedigreeTreeData?.docs || [];
+  const [nodes, setNodes] = useState<(TreeNode | null)[]>([]);
+
+  useEffect(() => {
+    if (pedigreeTreeData) {
+      setNodes(pedigreeTreeData.docs);
+    }
+  }, [pedigreeTreeData, animalId]);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -141,7 +148,7 @@ const Pedigree = () => {
               Drag and pinch to zoom
             </div>
             <div ref={ref} className="h-full overflow-hidden">
-              <PedigreeTree nodes={pedigreeTree} />
+              <PedigreeTree nodes={nodes} setNodes={setNodes} />
             </div>
           </div>
 
