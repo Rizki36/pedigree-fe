@@ -27,13 +27,16 @@ import { useMemo } from "react";
 import type { FC } from "react";
 import type { Achievement } from "@/common/types";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
+import type { AchievementDialogProps } from "./AchievementDialog";
 
 export type DataSource = Achievement;
 
 const AchievementTable: FC<{
   deleteState: DeleteAchievementDialogProps["state"];
   setDeleteState: (state: DeleteAchievementDialogProps["state"]) => void;
-}> = ({ deleteState, setDeleteState }) => {
+  updateState: AchievementDialogProps["state"];
+  setUpdateState: (state: AchievementDialogProps["state"]) => void;
+}> = ({ deleteState, setDeleteState, updateState, setUpdateState }) => {
   const { data, isLoading } = useAchievementListQuery({
     query: {},
   });
@@ -92,7 +95,20 @@ const AchievementTable: FC<{
               >
                 Delete
               </DropdownMenuItem>
-              <DropdownMenuItem>Update</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setUpdateState({
+                    id: row.original.id,
+                    mode: "edit",
+                    open: true,
+                    data: {
+                      achievement: row.original,
+                    },
+                  });
+                }}
+              >
+                Update
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         ),

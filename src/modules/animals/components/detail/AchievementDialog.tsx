@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/common/components/ui/dialog";
 import {
   Form,
@@ -25,13 +24,27 @@ import {
 import { Textarea } from "@/common/components/ui/textarea";
 import { cn, generateServiceErrorMessage } from "@/common/lib/utils";
 import useAddAchievementMutation from "@/common/mutations/useAddAchievementMutation";
+import useUpdateAchievementMutation from "@/common/mutations/useUpdateAchievementMutation";
+import type { Achievement } from "@/common/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs from "dayjs";
-import { CalendarIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { CalendarIcon } from "lucide-react";
+import { useEffect, type FC } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+
+export type AchievementDialogProps = {
+  state: {
+    mode: "add" | "edit";
+    data: {
+      achievement: Achievement;
+    } | null;
+    open: boolean;
+    id: string | null;
+  };
+  setState: (state: AchievementDialogProps["state"]) => void;
+};
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -40,19 +53,25 @@ const formSchema = z.object({
   note: z.string().optional(),
 });
 
-const AddAchievementDialog = () => {
-  const [open, setOpen] = useState(false);
-  const { mutateAsync, isPending } = useAddAchievementMutation({
-    options: {},
-  });
+const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
+  const { open } = state;
+
+  const { mutateAsync: addAchievement, isPending: addingAchievement } =
+    useAddAchievementMutation({
+      options: {},
+    });
+  const { mutateAsync: updateAchievement, isPending: updatingAchievement } =
+    useUpdateAchievementMutation({
+      options: {},
+    });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleAddAchievement = async (values: z.infer<typeof formSchema>) => {
     try {
-      await mutateAsync({
+      await addAchievement({
         name: values.name,
         issuedBy: values.issuedBy,
         issuedAt: values.issuedAt,
@@ -61,27 +80,75 @@ const AddAchievementDialog = () => {
       form.reset(undefined, {
         keepDirtyValues: true,
       });
-      setOpen(false);
+      setState({ open: false, mode: "add", data: null, id: null });
     } catch (error) {
       console.error(error);
-      toast.error("Failed to update animal details", {
+      toast.error("Failed to add achievement", {
         description: generateServiceErrorMessage(error),
       });
     }
   };
 
+  const handleUpdateAchievement = async (
+    values: z.infer<typeof formSchema>,
+  ) => {
+    try {
+      if (!state.id) throw new Error("ID is required for updating achievement");
+
+      await updateAchievement({
+        id: state.id,
+        name: values.name,
+        issuedBy: values.issuedBy,
+        issuedAt: values.issuedAt,
+        note: values.note,
+      });
+      form.reset(undefined, {
+        keepDirtyValues: true,
+      });
+      setState({ open: false, mode: "add", data: null, id: null });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update achievement", {
+        description: generateServiceErrorMessage(error),
+      });
+    }
+  };
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (state.mode === "add") {
+      await handleAddAchievement(values);
+    } else if (state.mode === "edit") {
+      await handleUpdateAchievement(values);
+    }
+  };
+
+  useEffect(() => {
+    if (state.mode === "edit" && state.data) {
+      const { achievement } = state.data;
+      form.reset({
+        name: achievement.name,
+        issuedBy: achievement.issuedBy || undefined,
+        issuedAt: achievement.issuedAt || undefined,
+        note: achievement.note || undefined,
+      });
+    }
+  }, [state.mode, state.data]);
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="ghost">
-          <PlusIcon />
-        </Button>
-      </DialogTrigger>
+    <Dialog
+      open={open}
+      onOpenChange={(open) => {
+        console.log(open);
+        setState({ ...state, open });
+      }}
+    >
       <DialogContent className="max-w-3xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
-              <DialogTitle>Add Achievement</DialogTitle>
+              <DialogTitle>
+                {state.mode === "add" ? "Add" : "Update"} Achievement
+              </DialogTitle>
             </DialogHeader>
             <FormField
               control={form.control}
@@ -175,7 +242,10 @@ const AddAchievementDialog = () => {
               )}
             />
             <DialogFooter>
-              <Button type="submit" disabled={isPending}>
+              <Button
+                type="submit"
+                disabled={addingAchievement || updatingAchievement}
+              >
                 Save
               </Button>
             </DialogFooter>
@@ -186,4 +256,4 @@ const AddAchievementDialog = () => {
   );
 };
 
-export default AddAchievementDialog;
+export default AchievementDialog;

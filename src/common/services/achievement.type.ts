@@ -25,6 +25,7 @@ export type DeleteAchievementResponse = { doc: Achievement };
 
 // #region PATCH /v1/achievement
 export type UpdateAchievementBody = {
+  id: string;
   name: string;
   issuedBy?: string | null;
   issuedAt?: string | null;

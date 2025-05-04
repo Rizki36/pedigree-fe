@@ -25,7 +25,8 @@ import DeleteAnimalDialog from "./DeleteAnimalDialog";
 import DetailsSection from "./DetailsSection";
 import ParentSection from "./ParentSection";
 import NoteSection from "./NoteSection";
-import AddAchievementDialog from "./AddAchievementDialog";
+import AchievementDialog from "./AchievementDialog";
+import type { AchievementDialogProps } from "./AchievementDialog";
 import DeleteAchievementDialog from "./DeleteAchievementDialog";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
 
@@ -58,6 +59,14 @@ const AnimalDetail = () => {
     open: false,
     id: null,
   });
+  const [achievementDialogState, setAchievementDialogState] = useState<
+    AchievementDialogProps["state"]
+  >({
+    mode: "add",
+    data: null,
+    open: false,
+    id: null,
+  });
 
   const { animal } = useAnimal();
 
@@ -66,6 +75,10 @@ const AnimalDetail = () => {
       <DeleteAchievementDialog
         state={deleteAchievementState}
         setState={setDeleteAchievementState}
+      />
+      <AchievementDialog
+        state={achievementDialogState}
+        setState={setAchievementDialogState}
       />
 
       <div className="-mt-4 w-[calc(100%+48px)] ml-[-24px] bg-teal-600 px-6 rounded-b-3xl py-4 pb-12">
@@ -112,12 +125,26 @@ const AnimalDetail = () => {
             <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
               <div className="mb-3 flex justify-between items-center">
                 Achievements
-                <AddAchievementDialog />
+                <Button
+                  onClick={() => {
+                    setAchievementDialogState({
+                      ...achievementDialogState,
+                      open: true,
+                      mode: "add",
+                    });
+                  }}
+                  size="sm"
+                  variant="ghost"
+                >
+                  <PlusIcon />
+                </Button>
               </div>
               <div>
                 <AchievementTable
                   deleteState={deleteAchievementState}
                   setDeleteState={setDeleteAchievementState}
+                  updateState={achievementDialogState}
+                  setUpdateState={setAchievementDialogState}
                 />
               </div>
             </section>
