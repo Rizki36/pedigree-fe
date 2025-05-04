@@ -110,7 +110,7 @@ const Sidebar: FC<{
 
 const languageOptions = [
   { key: "en", name: "English", flagImgPath: enFlag },
-  { key: "id", name: "Indonesia", flagImgPath: idFlag },
+  // { key: "id", name: "Indonesia", flagImgPath: idFlag },
 ] as const satisfies ReadonlyArray<{
   key: "id" | "en";
   name: string;
@@ -164,7 +164,7 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
       >
         <div className="bg-neutral-50 border-b px-4 py-2 w-[calc(100%+48px)] ml-[-24px] flex justify-between items-center">
           <div className="ml-3">
-            <div className="relative opacity-40 transition-all hover:opacity-100 ease-in-out">
+            {/* <div className="relative opacity-40 transition-all hover:opacity-100 ease-in-out">
               <Input
                 placeholder="Search your animals"
                 className="w-[300px] rounded-3xl"
@@ -172,7 +172,7 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
               <Button className="absolute right-0 top-0" variant="link">
                 <FiSearch />
               </Button>
-            </div>
+            </div> */}
           </div>
           <div className="flex items-center">
             <LanguageSwitcher />

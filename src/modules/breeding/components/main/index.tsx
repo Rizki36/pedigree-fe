@@ -41,6 +41,8 @@ export type MatchingResult = {
   description: string;
 };
 
+const comingSoon = true;
+
 const Breading = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [matchingResult, setMatchingResult] = useState<
@@ -56,6 +58,16 @@ const Breading = () => {
     });
     setCurrentStep(currentStep + 1);
   };
+
+  if (comingSoon) {
+    return (
+      <MainLayout>
+        <div className="h-[calc(100vh-16px-24px-53px)] w-full flex items-center justify-center">
+          Coming Soon
+        </div>
+      </MainLayout>
+    );
+  }
 
   return (
     <MainLayout>

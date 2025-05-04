@@ -3,7 +3,6 @@ import type { TreeNode } from "@/common/services/pedigree.type";
 import pedigreeService from "@/common/services/pedigree";
 import { AnimalGender } from "@/common/types";
 import clsx from "clsx";
-import { ChevronDown } from "lucide-react";
 import {
   useMemo,
   useState,
@@ -13,7 +12,14 @@ import {
   useContext,
 } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
-import { Loader2 } from "lucide-react";
+import { Loader2, ChevronDown, Skull } from "lucide-react";
+import { format } from "date-fns";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/common/components/ui/tooltip";
 
 type PedigreeNodeProps = {
   node: TreeNode;
@@ -22,7 +28,7 @@ type PedigreeNodeProps = {
 
 const GAP = 70;
 const WIDTH = 220;
-const HEIGHT = 58;
+const HEIGHT = 70;
 
 const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
   return (
@@ -31,7 +37,7 @@ const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
       className="cursor-pointer h-full flex items-center justify-center"
     >
       <div
-        className={clsx("border p-3 rounded-lg text-xs relative", {
+        className={clsx("border px-3 py-2.5 rounded-lg text-xs relative", {
           "bg-white text-neutral-900": true,
           "border-yellow-100": node.gender === AnimalGender.FEMALE,
           "border-green-100": node.gender === AnimalGender.MALE,
@@ -43,14 +49,36 @@ const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
       >
         <div className="absolute top-1 right-1">
           {node.gender === AnimalGender.FEMALE && (
-            <IoMdFemale className="text-yellow-600 text-lg" />
+            <IoMdFemale className="text-yellow-600 size-4" />
           )}
           {node.gender === AnimalGender.MALE && (
-            <IoMdMale className="text-green-600 text-lg" />
+            <IoMdMale className="text-green-600 size-4" />
           )}
         </div>
-        <div className="line-clamp-1 break-all mr-2">{node.name}</div>
-        <div className="">#{node.code}</div>
+        {!!node.diedAt && (
+          <div className="absolute bottom-1 right-1">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Skull className="text-red-600 size-4" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  Died at {format(node.diedAt, "dd MMM yyyy")}
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
+
+        <div className="text-[10px] text-neutral-700">{node.code}</div>
+        <div className="line-clamp-1 break-all mt-0.5 font-medium">
+          {node.name}
+        </div>
+        {node.dateOfBirth && (
+          <div className="line-clamp-1 break-all mt-0.5 text-neutral-500 text-[10px]">
+            BD : {format(node.dateOfBirth, "dd/MM/yyyy")}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -70,19 +98,19 @@ const Tree: FC<{
   const isCircularReference = node.id ? visitedNodes.has(node.id) : false;
   const isMaxDepthReached = currentDepth >= maxDepth;
 
+  const filteredNodes = useMemo(() => {
+    return node?.nodes?.filter((n) => !!n);
+  }, [node?.nodes]);
+
   // Add detection for same gender parents
   const hasSameGenderParents = useMemo(() => {
-    const parents = node?.nodes?.filter((n) => !!n);
+    const parents = filteredNodes;
     if (!parents || parents.length < 2) return false;
 
     // Check if all parents have the same gender
     const firstParentGender = parents[0].gender;
     return parents.every((parent) => parent.gender === firstParentGender);
-  }, [node?.nodes]);
-
-  const filteredNodes = useMemo(() => {
-    return node?.nodes?.filter((n) => !!n);
-  }, [node?.nodes]);
+  }, [filteredNodes]);
 
   // Only allow fetching if conditions are met
   const needFetchNodes =

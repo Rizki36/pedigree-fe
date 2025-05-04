@@ -25,6 +25,11 @@ import PedigreeTree from "./PedigreeTree";
 import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
 import usePedigreeTreeQuery from "@/common/queries/usePedigreeTreeQuery";
 import type { TreeNode } from "@/common/services/pedigree.type";
+import {
+  TransformWrapper,
+  TransformComponent,
+  useControls,
+} from "react-zoom-pan-pinch";
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();
@@ -143,12 +148,30 @@ const Pedigree = () => {
           </div>
 
           <div className="h-full relative w-full overflow-hidden">
-            <div className="absolute flex items-center text-xs top-2 -right-1 bg-white px-3 py-2 rounded-xl shadow-lg z-50">
+            <div className="absolute flex items-center text-xs top-4 right-2 bg-white px-3 py-2 rounded-xl shadow-lg z-50">
               <MdOutlineZoomInMap className="mr-2" />
               Drag and pinch to zoom
             </div>
-            <div ref={ref} className="h-full overflow-hidden">
-              {!!animalId && <PedigreeTree nodes={nodes} setNodes={setNodes} />}
+            <div ref={ref} className="h-full w-full">
+              {!!animalId && (
+                <TransformWrapper
+                  initialScale={1}
+                  centerOnInit={true}
+                  maxScale={99999}
+                  minScale={0.1}
+                >
+                  {() => (
+                    <TransformComponent
+                      wrapperStyle={{
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <PedigreeTree nodes={nodes} setNodes={setNodes} />
+                    </TransformComponent>
+                  )}
+                </TransformWrapper>
+              )}
               {!animalId && (
                 <div className="flex items-center justify-center h-full">
                   <span className="text-neutral-400">
