@@ -1,7 +1,7 @@
 import { Badge } from "@/common/components/ui/badge";
 import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
-import type { Animal } from "@/common/types";
+import { AnimalGender, type Animal } from "@/common/types";
 import {
   Form,
   FormControl,
@@ -64,7 +64,7 @@ const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
           )}
           <Badge variant="secondary" className="gap-x-1 inline-flex">
             {animalTypeListData?.docs.find(
-              (doc) => doc.code === animal?.animalTypeCode
+              (doc) => doc.code === animal?.animalTypeCode,
             )?.name ?? "-"}
           </Badge>
         </div>
@@ -104,6 +104,7 @@ const formSchema = z.object({
   name: z.string(),
   dateOfBirth: z.string().nullable(),
   diedAt: z.string().nullable(),
+  gender: z.nativeEnum(AnimalGender),
 });
 
 const DetailsForm: FC<{
@@ -127,6 +128,7 @@ const DetailsForm: FC<{
       diedAt: animal?.diedAt
         ? dayjs(animal?.diedAt).format("YYYY-MM-DD")
         : null,
+      gender: animal?.gender || undefined,
     },
   });
 
@@ -141,6 +143,7 @@ const DetailsForm: FC<{
         animalTypeCode: values.animalTypeCode,
         dateOfBirth: values.dateOfBirth,
         diedAt: values.diedAt,
+        gender: values.gender,
       });
 
       setEditing(false);
@@ -192,6 +195,7 @@ const DetailsForm: FC<{
                 <FormLabel>Animal Type</FormLabel>
                 <FormControl>
                   <Select
+                    disabled
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
@@ -228,7 +232,7 @@ const DetailsForm: FC<{
                         variant={"outline"}
                         className={cn(
                           "flex w-full justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         <CalendarIcon />
@@ -247,7 +251,7 @@ const DetailsForm: FC<{
                         }
                         onSelect={(day) => {
                           field.onChange(
-                            day ? dayjs(day).format("YYYY-MM-DD") : null
+                            day ? dayjs(day).format("YYYY-MM-DD") : null,
                           );
                         }}
                         initialFocus
@@ -272,7 +276,7 @@ const DetailsForm: FC<{
                         variant={"outline"}
                         className={cn(
                           "flex w-full justify-start text-left font-normal",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         <CalendarIcon />
@@ -291,13 +295,40 @@ const DetailsForm: FC<{
                         }
                         onSelect={(day) => {
                           field.onChange(
-                            day ? dayjs(day).format("YYYY-MM-DD") : null
+                            day ? dayjs(day).format("YYYY-MM-DD") : null,
                           );
                         }}
                         initialFocus
                       />
                     </PopoverContent>
                   </Popover>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="gender"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select gender" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.values(AnimalGender).map((gender) => (
+                        <SelectItem key={gender} value={gender}>
+                          {gender}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>

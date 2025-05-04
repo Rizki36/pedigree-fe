@@ -33,11 +33,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/common/components/ui/select";
+import { AnimalGender } from "@/common/types";
 
 const formSchema = z.object({
   animalTypeCode: z.string(),
   code: z.string(),
   name: z.string(),
+  gender: z.nativeEnum(AnimalGender),
 });
 
 const AddAnimalDialog = () => {
@@ -54,6 +56,7 @@ const AddAnimalDialog = () => {
     defaultValues: {
       animalTypeCode: undefined,
       name: "",
+      gender: AnimalGender.MALE
     },
   });
 
@@ -63,6 +66,7 @@ const AddAnimalDialog = () => {
         name: values.name,
         code: values.code,
         animalTypeCode: values.animalTypeCode,
+        gender: values.gender
       });
 
       setOpen(false);
@@ -118,6 +122,33 @@ const AddAnimalDialog = () => {
                               value={animalType.code}
                             >
                               {animalType.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.values(AnimalGender).map((gender) => (
+                            <SelectItem key={gender} value={gender}>
+                              {gender}
                             </SelectItem>
                           ))}
                         </SelectContent>

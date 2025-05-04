@@ -1,4 +1,4 @@
-import type { Animal } from "../types";
+import type { Animal, AnimalGender } from "../types";
 
 // #region GET /v1/animal/list
 export type GetAnimalListQuery = {
@@ -16,6 +16,7 @@ export type PostAnimalBody = {
   code: string;
   name: string;
   animalTypeCode: string;
+  gender: AnimalGender | null;
 };
 export type PostAnimalResponse = { doc: Animal };
 // #endregion
@@ -38,6 +39,7 @@ export type UpdateAnimalBody = {
   fatherId?: string | null;
   motherId?: string | null;
   note?: string | null;
+  gender?: AnimalGender | null;
 };
 export type UpdateAnimalResponse = { doc: Animal };
 // #endregion

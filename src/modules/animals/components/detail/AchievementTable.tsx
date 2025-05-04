@@ -22,69 +22,87 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/common/components/ui/dropdown-menu";
+import useAchievementListQuery from "@/common/queries/useAchievementListQuery";
+import { useMemo } from "react";
+import type { FC } from "react";
+import type { Achievement } from "@/common/types";
+import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
 
-const data: Achievement[] = [
-  {
-    id: "m5gr84i9",
-    name: 'Winning "Best Pet" Award',
-    issuedAt: "2022-01-01",
-    issuedBy: "John Doe",
-  },
-];
+export type DataSource = Achievement;
 
-export type Achievement = {
-  id: string;
-  name: string;
-  issuedAt: string;
-  issuedBy: string;
-};
+const AchievementTable: FC<{
+  deleteState: DeleteAchievementDialogProps["state"];
+  setDeleteState: (state: DeleteAchievementDialogProps["state"]) => void;
+}> = ({ deleteState, setDeleteState }) => {
+  const { data, isLoading } = useAchievementListQuery({
+    query: {},
+  });
 
-export const columns: ColumnDef<Achievement>[] = [
-  {
-    id: "number",
-    header: "#",
-    cell: ({ row }) => <div>{row.index + 1}</div>,
-    maxSize: 40,
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "issuedBy",
-    header: "Issued By",
-    cell: ({ row }) => <div>{row.getValue("issuedBy")}</div>,
-    maxSize: 30,
-  },
-  {
-    accessorKey: "issuedAt",
-    header: "Issued At",
-    cell: ({ row }) => (
-      <div>{dayjs(row.getValue("issuedAt")).format("DD MMM YY")}</div>
-    ),
-    maxSize: 30,
-  },
-  {
-    id: "action",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <BsThreeDots />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
-          <DropdownMenuItem>Remove</DropdownMenuItem>
-          <DropdownMenuItem>Update</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
-    maxSize: 10,
-  },
-];
+  const dataSource: DataSource[] = useMemo(() => {
+    if (!data?.docs?.length) return [];
+    return data?.docs;
+  }, [data?.docs]);
 
-const AchievementTable = () => {
+  const columns = useMemo<ColumnDef<DataSource>[]>(() => {
+    return [
+      {
+        id: "number",
+        header: "#",
+        cell: ({ row }) => <div>{row.index + 1}</div>,
+        maxSize: 40,
+      },
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => <div>{row.getValue("name")}</div>,
+      },
+      {
+        accessorKey: "issuedBy",
+        header: "Issued By",
+        cell: ({ row }) => <div>{row.getValue("issuedBy")}</div>,
+        maxSize: 30,
+      },
+      {
+        accessorKey: "issuedAt",
+        header: "Issued At",
+        cell: ({ row }) => (
+          <div>
+            {row.getValue("issuedAt")
+              ? dayjs(row.getValue("issuedAt")).format("DD MMM YY")
+              : "N/A"}
+          </div>
+        ),
+        maxSize: 30,
+      },
+      {
+        id: "action",
+        cell: ({ row }) => (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <BsThreeDots />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              <DropdownMenuItem
+                onClick={() => {
+                  setDeleteState({
+                    open: true,
+                    id: row.original.id,
+                  });
+                }}
+              >
+                Delete
+              </DropdownMenuItem>
+              <DropdownMenuItem>Update</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ),
+        maxSize: 10,
+      },
+    ];
+  }, []);
+
   const table = useReactTable({
-    data,
+    data: dataSource,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -117,7 +135,8 @@ const AchievementTable = () => {
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {/* Rows */}
+            {!!dataSource.length &&
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -132,8 +151,22 @@ const AchievementTable = () => {
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
+              ))}
+
+            {/* Loading */}
+            {isLoading && (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  Loading...
+                </TableCell>
+              </TableRow>
+            )}
+
+            {/* No results */}
+            {!dataSource.length && !isLoading && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}

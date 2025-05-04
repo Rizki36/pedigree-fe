@@ -18,13 +18,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/common/components/ui/dropdown-menu";
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import dayjs from "dayjs";
 import useAnimal from "../../hooks/useAnimal";
 import DeleteAnimalDialog from "./DeleteAnimalDialog";
 import DetailsSection from "./DetailsSection";
 import ParentSection from "./ParentSection";
 import NoteSection from "./NoteSection";
+import AddAchievementDialog from "./AddAchievementDialog";
+import DeleteAchievementDialog from "./DeleteAchievementDialog";
+import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
 
 type MateType = {
   id: string;
@@ -49,10 +52,22 @@ const mates: MateType[] = [
 ];
 
 const AnimalDetail = () => {
+  const [deleteAchievementState, setDeleteAchievementState] = useState<
+    DeleteAchievementDialogProps["state"]
+  >({
+    open: false,
+    id: null,
+  });
+
   const { animal } = useAnimal();
 
   return (
     <MainLayout>
+      <DeleteAchievementDialog
+        state={deleteAchievementState}
+        setState={setDeleteAchievementState}
+      />
+
       <div className="-mt-4 w-[calc(100%+48px)] ml-[-24px] bg-teal-600 px-6 rounded-b-3xl py-4 pb-12">
         <div className="flex items-center justify-between text-white">
           <Breadcrumb>
@@ -97,12 +112,13 @@ const AnimalDetail = () => {
             <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
               <div className="mb-3 flex justify-between items-center">
                 Achievements
-                <Button size="sm" variant="ghost">
-                  <PlusIcon />
-                </Button>
+                <AddAchievementDialog />
               </div>
               <div>
-                <AchievementTable />
+                <AchievementTable
+                  deleteState={deleteAchievementState}
+                  setDeleteState={setDeleteAchievementState}
+                />
               </div>
             </section>
           </div>
