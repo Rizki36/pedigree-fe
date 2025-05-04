@@ -20,7 +20,7 @@ type PedigreeNodeProps = {
   style?: React.CSSProperties;
 };
 
-const GAP = 60;
+const GAP = 70;
 const WIDTH = 220;
 const HEIGHT = 58;
 
@@ -62,27 +62,29 @@ const VisitedNodesContext = createContext<Set<string>>(new Set());
 const Tree: FC<{
   node: TreeNode;
   onNodeUpdate?: (nodeId: string, updatedNodes: TreeNode) => void;
-  maxDepth?: number; // Optional prop to limit tree depth
-  currentDepth?: number; // Track current depth
+  maxDepth?: number;
+  currentDepth?: number;
 }> = ({ node, onNodeUpdate, maxDepth = 10, currentDepth = 0 }) => {
-  // Get the set of already visited node IDs in this branch
   const visitedNodes = useContext(VisitedNodesContext);
 
-  // Check if this node has already appeared in the current branch (circular reference)
   const isCircularReference = node.id ? visitedNodes.has(node.id) : false;
-
-  // Check if we've reached max depth
   const isMaxDepthReached = currentDepth >= maxDepth;
+
+  // Add detection for same gender parents
+  const hasSameGenderParents = useMemo(() => {
+    const parents = node?.nodes?.filter((n) => !!n);
+    if (!parents || parents.length < 2) return false;
+
+    // Check if all parents have the same gender
+    const firstParentGender = parents[0].gender;
+    return parents.every((parent) => parent.gender === firstParentGender);
+  }, [node?.nodes]);
 
   const filteredNodes = useMemo(() => {
     return node?.nodes?.filter((n) => !!n);
   }, [node?.nodes]);
 
-  // Only allow fetching if:
-  // 1. The node has next nodes
-  // 2. We don't have children already
-  // 3. We haven't reached max depth
-  // 4. This is not a circular reference
+  // Only allow fetching if conditions are met
   const needFetchNodes =
     node.hasNextNodes &&
     !filteredNodes?.length &&
@@ -169,6 +171,13 @@ const Tree: FC<{
       <div style={{ marginBottom: `${GAP}px` }}>
         <PedigreeNode node={node} />
 
+        {/* Add warning for same gender parents */}
+        {hasSameGenderParents && hasChild && (
+          <div className="text-xs text-amber-500 text-center absolute left-[50%] translate-x-[-50%] mt-1.5 z-20 bg-white">
+            ⚠️ Same gender parents detected
+          </div>
+        )}
+
         {hasChild && canOpen && (
           <div
             className="absolute border-l-2 border-l-neutral-300 left-[50%]"
@@ -183,13 +192,13 @@ const Tree: FC<{
           <button
             type="button"
             className={cn(
-              "border border-neutral-200 z-20 bg-white rounded-full absolute left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all",
+              "border border-neutral-200 z-10 bg-white rounded-full absolute left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all",
               {
                 "hover:rotate-180": canOpen && !isLoading,
               },
             )}
             style={{
-              top: canOpen ? `${HEIGHT + GAP / 2}px` : `${HEIGHT}px`,
+              top: canOpen ? `${HEIGHT + GAP / 2}px` : `${HEIGHT - 5}px`,
             }}
             onClick={toggleOpen}
             disabled={isLoading}
