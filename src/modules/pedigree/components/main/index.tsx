@@ -22,138 +22,31 @@ import { Route } from "@/routes/pedigree";
 import { cn } from "@/common/lib/utils";
 import { toPng } from "html-to-image";
 import PedigreeTree from "./PedigreeTree";
-import type { Node } from "./PedigreeTree";
-import { AnimalGender } from "@/common/types";
-
-const animals: {
-  id: string;
-  name: string;
-  code: string;
-}[] = [
-  {
-    id: "a5gr84s9",
-    name: "John",
-    code: "AAA-001",
-  },
-  {
-    id: "m5gr84i2",
-    name: "Jane",
-    code: "AAA-002",
-  },
-  {
-    id: "a5gr84s1",
-    name: "Mary",
-    code: "AAA-003",
-  },
-];
-
-export const nodes: Node = {
-  id: "0",
-  name: "John Doe",
-  code: "AAA-001",
-  animalTypeCode: "AAA",
-  dateOfBirth: "2023-01-01",
-  diedAt: null,
-  createdAt: "2023-01-01",
-  updatedAt: "2023-01-01",
-  fatherId: "1",
-  motherId: "2",
-  gender: AnimalGender.MALE,
-  note: "",
-  userId: "",
-  nodes: [
-    {
-      id: "1",
-      name: "Jane Doe",
-      code: "AAA-002",
-      animalTypeCode: "AAA",
-      dateOfBirth: "2023-01-01",
-      diedAt: null,
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
-      fatherId: null,
-      motherId: null,
-      gender: AnimalGender.MALE,
-      note: "",
-      userId: "",
-      nodes: [
-        {
-          id: "11",
-          name: "John Doe",
-          code: "AAA-001",
-          animalTypeCode: "AAA",
-          dateOfBirth: "2023-01-01",
-          diedAt: null,
-          createdAt: "2023-01-01",
-          updatedAt: "2023-01-01",
-          fatherId: null,
-          motherId: null,
-          gender: AnimalGender.MALE,
-          note: "",
-          userId: "",
-          nodes: [undefined, undefined],
-        },
-        {
-          id: "12",
-          name: "Mary Jane",
-          code: "AAA-003",
-          animalTypeCode: "AAA",
-          dateOfBirth: "2023-01-01",
-          diedAt: null,
-          createdAt: "2023-01-01",
-          updatedAt: "2023-01-01",
-          fatherId: null,
-          motherId: null,
-          gender: AnimalGender.FEMALE,
-          note: "",
-          userId: "",
-          nodes: [undefined, undefined],
-        },
-      ],
-    },
-    {
-      id: "2",
-      name: "Mary Jane",
-      code: "AAA-003",
-      animalTypeCode: "AAA",
-      dateOfBirth: "2023-01-01",
-      diedAt: null,
-      createdAt: "2023-01-01",
-      updatedAt: "2023-01-01",
-      fatherId: null,
-      motherId: null,
-      gender: AnimalGender.FEMALE,
-      note: "",
-      userId: "",
-      nodes: [
-        {
-          id: "21",
-          name: "John Doe",
-          code: "AAA-001",
-          animalTypeCode: "AAA",
-          dateOfBirth: "2023-01-01",
-          diedAt: null,
-          createdAt: "2023-01-01",
-          updatedAt: "2023-01-01",
-          fatherId: null,
-          motherId: null,
-          gender: AnimalGender.MALE,
-          note: "",
-          userId: "",
-          nodes: [undefined, undefined],
-        },
-        undefined,
-      ],
-    },
-  ],
-};
+import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
+import usePedigreeTreeQuery from "@/common/queries/usePedigreeTreeQuery";
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();
+
+  const { data: animalsData } = useAnimalListQuery({
+    options: {},
+  });
+  const animals = animalsData?.docs ?? [];
   const currentAnimal = animals.find((animal) => animal.id === animalId);
   const navigate = useNavigate({ from: Route.fullPath });
 
   const [open, setOpen] = useState(false);
+
+  const { data: pedigreeTreeData } = usePedigreeTreeQuery({
+    query: {
+      animal_id_eq: animalId!,
+      level: 2,
+    },
+    options: {
+      enabled: !!animalId,
+    },
+  });
+  const pedigreeTree = pedigreeTreeData?.docs || [];
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -248,7 +141,7 @@ const Pedigree = () => {
               Drag and pinch to zoom
             </div>
             <div ref={ref} className="h-full overflow-hidden">
-              <PedigreeTree nodes={nodes} />
+              <PedigreeTree nodes={pedigreeTree} />
             </div>
           </div>
 
