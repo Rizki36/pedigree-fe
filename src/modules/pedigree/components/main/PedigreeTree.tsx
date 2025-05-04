@@ -54,20 +54,20 @@ const Tree: FC<{
     return node?.nodes?.filter((n) => !!n);
   }, [node?.nodes]);
 
-  const needFetchNodes = node.hasNextNodes && !!filteredNodes?.length;
+  const needFetchNodes = node.hasNextNodes && !filteredNodes?.length;
 
-  const [open, setOpen] = useState(needFetchNodes);
+  const [open, setOpen] = useState(!needFetchNodes);
+  const canOpen = open && !needFetchNodes;
   const hasChild = !!node.nodes.filter((n) => !!n).length;
 
-  const toggleOpen = () => {
-    setOpen((prev) => !prev);
-  };
+  const toggleOpen = () => setOpen((prev) => !prev);
 
   return (
     <ul className="relative flex flex-col">
       <div style={{ marginBottom: `${GAP}px` }}>
         <PedigreeNode node={node} />
-        {hasChild && open && (
+
+        {hasChild && canOpen && (
           <div
             className="absolute border-l-2 border-l-neutral-300 left-[50%]"
             style={{
@@ -80,18 +80,24 @@ const Tree: FC<{
         {node.hasNextNodes && (
           <button
             type="button"
-            className="border border-neutral-200 z-20 bg-white rounded-full absolute left-[50%] translate-x-[-50%] translate-y-[-50%] hover:rotate-180 transition-all"
+            className={cn(
+              "border border-neutral-200 z-20 bg-white rounded-full absolute left-[50%] translate-x-[-50%] translate-y-[-50%] transition-all",
+              {
+                "hover:rotate-180": canOpen,
+              },
+            )}
             style={{
-              top: open ? `${HEIGHT + GAP / 2}px` : `${HEIGHT}px`,
+              top: canOpen ? `${HEIGHT + GAP / 2}px` : `${HEIGHT}px`,
             }}
             onClick={toggleOpen}
+            aria-label="toggle loading children"
           >
             <ChevronDown className="size-5" />
           </button>
         )}
       </div>
 
-      {open && (
+      {canOpen && (
         <div className="flex flex-row">
           {node.nodes.map((child, index) => {
             const currentNodes = node.nodes.filter((n) => !!n);
