@@ -148,7 +148,14 @@ const Pedigree = () => {
               Drag and pinch to zoom
             </div>
             <div ref={ref} className="h-full overflow-hidden">
-              <PedigreeTree nodes={nodes} setNodes={setNodes} />
+              {!!animalId && <PedigreeTree nodes={nodes} setNodes={setNodes} />}
+              {!animalId && (
+                <div className="flex items-center justify-center h-full">
+                  <span className="text-neutral-400">
+                    Select an animal to view its pedigree tree
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
