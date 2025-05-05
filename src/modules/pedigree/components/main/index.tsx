@@ -25,11 +25,7 @@ import PedigreeTree from "./PedigreeTree";
 import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
 import usePedigreeTreeQuery from "@/common/queries/usePedigreeTreeQuery";
 import type { TreeNode } from "@/common/services/pedigree.type";
-import {
-  TransformWrapper,
-  TransformComponent,
-  useControls,
-} from "react-zoom-pan-pinch";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();

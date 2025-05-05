@@ -36,7 +36,7 @@ const AchievementTable: FC<{
   setDeleteState: (state: DeleteAchievementDialogProps["state"]) => void;
   updateState: AchievementDialogProps["state"];
   setUpdateState: (state: AchievementDialogProps["state"]) => void;
-}> = ({ deleteState, setDeleteState, updateState, setUpdateState }) => {
+}> = ({ setDeleteState, setUpdateState }) => {
   const { data, isLoading } = useAchievementListQuery({
     query: {},
   });

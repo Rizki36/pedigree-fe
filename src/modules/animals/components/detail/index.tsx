@@ -37,21 +37,6 @@ type MateType = {
   matedAt: string;
 };
 
-const mates: MateType[] = [
-  {
-    id: "m5gr84i9",
-    name: "Jane",
-    code: "AAA-003",
-    matedAt: "2022-01-01",
-  },
-  {
-    id: "a5gr84s9",
-    name: "Mary",
-    code: "AAA-004",
-    matedAt: "2022-01-01",
-  },
-];
-
 const AnimalDetail = () => {
   const [deleteAchievementState, setDeleteAchievementState] = useState<
     DeleteAchievementDialogProps["state"]
@@ -154,7 +139,7 @@ const AnimalDetail = () => {
             <ParentSection animal={animal} />
 
             {/* Mate section */}
-            <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
+            {/* <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
               <div className="mb-3 flex items-center justify-between">
                 Mate
                 <Button variant="ghost" size="sm">
@@ -167,7 +152,7 @@ const AnimalDetail = () => {
                   <Mate key={mate.id} mate={mate} />
                 ))}
               </div>
-            </section>
+            </section> */}
 
             {/* Note section */}
             <NoteSection animal={animal} />
@@ -178,7 +163,7 @@ const AnimalDetail = () => {
   );
 };
 
-const Mate: FC<{
+export const Mate: FC<{
   mate: MateType;
 }> = ({ mate }) => {
   return (

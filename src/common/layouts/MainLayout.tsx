@@ -8,13 +8,11 @@ import {
 } from "../components/ui/dropdown-menu";
 
 import enFlag from "@/assets/flags/en.png";
-import idFlag from "@/assets/flags/id.png";
 import { BiCollapseHorizontal, BiExpandHorizontal } from "react-icons/bi";
 import { PiCodesandboxLogo, PiCow } from "react-icons/pi";
 import { cn } from "@/common/lib/utils";
-import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { FiSearch, FiLogOut } from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { ChevronDown } from "lucide-react";
 import { TiFlowMerge } from "react-icons/ti";
 import { BsHouseHeart } from "react-icons/bs";
