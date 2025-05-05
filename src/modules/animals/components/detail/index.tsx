@@ -9,9 +9,14 @@ import {
 import MainLayout from "@/common/layouts/MainLayout";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/common/components/ui/button";
-import { ChevronLeft, ChevronRight, PlusIcon } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  EllipsisIcon,
+  PlusIcon,
+  TrashIcon,
+} from "lucide-react";
 import AchievementTable from "./AchievementTable";
-import { BsThreeDots } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +32,6 @@ import NoteSection from "./NoteSection";
 import type { DeleteAnimalDialogProps } from "./DeleteAnimalDialog";
 import type { AchievementDialogProps } from "./AchievementDialog";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
-import { TbTrash } from "react-icons/tb";
 import { Route } from "@/routes/animals/$animalId";
 
 const DeleteAnimalDialog = React.lazy(() => import("./DeleteAnimalDialog"));
@@ -117,7 +121,7 @@ const AnimalDetail = () => {
                 });
               }}
             >
-              <TbTrash className="size-2" />
+              <TrashIcon className="size-2" />
               Delete
             </Button>
             {enableCursor && (
@@ -206,7 +210,7 @@ export const Mate: FC<{
         Name
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <BsThreeDots />
+            <EllipsisIcon />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem>Remove</DropdownMenuItem>

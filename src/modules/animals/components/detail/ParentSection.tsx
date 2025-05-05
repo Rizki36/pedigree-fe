@@ -26,11 +26,14 @@ import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
 import type { Animal } from "@/common/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
-import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Check,
+  ChevronsUpDown,
+  PencilIcon,
+  SquareArrowOutUpRightIcon,
+} from "lucide-react";
 import { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { MdOutlineOpenInNew } from "react-icons/md";
-import { TbPencil } from "react-icons/tb";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -50,7 +53,7 @@ const Parent: FC<{ label: string; parent: Animal | undefined }> = ({
             }}
             target="_blank"
           >
-            <MdOutlineOpenInNew />
+            <SquareArrowOutUpRightIcon className="size-3" />
           </Link>
         )}
       </div>
@@ -153,7 +156,7 @@ const ParentForm: FC<{
           name="fatherId"
           render={({ field }) => {
             const selectedFather = fatherList.find(
-              (father) => father.id === field.value
+              (father) => father.id === field.value,
             );
             return (
               <FormItem className="flex flex-col">
@@ -166,7 +169,7 @@ const ParentForm: FC<{
                         role="combobox"
                         className={cn(
                           "flex w-full justify-between",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value
@@ -199,7 +202,7 @@ const ParentForm: FC<{
                                   "ml-auto",
                                   father.id === field.value
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
                             </CommandItem>
@@ -220,7 +223,7 @@ const ParentForm: FC<{
           name="motherId"
           render={({ field }) => {
             const selectedMother = motherList.find(
-              (mother) => mother.id === field.value
+              (mother) => mother.id === field.value,
             );
             return (
               <FormItem className="flex flex-col">
@@ -233,7 +236,7 @@ const ParentForm: FC<{
                         role="combobox"
                         className={cn(
                           "flex w-full justify-between",
-                          !field.value && "text-muted-foreground"
+                          !field.value && "text-muted-foreground",
                         )}
                       >
                         {field.value
@@ -266,7 +269,7 @@ const ParentForm: FC<{
                                   "ml-auto",
                                   mother.id === field.value
                                     ? "opacity-100"
-                                    : "opacity-0"
+                                    : "opacity-0",
                                 )}
                               />
                             </CommandItem>
@@ -321,7 +324,7 @@ const ParentSection: FC<{
         Parent
         {!isEditing && (
           <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>
-            <TbPencil />
+            <PencilIcon />
           </Button>
         )}
       </div>

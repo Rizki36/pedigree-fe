@@ -1,5 +1,4 @@
 import { Badge } from "@/common/components/ui/badge";
-import { BsGenderFemale, BsGenderMale } from "react-icons/bs";
 
 import { AnimalGender, type Animal } from "@/common/types";
 import {
@@ -28,14 +27,13 @@ import useUpdateAnimalMutation from "@/common/mutations/useUpdateAnimalMutation"
 import { useState, type FC } from "react";
 import dayjs from "dayjs";
 import { Button } from "@/common/components/ui/button";
-import { TbPencil } from "react-icons/tb";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/common/components/ui/popover";
 import { Calendar } from "@/common/components/ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, MarsIcon, PencilIcon, VenusIcon } from "lucide-react";
 import { useEventListener } from "usehooks-ts";
 
 const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
@@ -53,13 +51,13 @@ const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
           <span>{animal?.name || "{No name}"}</span>
           {animal?.gender === "MALE" && (
             <Badge variant="secondary" className="gap-x-1 inline-flex">
-              <BsGenderMale />
+              <MarsIcon className="size-3" />
               Male
             </Badge>
           )}
           {animal?.gender === "FEMALE" && (
             <Badge variant="secondary" className="gap-x-1 inline-flex">
-              <BsGenderFemale />
+              <VenusIcon className="size-3" />
               Female
             </Badge>
           )}
@@ -372,7 +370,7 @@ const DetailsSection: FC<{ animal: Animal | undefined }> = ({ animal }) => {
         Details
         {!isEditing && (
           <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>
-            <TbPencil />
+            <PencilIcon />
           </Button>
         )}
       </div>

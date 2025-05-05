@@ -8,8 +8,8 @@ import { Label } from "@/common/components/ui/label";
 import { useDebounceCallback } from "usehooks-ts";
 import type { AddAnimalDialogProps } from "./AddAnimalDialog";
 import { Button } from "@/common/components/ui/button";
-import { TiPlus } from "react-icons/ti";
 import React, { useState } from "react";
+import { PlusIcon } from "lucide-react";
 
 const AddAnimalDialog = React.lazy(() => import("./AddAnimalDialog"));
 
@@ -44,7 +44,7 @@ const Animals = () => {
             <h1 className="mt-4 text-3xl">Animals</h1>
 
             <Button onClick={() => setAddAnimalState({ open: true })}>
-              <TiPlus />
+              <PlusIcon className="size-4" />
               Add Animal
             </Button>
           </div>

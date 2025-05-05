@@ -8,14 +8,18 @@ import {
 } from "../components/ui/dropdown-menu";
 
 import enFlag from "@/assets/flags/en.png";
-import { BiCollapseHorizontal, BiExpandHorizontal } from "react-icons/bi";
-import { PiCodesandboxLogo, PiCow } from "react-icons/pi";
 import { cn } from "@/common/lib/utils";
 import { Button } from "../components/ui/button";
-import { FiLogOut } from "react-icons/fi";
-import { ChevronDown } from "lucide-react";
-import { TiFlowMerge } from "react-icons/ti";
-import { BsHouseHeart } from "react-icons/bs";
+import {
+  BirdIcon,
+  ChevronDown,
+  ChevronsLeftRight,
+  ChevronsRightLeft,
+  CodesandboxIcon,
+  GitForkIcon,
+  HeartIcon,
+  LogOutIcon,
+} from "lucide-react";
 import { useAuth } from "@/modules/auth/contexts/AuthContext";
 
 const menus = [
@@ -23,25 +27,25 @@ const menus = [
     key: "dashboard",
     name: "Dashboard",
     path: "/",
-    icon: <PiCodesandboxLogo className="shrink-0" />,
+    icon: <CodesandboxIcon className="shrink-0" size={16} />,
   },
   {
     key: "animals",
     name: "Animals",
     path: "/animals",
-    icon: <PiCow className="shrink-0" />,
+    icon: <BirdIcon className="shrink-0" size={16} />,
   },
   {
     key: "pedigree",
     name: "Pedigree",
     path: "/pedigree",
-    icon: <TiFlowMerge className="shrink-0" />,
+    icon: <GitForkIcon className="shrink-0" size={16} />,
   },
   {
     key: "breeding",
     name: "Breeding",
     path: "/breeding",
-    icon: <BsHouseHeart className="shrink-0" />,
+    icon: <HeartIcon className="shrink-0" size={16} />,
   },
 ] as const satisfies ReadonlyArray<{
   key: string;
@@ -97,9 +101,9 @@ const Sidebar: FC<{
         className="border text-neutral-500 grid place-items-center bg-white rounded-full size-[26px] absolute top-[14px] right-[-13px]"
       >
         {collapse ? (
-          <BiExpandHorizontal className="text-inherit" />
+          <ChevronsLeftRight className="text-inherit" size={16} />
         ) : (
-          <BiCollapseHorizontal className="text-inherit" />
+          <ChevronsRightLeft className="text-inherit" size={16} />
         )}
       </button>
     </div>
@@ -200,7 +204,7 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
               size="sm"
               className="flex items-center gap-1.5 text-neutral-500 hover:text-red-600 transition-colors"
             >
-              <FiLogOut className="size-4" />
+              <LogOutIcon className="size-4" />
             </Button>
           </div>
         </div>

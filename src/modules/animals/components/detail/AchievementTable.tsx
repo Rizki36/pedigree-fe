@@ -14,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/common/components/ui/table";
-import { BsThreeDots } from "react-icons/bs";
 import dayjs from "dayjs";
 import {
   DropdownMenu,
@@ -27,6 +26,7 @@ import { useMemo } from "react";
 import type { Achievement } from "@/common/types";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
 import type { AchievementDialogProps } from "./AchievementDialog";
+import { EllipsisIcon } from "lucide-react";
 
 export type DataSource = Achievement;
 
@@ -86,7 +86,7 @@ const AchievementTable = (props: AchievementTableProps) => {
         cell: ({ row }) => (
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <BsThreeDots />
+              <EllipsisIcon className="size-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
               <DropdownMenuItem

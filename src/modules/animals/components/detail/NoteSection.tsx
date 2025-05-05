@@ -11,9 +11,9 @@ import { generateServiceErrorMessage } from "@/common/lib/utils";
 import useUpdateAnimalMutation from "@/common/mutations/useUpdateAnimalMutation";
 import type { Animal } from "@/common/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PencilIcon } from "lucide-react";
 import { useState, type FC } from "react";
 import { useForm } from "react-hook-form";
-import { TbPencil } from "react-icons/tb";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -103,7 +103,7 @@ const NoteSection: FC<{
         Note
         {!isEditing && (
           <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>
-            <TbPencil />
+            <PencilIcon />
           </Button>
         )}
       </div>

@@ -11,8 +11,7 @@ import {
   useContext,
 } from "react";
 import type { FC, Dispatch, SetStateAction } from "react";
-import { IoMdFemale, IoMdMale } from "react-icons/io";
-import { Loader2, ChevronDown, Skull } from "lucide-react";
+import { Loader2, ChevronDown, Skull, VenusIcon, MarsIcon } from "lucide-react";
 import { format } from "date-fns";
 import {
   Tooltip,
@@ -57,10 +56,10 @@ const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
         >
           <div className="absolute top-1 right-1">
             {node.gender === AnimalGender.FEMALE && (
-              <IoMdFemale className="text-yellow-600 size-4" />
+              <VenusIcon className="text-yellow-600 size-4" />
             )}
             {node.gender === AnimalGender.MALE && (
-              <IoMdMale className="text-green-600 size-4" />
+              <MarsIcon className="text-green-600 size-4" />
             )}
           </div>
           {!!node.diedAt && (

@@ -1,6 +1,6 @@
 import type { FC } from "react";
-import { IoMdFemale, IoMdMale } from "react-icons/io";
 import type { MatchingResult } from ".";
+import { MarsIcon, VenusIcon } from "lucide-react";
 
 const AnimalCard: FC<{
   name: string;
@@ -24,7 +24,7 @@ const BreadingPanel = () => {
     <div className="grid grid-cols-2 mt-12">
       <div>
         <div className="flex items-center flex-col">
-          <IoMdFemale className="text-yellow-600 text-5xl ml-1" />
+          <VenusIcon className="text-yellow-600 text-5xl ml-1" />
           <span>Female</span>
         </div>
 
@@ -33,7 +33,7 @@ const BreadingPanel = () => {
 
       <div>
         <div className="flex items-center flex-col">
-          <IoMdMale className="text-green-600 text-5xl ml-1" />
+          <MarsIcon className="text-green-600 text-5xl ml-1" />
           <span>Male</span>
         </div>
 

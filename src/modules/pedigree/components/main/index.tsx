@@ -1,7 +1,5 @@
 import MainLayout from "@/common/layouts/MainLayout";
 import { Button } from "@/common/components/ui/button";
-import { IoMdFemale, IoMdMale } from "react-icons/io";
-import { MdOutlineZoomInMap } from "react-icons/md";
 import {
   Popover,
   PopoverContent,
@@ -17,7 +15,14 @@ import {
 } from "@/common/components/ui/command";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, ChevronsUpDown, Skull } from "lucide-react";
+import {
+  Check,
+  ChevronsUpDown,
+  MarsIcon,
+  ShrinkIcon,
+  Skull,
+  VenusIcon,
+} from "lucide-react";
 import { Route } from "@/routes/pedigree";
 import { cn } from "@/common/lib/utils";
 import { toPng } from "html-to-image";
@@ -145,7 +150,7 @@ const Pedigree = () => {
 
           <div className="h-full relative w-full overflow-hidden">
             <div className="absolute flex items-center text-xs top-4 right-2 bg-white px-3 py-2 rounded-xl shadow-lg z-50">
-              <MdOutlineZoomInMap className="mr-2" />
+              <ShrinkIcon className="mr-2 size-3" />
               Drag and pinch to zoom
             </div>
             <div ref={ref} className="h-full w-full">
@@ -185,10 +190,10 @@ const Pedigree = () => {
                 <div className="flex items-center gap-2 border px-3 py-2 bg-white rounded-2xl">
                   <div className="flex items-center">
                     Female
-                    <IoMdFemale className="text-yellow-600 size-4 ml-1" />
+                    <VenusIcon className="text-yellow-600 size-4 ml-1" />
                   </div>
                   <div className="flex items-center">
-                    Male <IoMdMale className="text-green-600 size-4 ml-1" />
+                    Male <MarsIcon className="text-green-600 size-4 ml-1" />
                   </div>
                 </div>
                 <div className="flex items-center gap-2 border px-3 py-2 bg-white rounded-2xl">
