@@ -17,7 +17,7 @@ import {
 } from "@/common/components/ui/command";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Skull } from "lucide-react";
 import { Route } from "@/routes/pedigree";
 import { cn } from "@/common/lib/utils";
 import { toPng } from "html-to-image";
@@ -181,14 +181,20 @@ const Pedigree = () => {
           <div className="border-t w-[calc(100%+32px)] ml-[-16px] px-4 flex items-center justify-between text-xs py-3">
             <div className="text-neutral-400">Pedigree</div>
             <div>
-              <div className="">
+              <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 border px-3 py-2 bg-white rounded-2xl">
                   <div className="flex items-center">
                     Female
-                    <IoMdFemale className="text-yellow-600 text-lg ml-1" />
+                    <IoMdFemale className="text-yellow-600 size-4 ml-1" />
                   </div>
                   <div className="flex items-center">
-                    Male <IoMdMale className="text-green-600 text-lg ml-1" />
+                    Male <IoMdMale className="text-green-600 size-4 ml-1" />
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 border px-3 py-2 bg-white rounded-2xl">
+                  <div className="flex items-center">
+                    Dead
+                    <Skull className="text-red-600 size-4 ml-1" />
                   </div>
                 </div>
               </div>
