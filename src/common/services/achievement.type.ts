@@ -1,8 +1,9 @@
 import type { Achievement } from "../types";
 
 // #region GET /v1/achievement/list
-// biome-ignore lint/complexity/noBannedTypes: <explanation>
-export type GetAchievementListQuery = {};
+export type GetAchievementListQuery = {
+  animal_id_eq?: string;
+};
 export type GetAchievementListResponse = { docs: Achievement[] };
 // #endregion
 
@@ -12,6 +13,7 @@ export type PostAchievementBody = {
   issuedBy?: string | null;
   issuedAt?: string | null;
   note?: string | null;
+  animalId: string;
 };
 export type PostAchievementResponse = { doc: Achievement };
 // #endregion

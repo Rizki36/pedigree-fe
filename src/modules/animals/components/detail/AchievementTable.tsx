@@ -24,21 +24,25 @@ import {
 } from "@/common/components/ui/dropdown-menu";
 import useAchievementListQuery from "@/common/queries/useAchievementListQuery";
 import { useMemo } from "react";
-import type { FC } from "react";
 import type { Achievement } from "@/common/types";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
 import type { AchievementDialogProps } from "./AchievementDialog";
 
 export type DataSource = Achievement;
 
-const AchievementTable: FC<{
-  deleteState: DeleteAchievementDialogProps["state"];
+type AchievementTableProps = {
+  animalId: string;
   setDeleteState: (state: DeleteAchievementDialogProps["state"]) => void;
-  updateState: AchievementDialogProps["state"];
   setUpdateState: (state: AchievementDialogProps["state"]) => void;
-}> = ({ setDeleteState, setUpdateState }) => {
+};
+
+const AchievementTable = (props: AchievementTableProps) => {
+  const { animalId, setDeleteState, setUpdateState } = props;
+
   const { data, isLoading } = useAchievementListQuery({
-    query: {},
+    query: {
+      animal_id_eq: animalId,
+    },
   });
 
   const dataSource: DataSource[] = useMemo(() => {
@@ -98,11 +102,12 @@ const AchievementTable: FC<{
               <DropdownMenuItem
                 onClick={() => {
                   setUpdateState({
-                    id: row.original.id,
                     mode: "edit",
                     open: true,
                     data: {
+                      id: row.original.id,
                       achievement: row.original,
+                      animalId: animalId,
                     },
                   });
                 }}

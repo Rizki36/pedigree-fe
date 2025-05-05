@@ -34,15 +34,26 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+type AddState = {
+  mode: "add";
+  data: {
+    animalId: string;
+  } | null;
+};
+
+type EditState = {
+  mode: "edit";
+  data: {
+    achievement: Achievement;
+    animalId: string;
+    id: string;
+  } | null;
+};
+
 export type AchievementDialogProps = {
   state: {
-    mode: "add" | "edit";
-    data: {
-      achievement: Achievement;
-    } | null;
     open: boolean;
-    id: string | null;
-  };
+  } & (AddState | EditState);
   setState: (state: AchievementDialogProps["state"]) => void;
 };
 
@@ -55,6 +66,7 @@ const formSchema = z.object({
 
 const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
   const { open } = state;
+  const { mode, data } = state;
 
   const { mutateAsync: addAchievement, isPending: addingAchievement } =
     useAddAchievementMutation({
@@ -71,16 +83,20 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
 
   const handleAddAchievement = async (values: z.infer<typeof formSchema>) => {
     try {
+      if (mode !== "add") throw new Error("Invalid mode");
+      if (!data?.animalId) throw new Error("Animal ID is required");
+
       await addAchievement({
         name: values.name,
         issuedBy: values.issuedBy,
         issuedAt: values.issuedAt,
         note: values.note,
+        animalId: data.animalId,
       });
       form.reset(undefined, {
         keepDirtyValues: true,
       });
-      setState({ open: false, mode: "add", data: null, id: null });
+      setState({ open: false, mode: "add", data: null });
     } catch (error) {
       console.error(error);
       toast.error("Failed to add achievement", {
@@ -93,10 +109,12 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
     values: z.infer<typeof formSchema>,
   ) => {
     try {
-      if (!state.id) throw new Error("ID is required for updating achievement");
+      if (state.mode !== "edit") throw new Error("Invalid mode");
+      if (!state?.data?.id)
+        throw new Error("ID is required for updating achievement");
 
       await updateAchievement({
-        id: state.id,
+        id: state.data.id,
         name: values.name,
         issuedBy: values.issuedBy,
         issuedAt: values.issuedAt,
@@ -105,7 +123,7 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
       form.reset(undefined, {
         keepDirtyValues: true,
       });
-      setState({ open: false, mode: "add", data: null, id: null });
+      setState({ open: false, mode: "add", data: null });
     } catch (error) {
       console.error(error);
       toast.error("Failed to update achievement", {
@@ -115,15 +133,15 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
   };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    if (state.mode === "add") {
+    if (mode === "add") {
       await handleAddAchievement(values);
-    } else if (state.mode === "edit") {
+    } else if (mode === "edit") {
       await handleUpdateAchievement(values);
     }
   };
 
   useEffect(() => {
-    if (state.mode === "edit" && state.data) {
+    if (mode === "edit" && state.data) {
       const { achievement } = state.data;
       form.reset({
         name: achievement.name,
@@ -132,7 +150,7 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
         note: achievement.note || undefined,
       });
     }
-  }, [state.mode, state.data]);
+  }, [mode, state.data]);
 
   return (
     <Dialog
@@ -147,7 +165,7 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <DialogHeader>
               <DialogTitle>
-                {state.mode === "add" ? "Add" : "Update"} Achievement
+                {mode === "add" ? "Add" : "Update"} Achievement
               </DialogTitle>
             </DialogHeader>
             <FormField

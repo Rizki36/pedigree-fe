@@ -58,7 +58,6 @@ const AnimalDetail = () => {
     mode: "add",
     data: null,
     open: false,
-    id: null,
   });
   const [deleteAnimalState, setDeleteAnimalState] = useState<
     DeleteAnimalDialogProps["state"]
@@ -147,9 +146,11 @@ const AnimalDetail = () => {
                 <Button
                   onClick={() => {
                     setAchievementDialogState({
-                      ...achievementDialogState,
                       open: true,
                       mode: "add",
+                      data: {
+                        animalId,
+                      },
                     });
                   }}
                   size="sm"
@@ -160,9 +161,8 @@ const AnimalDetail = () => {
               </div>
               <div>
                 <AchievementTable
-                  deleteState={deleteAchievementState}
+                  animalId={animalId}
                   setDeleteState={setDeleteAchievementState}
-                  updateState={achievementDialogState}
                   setUpdateState={setAchievementDialogState}
                 />
               </div>
