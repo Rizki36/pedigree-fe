@@ -7,10 +7,10 @@ import {
   useMemo,
   useState,
   useCallback,
-  type FC,
   createContext,
   useContext,
 } from "react";
+import type { FC, Dispatch, SetStateAction } from "react";
 import { IoMdFemale, IoMdMale } from "react-icons/io";
 import { Loader2, ChevronDown, Skull } from "lucide-react";
 import { format } from "date-fns";
@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/common/components/ui/tooltip";
+import { Link } from "@tanstack/react-router";
 
 type PedigreeNodeProps = {
   node: TreeNode;
@@ -32,55 +33,63 @@ const HEIGHT = 70;
 
 const PedigreeNode = ({ node, style }: PedigreeNodeProps) => {
   return (
-    <div
-      style={style}
-      className="cursor-pointer h-full flex items-center justify-center"
+    <Link
+      to="/animals/$animalId"
+      params={{
+        animalId: node.id,
+      }}
+      target="_blank"
     >
       <div
-        className={clsx("border px-3 py-2.5 rounded-lg text-xs relative", {
-          "bg-white text-neutral-900": true,
-          "border-yellow-100": node.gender === AnimalGender.FEMALE,
-          "border-green-100": node.gender === AnimalGender.MALE,
-        })}
-        style={{
-          width: `${WIDTH}px`,
-          height: `${HEIGHT}px`,
-        }}
+        style={style}
+        className="cursor-pointer h-full flex items-center justify-center"
       >
-        <div className="absolute top-1 right-1">
-          {node.gender === AnimalGender.FEMALE && (
-            <IoMdFemale className="text-yellow-600 size-4" />
-          )}
-          {node.gender === AnimalGender.MALE && (
-            <IoMdMale className="text-green-600 size-4" />
-          )}
-        </div>
-        {!!node.diedAt && (
-          <div className="absolute bottom-1 right-1">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Skull className="text-red-600 size-4" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  Died at {format(node.diedAt, "dd MMM yyyy")}
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+        <div
+          className={clsx("border px-3 py-2.5 rounded-lg text-xs relative", {
+            "bg-white text-neutral-900": true,
+            "border-yellow-100": node.gender === AnimalGender.FEMALE,
+            "border-green-100": node.gender === AnimalGender.MALE,
+          })}
+          style={{
+            width: `${WIDTH}px`,
+            height: `${HEIGHT}px`,
+          }}
+        >
+          <div className="absolute top-1 right-1">
+            {node.gender === AnimalGender.FEMALE && (
+              <IoMdFemale className="text-yellow-600 size-4" />
+            )}
+            {node.gender === AnimalGender.MALE && (
+              <IoMdMale className="text-green-600 size-4" />
+            )}
           </div>
-        )}
+          {!!node.diedAt && (
+            <div className="absolute bottom-1 right-1">
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Skull className="text-red-600 size-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Died at {format(node.diedAt, "dd MMM yyyy")}
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
+          )}
 
-        <div className="text-[10px] text-neutral-700">{node.code}</div>
-        <div className="line-clamp-1 break-all mt-0.5 font-medium">
-          {node.name}
-        </div>
-        {node.dateOfBirth && (
-          <div className="line-clamp-1 break-all mt-0.5 text-neutral-500 text-[10px]">
-            BD : {format(node.dateOfBirth, "dd/MM/yyyy")}
+          <div className="text-[10px] text-neutral-700">{node.code}</div>
+          <div className="line-clamp-1 break-all mt-0.5 font-medium">
+            {node.name}
           </div>
-        )}
+          {node.dateOfBirth && (
+            <div className="line-clamp-1 break-all mt-0.5 text-neutral-500 text-[10px]">
+              BD : {format(node.dateOfBirth, "dd/MM/yyyy")}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -299,7 +308,7 @@ const Tree: FC<{
 // Update the main PedigreeTree component to pass initial values
 const PedigreeTree: FC<{
   nodes: (TreeNode | null)[];
-  setNodes: React.Dispatch<React.SetStateAction<(TreeNode | null)[]>>;
+  setNodes: Dispatch<SetStateAction<(TreeNode | null)[]>>;
   maxDepth?: number; // Allow setting max depth at top level
 }> = ({ nodes, setNodes, maxDepth = 10 }) => {
   const handleNodeUpdate = useCallback(
