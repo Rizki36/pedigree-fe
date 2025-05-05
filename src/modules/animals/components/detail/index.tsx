@@ -37,6 +37,8 @@ type MateType = {
   matedAt: string;
 };
 
+const enableCursor = false;
+
 const AnimalDetail = () => {
   const [deleteAchievementState, setDeleteAchievementState] = useState<
     DeleteAchievementDialogProps["state"]
@@ -88,15 +90,16 @@ const AnimalDetail = () => {
 
           <div className="flex gap-x-2">
             <DeleteAnimalDialog />
-
-            <div className="border border-white/0 hover:border-white/100 rounded-lg opacity-50 hover:opacity-100">
-              <Button variant="ghost" size="sm">
-                <ChevronLeft />
-              </Button>
-              <Button variant="ghost" size="sm">
-                <ChevronRight />
-              </Button>
-            </div>
+            {enableCursor && (
+              <div className="border border-white/0 hover:border-white/100 rounded-lg opacity-50 hover:opacity-100">
+                <Button variant="ghost" size="sm">
+                  <ChevronLeft />
+                </Button>
+                <Button variant="ghost" size="sm">
+                  <ChevronRight />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
