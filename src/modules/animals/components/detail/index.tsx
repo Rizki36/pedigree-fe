@@ -18,21 +18,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/common/components/ui/dropdown-menu";
-import { useState, type FC } from "react";
+import React, { useState, type FC } from "react";
 import dayjs from "dayjs";
 import useAnimal from "../../hooks/useAnimal";
-import DeleteAnimalDialog, {
-  type DeleteAnimalDialogProps,
-} from "./DeleteAnimalDialog";
 import DetailsSection from "./DetailsSection";
 import ParentSection from "./ParentSection";
 import NoteSection from "./NoteSection";
-import AchievementDialog from "./AchievementDialog";
+import type { DeleteAnimalDialogProps } from "./DeleteAnimalDialog";
 import type { AchievementDialogProps } from "./AchievementDialog";
-import DeleteAchievementDialog from "./DeleteAchievementDialog";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
 import { TbTrash } from "react-icons/tb";
 import { Route } from "@/routes/animals/$animalId";
+
+const DeleteAnimalDialog = React.lazy(() => import("./DeleteAnimalDialog"));
+const AchievementDialog = React.lazy(() => import("./AchievementDialog"));
+const DeleteAchievementDialog = React.lazy(
+  () => import("./DeleteAchievementDialog"),
+);
 
 type MateType = {
   id: string;
