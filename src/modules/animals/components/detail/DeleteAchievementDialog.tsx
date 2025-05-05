@@ -57,7 +57,7 @@ const DeleteAchievementDialog: FC<DeleteAchievementDialogProps> = ({
           <AlertDialogTitle>Are you sure you want to do this?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
-            animal.
+            animal achievement.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
