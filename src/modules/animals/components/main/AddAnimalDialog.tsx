@@ -5,7 +5,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/common/components/ui/dialog";
 import {
   Form,
@@ -17,11 +16,9 @@ import {
 } from "@/common/components/ui/form";
 import { Input } from "@/common/components/ui/input";
 import { useForm } from "react-hook-form";
-import { TiPlus } from "react-icons/ti";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useAddAnimalMutation from "@/common/mutations/useAddAnimalMutation";
-import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { generateServiceErrorMessage } from "@/common/lib/utils";
@@ -35,6 +32,13 @@ import {
 } from "@/common/components/ui/select";
 import { AnimalGender } from "@/common/types";
 
+export type AddAnimalDialogProps = {
+  state: {
+    open: boolean;
+  };
+  setState: (state: AddAnimalDialogProps["state"]) => void;
+};
+
 const formSchema = z.object({
   animalTypeCode: z.string(),
   code: z.string(),
@@ -42,9 +46,10 @@ const formSchema = z.object({
   gender: z.nativeEnum(AnimalGender),
 });
 
-const AddAnimalDialog = () => {
+const AddAnimalDialog = (props: AddAnimalDialogProps) => {
+  const { state, setState } = props;
+
   const navigate = useNavigate({ from: "/animals" });
-  const [open, setOpen] = useState(false);
 
   const { data: animalTypeListData } = useAnimalTypeListQuery();
 
@@ -56,7 +61,7 @@ const AddAnimalDialog = () => {
     defaultValues: {
       animalTypeCode: undefined,
       name: "",
-      gender: AnimalGender.MALE
+      gender: AnimalGender.MALE,
     },
   });
 
@@ -66,10 +71,12 @@ const AddAnimalDialog = () => {
         name: values.name,
         code: values.code,
         animalTypeCode: values.animalTypeCode,
-        gender: values.gender
+        gender: values.gender,
       });
 
-      setOpen(false);
+      setState({
+        open: false,
+      });
 
       await navigate({
         to: "/animals/$animalId",
@@ -86,14 +93,7 @@ const AddAnimalDialog = () => {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <TiPlus />
-          Add Animal
-        </Button>
-      </DialogTrigger>
-
+    <Dialog open={state.open} onOpenChange={(open) => setState({ open })}>
       <DialogContent className="sm:max-w-[425px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

@@ -6,9 +6,20 @@ import { Route } from "@/routes/animals/index";
 import { useNavigate } from "@tanstack/react-router";
 import { Label } from "@/common/components/ui/label";
 import { useDebounceCallback } from "usehooks-ts";
-import AddAnimalDialog from "./AddAnimalDialog";
+import type { AddAnimalDialogProps } from "./AddAnimalDialog";
+import { Button } from "@/common/components/ui/button";
+import { TiPlus } from "react-icons/ti";
+import React, { useState } from "react";
+
+const AddAnimalDialog = React.lazy(() => import("./AddAnimalDialog"));
 
 const Animals = () => {
+  const [addAnimalState, setAddAnimalState] = useState<
+    AddAnimalDialogProps["state"]
+  >({
+    open: false,
+  });
+
   const { gender, search } = Route.useSearch();
   const navigate = useNavigate({ from: "/animals" });
 
@@ -25,11 +36,17 @@ const Animals = () => {
 
   return (
     <MainLayout>
+      <AddAnimalDialog state={addAnimalState} setState={setAddAnimalState} />
+
       <div className="relative">
         <div className="mr-[280px]">
           <div className="flex items-center justify-between mb-4">
             <h1 className="mt-4 text-3xl">Animals</h1>
-            <AddAnimalDialog />
+
+            <Button onClick={() => setAddAnimalState({ open: true })}>
+              <TiPlus />
+              Add Animal
+            </Button>
           </div>
           <AnimalsTable />
         </div>
