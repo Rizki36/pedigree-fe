@@ -36,6 +36,7 @@ import {
 } from "@/common/components/ui/popover";
 import { Calendar } from "@/common/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
+import { useEventListener } from "usehooks-ts";
 
 const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
   const { data: animalTypeListData } = useAnimalTypeListQuery();
@@ -156,6 +157,16 @@ const DetailsForm: FC<{
       });
     }
   };
+
+  useEventListener("keydown", (event) => {
+    if (
+      event.target === document.body &&
+      event.key === "Escape" &&
+      !isPending
+    ) {
+      setEditing(false);
+    }
+  });
 
   return (
     <Form {...form}>
@@ -338,6 +349,14 @@ const DetailsForm: FC<{
 
         <Button type="submit" className="mt-4" disabled={isPending}>
           Save
+        </Button>
+        <Button
+          variant="outline"
+          className="mt-4 ml-2"
+          onClick={() => setEditing(false)}
+          disabled={isPending}
+        >
+          Cancel
         </Button>
       </form>
     </Form>
