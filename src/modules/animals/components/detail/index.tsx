@@ -21,7 +21,9 @@ import {
 import { useState, type FC } from "react";
 import dayjs from "dayjs";
 import useAnimal from "../../hooks/useAnimal";
-import DeleteAnimalDialog from "./DeleteAnimalDialog";
+import DeleteAnimalDialog, {
+  type DeleteAnimalDialogProps,
+} from "./DeleteAnimalDialog";
 import DetailsSection from "./DetailsSection";
 import ParentSection from "./ParentSection";
 import NoteSection from "./NoteSection";
@@ -29,6 +31,8 @@ import AchievementDialog from "./AchievementDialog";
 import type { AchievementDialogProps } from "./AchievementDialog";
 import DeleteAchievementDialog from "./DeleteAchievementDialog";
 import type { DeleteAchievementDialogProps } from "./DeleteAchievementDialog";
+import { TbTrash } from "react-icons/tb";
+import { Route } from "@/routes/animals/$animalId";
 
 type MateType = {
   id: string;
@@ -54,6 +58,14 @@ const AnimalDetail = () => {
     open: false,
     id: null,
   });
+  const [deleteAnimalState, setDeleteAnimalState] = useState<
+    DeleteAnimalDialogProps["state"]
+  >({
+    open: false,
+    id: null,
+  });
+
+  const { animalId } = Route.useParams();
 
   const { animal } = useAnimal();
 
@@ -66,6 +78,10 @@ const AnimalDetail = () => {
       <AchievementDialog
         state={achievementDialogState}
         setState={setAchievementDialogState}
+      />
+      <DeleteAnimalDialog
+        state={deleteAnimalState}
+        setState={setDeleteAnimalState}
       />
 
       <div className="-mt-4 w-[calc(100%+48px)] ml-[-24px] bg-teal-600 px-6 rounded-b-3xl py-4 pb-12">
@@ -89,7 +105,20 @@ const AnimalDetail = () => {
           </Breadcrumb>
 
           <div className="flex gap-x-2">
-            <DeleteAnimalDialog />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="opacity-50 hover:opacity-100"
+              onClick={() => {
+                setDeleteAnimalState({
+                  open: true,
+                  id: animalId,
+                });
+              }}
+            >
+              <TbTrash className="size-2" />
+              Delete
+            </Button>
             {enableCursor && (
               <div className="border border-white/0 hover:border-white/100 rounded-lg opacity-50 hover:opacity-100">
                 <Button variant="ghost" size="sm">

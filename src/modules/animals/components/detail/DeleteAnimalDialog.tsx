@@ -8,34 +8,42 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/common/components/ui/alert-dialog";
-import { Button } from "@/common/components/ui/button";
 
 import { generateServiceErrorMessage } from "@/common/lib/utils";
 import useDeleteAnimalMutation from "@/common/mutations/useDeleteAnimalMutation";
-import { Route } from "@/routes/animals/$animalId";
 import { useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
-import { TbTrash } from "react-icons/tb";
 import { toast } from "sonner";
 
-const DeleteAnimalDialog = () => {
-  const { animalId } = Route.useParams();
+export type DeleteAnimalDialogProps = {
+  state: {
+    open: boolean;
+    id: string | null;
+  };
+  setState: (state: DeleteAnimalDialogProps["state"]) => void;
+};
+
+const DeleteAnimalDialog = (props: DeleteAnimalDialogProps) => {
+  const { state, setState } = props;
   const navigate = useNavigate({ from: "/animals/$animalId" });
-  const [open, setOpen] = useState(false);
 
   const { mutateAsync, isPending } = useDeleteAnimalMutation({});
 
   const onSubmit = async () => {
     try {
+      if (!state.id) throw new Error("Animal ID is required");
+
       await mutateAsync({
-        id: animalId,
+        id: state.id,
       });
 
       await navigate({
         to: "/animals",
       });
 
-      setOpen(false);
+      setState({
+        open: false,
+        id: null,
+      });
 
       toast.success("Animal deleted successfully");
     } catch (error) {
@@ -47,16 +55,10 @@ const DeleteAnimalDialog = () => {
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <Button
-        variant="ghost"
-        size="sm"
-        className="opacity-50 hover:opacity-100"
-        onClick={() => setOpen(true)}
-      >
-        <TbTrash className="size-2" />
-        Delete
-      </Button>
+    <AlertDialog
+      open={state.open}
+      onOpenChange={(open) => setState({ open, id: null })}
+    >
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want to do this?</AlertDialogTitle>
