@@ -220,7 +220,11 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
                           )}
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
+                      <PopoverContent
+                        withoutPortal={true}
+                        className="w-auto p-0"
+                        align="start"
+                      >
                         <Calendar
                           mode="single"
                           selected={
