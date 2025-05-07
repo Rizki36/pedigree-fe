@@ -5,6 +5,11 @@ export enum AnimalGender {
   FEMALE = "FEMALE",
 }
 
+export enum AnimalStatus {
+  ALIVE = "ALIVE",
+  DEAD = "DEAD",
+}
+
 export type Animal = {
   id: string;
   code: string;
@@ -20,4 +25,3 @@ export type Animal = {
   createdAt: IsoDateString;
   updatedAt: IsoDateString;
 };
-
