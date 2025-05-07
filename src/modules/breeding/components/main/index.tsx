@@ -1,8 +1,8 @@
-import MainLayout from "@/common/layouts/MainLayout";
 import Steps from "./Steps";
 import { type FC, useState } from "react";
-import { Button } from "@/common/components/ui/button";
+import { Button } from "@/modules/common/components/ui/button";
 import Panels from "./Panels";
+import MainLayout from "@/modules/common/components/layouts/MainLayout";
 
 const Footer: FC<{
   currentStep: number;

@@ -1,7 +1,5 @@
-import { cn } from "@/common/lib/utils";
-import type { TreeNode } from "@/common/services/pedigree.type";
-import pedigreeService from "@/common/services/pedigree";
-import { AnimalGender } from "@/common/types";
+import { cn } from "@/modules/common/lib/utils";
+import { AnimalGender } from "@/modules/animal/types";
 import clsx from "clsx";
 import {
   useMemo,
@@ -18,8 +16,10 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/common/components/ui/tooltip";
+} from "@/modules/common/components/ui/tooltip";
 import { Link } from "@tanstack/react-router";
+import type { TreeNode } from "../../services/pedigree.type";
+import pedigreeService from "../../services/pedigree";
 
 type PedigreeNodeProps = {
   node: TreeNode;

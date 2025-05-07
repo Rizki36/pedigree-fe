@@ -1,4 +1,4 @@
-import MainLayout from "@/common/layouts/MainLayout";
+import MainLayout from "@/modules/common/components/layouts/MainLayout";
 
 const Dashboard = () => {
   return (

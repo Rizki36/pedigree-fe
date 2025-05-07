@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createRootRouteWithContext } from "@tanstack/react-router";
-import { Toaster } from "@/common/components/ui/sonner";
+import { Toaster } from "@/modules/common/components/ui/sonner";
 import { RouteGuard } from "../modules/auth/components/RouteGuard";
 import type { AuthContextType } from "@/modules/auth/contexts/AuthContext";
 

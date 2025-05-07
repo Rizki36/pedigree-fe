@@ -1,10 +1,9 @@
-import MainLayout from "@/common/layouts/MainLayout";
-import { Button } from "@/common/components/ui/button";
+import { Button } from "@/modules/common/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/common/components/ui/popover";
+} from "@/modules/common/components/ui/popover";
 import {
   Command,
   CommandEmpty,
@@ -12,7 +11,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/common/components/ui/command";
+} from "@/modules/common/components/ui/command";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
@@ -24,13 +23,14 @@ import {
   VenusIcon,
 } from "lucide-react";
 import { Route } from "@/routes/pedigree";
-import { cn } from "@/common/lib/utils";
+import { cn } from "@/modules/common/lib/utils";
 import { toPng } from "html-to-image";
 import PedigreeTree from "./PedigreeTree";
-import useAnimalListQuery from "@/common/queries/useAnimalListQuery";
-import usePedigreeTreeQuery from "@/common/queries/usePedigreeTreeQuery";
-import type { TreeNode } from "@/common/services/pedigree.type";
+import useAnimalListQuery from "@/modules/animal/hooks/queries/useAnimalListQuery";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import MainLayout from "@/modules/common/components/layouts/MainLayout";
+import usePedigreeTreeQuery from "../../hooks/queries/usePedigreeTreeQuery";
+import type { TreeNode } from "../../services/pedigree.type";
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();

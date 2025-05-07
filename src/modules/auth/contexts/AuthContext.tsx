@@ -1,5 +1,5 @@
-import { BASE_URL } from "@/common/constants";
-import fetchInstance from "@/common/lib/fetch-instance";
+import { BASE_URL } from "@/modules/common/constants";
+import fetchInstance from "@/modules/common/lib/fetch-instance";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext } from "react";
 import type { ReactNode } from "react";

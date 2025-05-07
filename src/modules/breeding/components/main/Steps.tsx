@@ -1,4 +1,4 @@
-import { cn } from "@/common/lib/utils";
+import { cn } from "@/modules/common/lib/utils";
 import type { FC } from "react";
 
 const Step: FC<{ label: string; isActive: boolean }> = ({
