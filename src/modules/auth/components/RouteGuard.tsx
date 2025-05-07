@@ -1,5 +1,6 @@
-import { Navigate, Outlet, useRouter } from "@tanstack/react-router";
+import { Outlet, useRouter } from "@tanstack/react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { useEffect } from "react";
 
 const publicRoutes = ["/login"];
 
@@ -22,20 +23,19 @@ export function RouteGuard() {
     );
   }
 
-  // If route requires auth and user is not authenticated, redirect to login
-  if (!isPublicRoute && !isAuthenticated) {
-    // Save the attempted URL for redirecting back after login
-    const currentPath = router.state.location.pathname;
+  useEffect(() => {
+    // If route requires auth and user is not authenticated, redirect to login
+    if (!isPublicRoute && !isAuthenticated) {
+      // Save the attempted URL for redirecting back after login
+      const currentPath = router.state.location.pathname;
 
-    return (
-      <Navigate
-        to="/login"
-        search={{
-          redirect: currentPath !== "/login" ? currentPath : undefined,
-        }}
-      />
-    );
-  }
+      // Redirect to login page
+      router.navigate({
+        to: "/login",
+        search: { redirectTo: currentPath },
+      });
+    }
+  }, [isPublicRoute, isAuthenticated, router]);
 
   // Otherwise, render the route content
   return <Outlet />;
