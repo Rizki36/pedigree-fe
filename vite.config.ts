@@ -18,5 +18,8 @@ export default defineConfig(({ mode }) => {
       port: Number.parseInt(env.PORT),
       host: true,
     },
+    preview: {
+      port: Number.parseInt(env.PORT),
+    },
   };
 });
