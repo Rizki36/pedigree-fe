@@ -9,7 +9,10 @@
     "lint": "biome lint ./src",
     "lint:fix": "biome lint --write ./src",
     "check-types": "tsc -b --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "e2e": "playwright test --headed --project=chromium",
+    "e2e:debug": "playwright test --headed --project=chromium --debug",
+    "e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -50,6 +53,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@eslint/js": "^9.11.1",
+    "@playwright/test": "^1.52.0",
     "@tanstack/router-devtools": "^1.70.1",
     "@tanstack/router-plugin": "^1.69.1",
     "@types/node": "^22.8.1",

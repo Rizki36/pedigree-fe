@@ -17,7 +17,10 @@ export function RouteGuard() {
   // If still loading auth state, show a loading indicator
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div
+        data-testid="loading-route-guard"
+        className="flex items-center justify-center min-h-screen"
+      >
         Loading...
       </div>
     );
