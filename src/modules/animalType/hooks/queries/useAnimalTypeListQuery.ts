@@ -1,24 +1,23 @@
 import { useQuery, type UseQueryOptions } from "@tanstack/react-query";
-import type {
-  GetAnimalTypeListQuery,
-  GetAnimalTypeListResponse,
-} from "@/modules/animalType/services/animalType.type";
-import animalTypeService from "@/modules/animalType/services/animalType";
+import type { GetAnimalTypeListResponse } from "@/modules/animalType/services/animalType.type";
+import { AnimalType } from "@/modules/animalType/types";
 
 type UseAnimalTypeListQueryProps = {
-  query?: GetAnimalTypeListQuery;
   options?: UseQueryOptions<GetAnimalTypeListResponse>;
 };
 
 const useAnimalTypeListQuery = ({
-  query,
   options,
 }: UseAnimalTypeListQueryProps = {}) => {
   const queryResult = useQuery({
     ...options,
-    queryKey: ["animalType/list", query],
+    queryKey: ["animalType/list"],
     queryFn: async () => {
-      return animalTypeService.getAnimalTypeList({ query });
+      return {
+        // fill docs with all AnimalType values
+        // this is a workaround to avoid using the API
+        docs: Object.entries(AnimalType).map(([_, value]) => value),
+      };
     },
   });
 

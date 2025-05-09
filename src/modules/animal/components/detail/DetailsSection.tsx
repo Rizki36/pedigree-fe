@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/modules/common/components/ui/select";
-import useAnimalTypeListQuery from "@/modules/animal/hooks/queries/useAnimalTypeListQuery";
+import useAnimalTypeListQuery from "@/modules/animalType/hooks/queries/useAnimalTypeListQuery";
 import { toast } from "sonner";
 import { cn, generateServiceErrorMessage } from "@/modules/common/lib/utils";
 import useUpdateAnimalMutation from "@/modules/animal/hooks/mutations/useUpdateAnimalMutation";
@@ -63,8 +63,8 @@ const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
           )}
           <Badge variant="secondary" className="gap-x-1 inline-flex">
             {animalTypeListData?.docs.find(
-              (doc) => doc.code === animal?.animalTypeCode,
-            )?.name ?? "-"}
+              (doc) => doc === animal?.animalType,
+            ) ?? "-"}
           </Badge>
         </div>
       </div>
@@ -118,7 +118,7 @@ const DetailsForm: FC<{
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      animalTypeCode: animal?.animalTypeCode,
+      animalTypeCode: animal?.animalType,
       name: animal?.name,
       code: animal?.code,
       dateOfBirth: animal?.dateOfBirth
@@ -213,11 +213,8 @@ const DetailsForm: FC<{
                     </SelectTrigger>
                     <SelectContent>
                       {animalTypeListData?.docs.map((animalType) => (
-                        <SelectItem
-                          key={animalType.code}
-                          value={animalType.code}
-                        >
-                          {animalType.name}
+                        <SelectItem key={animalType} value={animalType}>
+                          {animalType}
                         </SelectItem>
                       ))}
                     </SelectContent>

@@ -22,7 +22,7 @@ import useAddAnimalMutation from "@/modules/animal/hooks/mutations/useAddAnimalM
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { generateServiceErrorMessage } from "@/modules/common/lib/utils";
-import useAnimalTypeListQuery from "@/modules/animal/hooks/queries/useAnimalTypeListQuery";
+import useAnimalTypeListQuery from "@/modules/animalType/hooks/queries/useAnimalTypeListQuery";
 import {
   Select,
   SelectContent,
@@ -116,11 +116,8 @@ const AddAnimalDialog = (props: AddAnimalDialogProps) => {
                         </SelectTrigger>
                         <SelectContent>
                           {animalTypeListData?.docs.map((animalType) => (
-                            <SelectItem
-                              key={animalType.code}
-                              value={animalType.code}
-                            >
-                              {animalType.name}
+                            <SelectItem key={animalType} value={animalType}>
+                              {animalType}
                             </SelectItem>
                           ))}
                         </SelectContent>
