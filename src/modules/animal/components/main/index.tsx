@@ -65,29 +65,25 @@ const Animals = () => {
 
           <div className="my-3 border-t" />
 
-          <div className="grid grid-cols-2 gap-2">
-            {([AnimalGender.MALE, AnimalGender.FEMALE] as const).map(
+          <div className="grid grid-cols-3 gap-2">
+            {([AnimalGender.MALE, AnimalGender.FEMALE, "OTHER"] as const).map(
               (currentGender) => (
                 <div key={currentGender}>
                   <Checkbox
                     value={currentGender}
                     id={`cb-gender-${currentGender}`}
                     className="peer sr-only"
-                    checked={
-                      !!gender?.length && gender?.includes(currentGender)
-                    }
+                    checked={gender === currentGender}
                     onCheckedChange={(checked) => {
                       navigate({
                         search: (prev) => {
-                          const newGender = checked
-                            ? [...(prev.gender ?? []), currentGender]
-                            : (prev.gender ?? []).filter(
-                                (g) => g !== currentGender,
-                              );
+                          // If checking and it's not already selected, set it as the new gender
+                          // If unchecking the current selection, set gender to undefined
+                          const newGender = checked ? currentGender : undefined;
 
                           return {
                             ...prev,
-                            gender: newGender.length ? newGender : undefined,
+                            gender: newGender,
                           };
                         },
                       });
@@ -114,21 +110,17 @@ const Animals = () => {
                     value={currentStatus}
                     id={`cb-status-${currentStatus}`}
                     className="peer sr-only"
-                    checked={
-                      !!status?.length && status?.includes(currentStatus)
-                    }
+                    checked={status === currentStatus}
                     onCheckedChange={(checked) => {
                       navigate({
                         search: (prev) => {
-                          const newStatus = checked
-                            ? [...(prev.status ?? []), currentStatus]
-                            : (prev.status ?? []).filter(
-                                (s) => s !== currentStatus,
-                              );
+                          // If checking and it's not already selected, set it as the new status
+                          // If unchecking the current selection, set status to undefined
+                          const newStatus = checked ? currentStatus : undefined;
 
                           return {
                             ...prev,
-                            status: newStatus.length ? newStatus : undefined,
+                            status: newStatus,
                           };
                         },
                       });

@@ -6,7 +6,8 @@ export type GetAnimalListQuery = {
   id_ne?: string;
   animal_type_code_eq?: string;
   search?: string;
-  gender_eq?: "FEMALE" | "MALE";
+  gender_eq?: "FEMALE" | "MALE" | "OTHER";
+  status_eq?: "ALIVE" | "DEAD"; // Add status_eq parameter
 };
 export type GetAnimalListResponse = { docs: Animal[]; limit: number };
 // #endregion
@@ -42,4 +43,51 @@ export type UpdateAnimalBody = {
   gender?: AnimalGender | null;
 };
 export type UpdateAnimalResponse = { doc: Animal };
+// #endregion
+
+// #region GET /v1/animal/stat/require-to-add-parent
+export type GetParentRequirementResponse = {
+  doc: {
+    father: number;
+    mother: number;
+  };
+};
+// #endregion
+
+// #region GET /v1/animal/stat/require-to-add-gender
+export type GetGenderRequirementResponse = {
+  doc: {
+    count: number;
+  };
+};
+// #endregion
+
+// #region GET /v1/animal/stat/require-to-dob
+export type GetDobRequirementResponse = {
+  doc: {
+    count: number;
+  };
+};
+// #endregion
+
+// #region GET /v1/tree/status-distribution
+export type GetStatusDistributionResponse = {
+  doc: {
+    maleCount: {
+      total: number;
+      alive: number;
+      dead: number;
+    };
+    femaleCount: {
+      total: number;
+      alive: number;
+      dead: number;
+    };
+    otherCount: {
+      total: number;
+      alive: number;
+      dead: number;
+    };
+  };
+};
 // #endregion

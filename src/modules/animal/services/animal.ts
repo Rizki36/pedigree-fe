@@ -8,6 +8,10 @@ import type {
   DeleteAnimalResponse,
   UpdateAnimalBody,
   UpdateAnimalResponse,
+  GetParentRequirementResponse,
+  GetGenderRequirementResponse,
+  GetDobRequirementResponse,
+  GetStatusDistributionResponse,
 } from "./animal.type";
 
 const animalService = {
@@ -50,6 +54,38 @@ const animalService = {
       method: "PATCH",
       body: JSON.stringify(body),
     });
+  },
+  getParentRequirement: async () => {
+    return fetchInstance<GetParentRequirementResponse>(
+      "/v1/animal/stat/require-to-add-parent",
+      {
+        method: "GET",
+      },
+    );
+  },
+  getGenderRequirement: async () => {
+    return fetchInstance<GetGenderRequirementResponse>(
+      "/v1/animal/stat/require-to-add-gender",
+      {
+        method: "GET",
+      },
+    );
+  },
+  getDobRequirement: async () => {
+    return fetchInstance<GetDobRequirementResponse>(
+      "/v1/animal/stat/require-to-dob",
+      {
+        method: "GET",
+      },
+    );
+  },
+  getStatusDistribution: async () => {
+    return fetchInstance<GetStatusDistributionResponse>(
+      "/v1/animal/tree/status-distribution",
+      {
+        method: "GET",
+      },
+    );
   },
 };
 

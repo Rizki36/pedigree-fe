@@ -43,7 +43,7 @@ const formSchema = z.object({
   animalTypeCode: z.string(),
   code: z.string(),
   name: z.string(),
-  gender: z.nativeEnum(AnimalGender),
+  gender: z.nativeEnum(AnimalGender).optional(),
 });
 
 const AddAnimalDialog = (props: AddAnimalDialogProps) => {
@@ -61,7 +61,6 @@ const AddAnimalDialog = (props: AddAnimalDialogProps) => {
     defaultValues: {
       animalTypeCode: undefined,
       name: "",
-      gender: AnimalGender.MALE,
     },
   });
 
@@ -71,7 +70,7 @@ const AddAnimalDialog = (props: AddAnimalDialogProps) => {
         name: values.name,
         code: values.code,
         animalTypeCode: values.animalTypeCode,
-        gender: values.gender,
+        gender: values.gender || null,
       });
 
       setState({

@@ -69,12 +69,13 @@ export const columns: ColumnDef<DataSource>[] = [
 ];
 
 const AnimalsTable: FC = () => {
-  const { gender, search } = Route.useSearch();
+  const { gender, status, search } = Route.useSearch();
 
   const { data, isLoading } = useAnimalListQuery({
     query: {
       search,
-      gender_eq: gender?.length === 1 ? gender[0] : undefined,
+      gender_eq: gender,
+      status_eq: status,
     },
   });
 
