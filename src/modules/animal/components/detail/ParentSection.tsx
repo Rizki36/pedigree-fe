@@ -23,7 +23,7 @@ import {
 import { cn, generateServiceErrorMessage } from "@/modules/common/lib/utils";
 import useUpdateAnimalMutation from "@/modules/animal/hooks/mutations/useUpdateAnimalMutation";
 import useAnimalListQuery from "@/modules/animal/hooks/queries/useAnimalListQuery";
-import { AnimalGender, type Animal } from "@/modules/animal/types";
+import type { Animal } from "@/modules/animal/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
 import {
@@ -96,8 +96,8 @@ const ParentForm: FC<{
   const { data: fatherData } = useAnimalListQuery({
     query: {
       id_ne: animal?.id,
-      gender_eq: AnimalGender.MALE,
-      animal_type_eq: animal?.animalType,
+      gender_eq: "MALE",
+      animal_type_code_eq: animal?.animalTypeCode,
     },
     options: {
       enabled: !!animal?.id,
@@ -107,8 +107,8 @@ const ParentForm: FC<{
   const { data: motherData } = useAnimalListQuery({
     query: {
       id_ne: animal?.id,
-      gender_eq: AnimalGender.FEMALE,
-      animal_type_eq: animal?.animalType,
+      gender_eq: "FEMALE",
+      animal_type_code_eq: animal?.animalTypeCode,
     },
     options: {
       enabled: !!animal?.id,

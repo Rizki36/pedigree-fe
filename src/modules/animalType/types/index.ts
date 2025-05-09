@@ -1,8 +1,4 @@
-export enum AnimalType {
-  DOG = "DOG",
-  CAT = "CAT",
-  BIRD = "BIRD",
-  FISH = "FISH",
-  REPTILE = "REPTILE",
-  OTHER = "OTHER"
+export type AnimalType = {
+  code: string;
+  name: string;
 };

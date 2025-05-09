@@ -1,5 +1,3 @@
-import type { AnimalType } from "@/modules/animalType/types";
-
 export type IsoDateString = string;
 
 export enum AnimalGender {
@@ -19,7 +17,7 @@ export type Animal = {
   gender: AnimalGender | null;
   fatherId: string | null;
   motherId: string | null;
-  animalType: AnimalType;
+  animalTypeCode: string;
   note: string | null;
   dateOfBirth: IsoDateString | null;
   diedAt: IsoDateString | null;

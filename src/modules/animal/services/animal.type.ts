@@ -1,14 +1,13 @@
-import type { AnimalType } from "@/modules/animalType/types";
-import type { Animal, AnimalGender, AnimalStatus } from "../types";
+import type { Animal, AnimalGender } from "../types";
 
 // #region GET /v1/animal/list
 export type GetAnimalListQuery = {
   id_eq?: string;
   id_ne?: string;
-  animal_type_eq?: AnimalType;
+  animal_type_code_eq?: string;
   search?: string;
-  gender_eq?: AnimalGender | "OTHER";
-  status_eq?: AnimalStatus; // Add status_eq parameter
+  gender_eq?: "FEMALE" | "MALE" | "OTHER";
+  status_eq?: "ALIVE" | "DEAD"; // Add status_eq parameter
 };
 export type GetAnimalListResponse = { docs: Animal[]; limit: number };
 // #endregion

@@ -219,7 +219,7 @@ const Dashboard = () => {
   return (
     <MainLayout>
       <div className="flex gap-6">
-        <div className="flex justify-center w-full bg-neutral-100 rounded-2xl pt-12 pb-8 px-4 border border-neutral-200 relative h-[600px]">
+        <div className="flex justify-center w-full bg-neutral-100 rounded-2xl pt-12 pb-8 px-4 border border-neutral-200 relative h-[500px]">
           <div className="absolute top-4 left-[50%] transform -translate-x-1/2 z-40 flex items-center">
             Animal Distribution
             {statusDistributionError && (
@@ -260,7 +260,7 @@ const Dashboard = () => {
             </div>
           ) : (
             <TransformWrapper
-              initialScale={0.8}
+              initialScale={0.7}
               centerOnInit={true}
               maxScale={99999}
               minScale={0.1}
