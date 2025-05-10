@@ -22,6 +22,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar";
 
 const menus = [
   {
@@ -184,14 +185,12 @@ const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
             <div className="mx-4 border-l h-5" />
 
             <div className="flex items-center">
-              <img
-                src={
-                  user?.profilePictureUrl ||
-                  "https://avatar.iran.liara.run/public/46"
-                }
-                alt="Language"
-                className="size-9 rounded-full"
-              />
+              <Avatar>
+                <AvatarImage src={user?.profilePictureUrl} />
+                <AvatarFallback>
+                  {(user?.name || "").charAt(0).toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
               <div className="text-xs text-neutral-400 ml-2">
                 <div>{user?.name}</div>
                 <div>{user?.email}</div>
