@@ -110,16 +110,6 @@ const Tree: FC<{
     return node?.nodes?.filter((n) => !!n);
   }, [node?.nodes]);
 
-  // Add detection for same gender parents
-  const hasSameGenderParents = useMemo(() => {
-    const parents = filteredNodes;
-    if (!parents || parents.length < 2) return false;
-
-    // Check if all parents have the same gender
-    const firstParentGender = parents[0].gender;
-    return parents.every((parent) => parent.gender === firstParentGender);
-  }, [filteredNodes]);
-
   // Only allow fetching if conditions are met
   const needFetchNodes =
     node.hasNextNodes &&
@@ -212,7 +202,7 @@ const Tree: FC<{
         <PedigreeNode node={node} />
 
         {/* Add warning for same gender parents */}
-        {hasSameGenderParents && hasChild && (
+        {node.isSameGenderParent && hasChild && (
           <div className="text-xs text-amber-500 text-center absolute left-[50%] translate-x-[-50%] mt-1.5 z-20 bg-white">
             ⚠️ Same gender parents detected
           </div>

@@ -4,6 +4,7 @@ import type { Animal } from "@/modules/animal/types";
 export type TreeNode = Animal & {
   hasNextNodes: boolean;
   isCircular: boolean;
+  isSameGenderParent: boolean;
   nodes: [TreeNode | null, TreeNode | null];
 };
 export type GetPedigreeTreeQuery = {
