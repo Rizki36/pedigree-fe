@@ -7,9 +7,17 @@ export type GetAnimalListQuery = {
   animal_type_code_eq?: string;
   search?: string;
   gender_eq?: "FEMALE" | "MALE" | "OTHER";
-  status_eq?: "ALIVE" | "DEAD"; // Add status_eq parameter
+  status_eq?: "ALIVE" | "DEAD";
+  limit?: number;
+  cursor?: string;
 };
-export type GetAnimalListResponse = { docs: Animal[]; limit: number };
+
+export type GetAnimalListResponse = {
+  docs: Animal[];
+  limit: number;
+  nextCursor?: string; // cursor-based pagination
+  hasMore: boolean;
+};
 // #endregion
 
 // #region POST /v1/animal

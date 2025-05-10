@@ -23,6 +23,7 @@ import {
 import { cn, generateServiceErrorMessage } from "@/modules/common/lib/utils";
 import useUpdateAnimalMutation from "@/modules/animal/hooks/mutations/useUpdateAnimalMutation";
 import useAnimalListQuery from "@/modules/animal/hooks/queries/useAnimalListQuery";
+import useInfiniteAnimalListQuery from "@/modules/animal/hooks/queries/useInfiniteAnimalListQuery";
 import type { Animal } from "@/modules/animal/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "@tanstack/react-router";
@@ -32,7 +33,7 @@ import {
   PencilIcon,
   SquareArrowOutUpRightIcon,
 } from "lucide-react";
-import { type FC, useState } from "react";
+import { type FC, useState, useMemo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -93,38 +94,105 @@ const ParentForm: FC<{
   mother: Animal | undefined;
   setEditing: (open: boolean) => void;
 }> = ({ animal, father, mother, setEditing }) => {
-  const { data: fatherData } = useAnimalListQuery({
-    query: {
-      id_ne: animal?.id,
-      gender_eq: "MALE",
-      animal_type_code_eq: animal?.animalTypeCode,
-    },
-    options: {
-      enabled: !!animal?.id,
-    },
-  });
-  const fatherList = fatherData?.docs ?? [];
-  const { data: motherData } = useAnimalListQuery({
-    query: {
-      id_ne: animal?.id,
-      gender_eq: "FEMALE",
-      animal_type_code_eq: animal?.animalTypeCode,
-    },
-    options: {
-      enabled: !!animal?.id,
-    },
-  });
-  const motherList = motherData?.docs ?? [];
+  // State for search queries
+  const [fatherSearchQuery, setFatherSearchQuery] = useState("");
+  const [motherSearchQuery, setMotherSearchQuery] = useState("");
 
-  const { mutateAsync, isPending } = useUpdateAnimalMutation({
-    options: {},
-  });
+  // Form setup with initial values
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       fatherId: father?.id ? father.id : null,
       motherId: mother?.id ? mother.id : null,
     },
+  });
+
+  // Watch for changes to the father and mother IDs
+  const selectedFatherId = form.watch("fatherId");
+  const selectedMotherId = form.watch("motherId");
+
+  // Fetch the selected father directly
+  const { data: selectedFatherData } = useAnimalListQuery({
+    query: {
+      id_eq: selectedFatherId!,
+    },
+    options: {
+      enabled: !!selectedFatherId,
+    },
+  });
+
+  // Get the selected father from the direct query
+  const selectedFather = selectedFatherData?.docs?.[0];
+
+  // Fetch the selected mother directly
+  const { data: selectedMotherData } = useAnimalListQuery({
+    query: {
+      id_eq: selectedMotherId!,
+    },
+    options: {
+      enabled: !!selectedMotherId,
+    },
+  });
+
+  // Get the selected mother from the direct query
+  const selectedMother = selectedMotherData?.docs?.[0];
+
+  // Infinite query for fathers (options list)
+  const {
+    data: infiniteFatherData,
+    fetchNextPage: fetchNextFathers,
+    hasNextPage: hasNextFathers,
+    isFetchingNextPage: isFetchingNextFathers,
+  } = useInfiniteAnimalListQuery({
+    query: {
+      id_ne: animal?.id,
+      gender_eq: "MALE",
+      animal_type_code_eq: animal?.animalTypeCode,
+      search: fatherSearchQuery || undefined,
+    },
+    options: {
+      enabled: !!animal?.id,
+    },
+  });
+
+  // Infinite query for mothers (options list)
+  const {
+    data: infiniteMotherData,
+    fetchNextPage: fetchNextMothers,
+    hasNextPage: hasNextMothers,
+    isFetchingNextPage: isFetchingNextMothers,
+  } = useInfiniteAnimalListQuery({
+    query: {
+      id_ne: animal?.id,
+      gender_eq: "FEMALE",
+      animal_type_code_eq: animal?.animalTypeCode,
+      search: motherSearchQuery || undefined,
+    },
+    options: {
+      enabled: !!animal?.id,
+    },
+  });
+
+  // Flatten the pages data for rendering the dropdowns
+  const fatherList = useMemo(() => {
+    return infiniteFatherData?.pages.flatMap((page) => page.docs) || [];
+  }, [infiniteFatherData]);
+
+  const motherList = useMemo(() => {
+    return infiniteMotherData?.pages.flatMap((page) => page.docs) || [];
+  }, [infiniteMotherData]);
+
+  // Handle search input
+  const handleFatherSearchInput = useCallback((value: string) => {
+    setFatherSearchQuery(value);
+  }, []);
+
+  const handleMotherSearchInput = useCallback((value: string) => {
+    setMotherSearchQuery(value);
+  }, []);
+
+  const { mutateAsync, isPending } = useUpdateAnimalMutation({
+    options: {},
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -155,9 +223,6 @@ const ParentForm: FC<{
           control={form.control}
           name="fatherId"
           render={({ field }) => {
-            const selectedFather = fatherList.find(
-              (father) => father.id === field.value,
-            );
             return (
               <FormItem className="flex flex-col">
                 <FormLabel>Father</FormLabel>
@@ -180,10 +245,12 @@ const ParentForm: FC<{
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-[320px] p-0">
-                    <Command>
+                    <Command shouldFilter={false}>
                       <CommandInput
                         placeholder="Search name or code"
                         className="h-9"
+                        value={fatherSearchQuery}
+                        onValueChange={handleFatherSearchInput}
                       />
                       <CommandList>
                         <CommandEmpty>No father found.</CommandEmpty>
@@ -208,6 +275,27 @@ const ParentForm: FC<{
                             </CommandItem>
                           ))}
                         </CommandGroup>
+
+                        {/* Add load more button */}
+                        {hasNextFathers && (
+                          <div className="py-2 px-1 text-center">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => fetchNextFathers()}
+                              disabled={isFetchingNextFathers}
+                              className="w-full"
+                            >
+                              {isFetchingNextFathers ? (
+                                <div className="flex items-center justify-center">
+                                  Loading more...
+                                </div>
+                              ) : (
+                                "Load more"
+                              )}
+                            </Button>
+                          </div>
+                        )}
                       </CommandList>
                     </Command>
                   </PopoverContent>
@@ -222,9 +310,6 @@ const ParentForm: FC<{
           control={form.control}
           name="motherId"
           render={({ field }) => {
-            const selectedMother = motherList.find(
-              (mother) => mother.id === field.value,
-            );
             return (
               <FormItem className="flex flex-col">
                 <FormLabel>Mother</FormLabel>
@@ -247,10 +332,12 @@ const ParentForm: FC<{
                     </FormControl>
                   </PopoverTrigger>
                   <PopoverContent className="w-[320px] p-0">
-                    <Command>
+                    <Command shouldFilter={false}>
                       <CommandInput
                         placeholder="Search name or code"
                         className="h-9"
+                        value={motherSearchQuery}
+                        onValueChange={handleMotherSearchInput}
                       />
                       <CommandList>
                         <CommandEmpty>No mother found.</CommandEmpty>
@@ -275,6 +362,27 @@ const ParentForm: FC<{
                             </CommandItem>
                           ))}
                         </CommandGroup>
+
+                        {/* Add load more button */}
+                        {hasNextMothers && (
+                          <div className="py-2 px-1 text-center">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => fetchNextMothers()}
+                              disabled={isFetchingNextMothers}
+                              className="w-full"
+                            >
+                              {isFetchingNextMothers ? (
+                                <div className="flex items-center justify-center">
+                                  Loading more...
+                                </div>
+                              ) : (
+                                "Load more"
+                              )}
+                            </Button>
+                          </div>
+                        )}
                       </CommandList>
                     </Command>
                   </PopoverContent>

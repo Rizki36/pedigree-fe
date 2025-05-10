@@ -13,7 +13,7 @@ import {
   CommandList,
 } from "@/modules/common/components/ui/command";
 import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Check,
   ChevronsUpDown,
@@ -26,6 +26,7 @@ import { Route } from "@/routes/pedigree";
 import { cn } from "@/modules/common/lib/utils";
 import { toPng } from "html-to-image";
 import PedigreeTree from "./PedigreeTree";
+import useInfiniteAnimalListQuery from "@/modules/animal/hooks/queries/useInfiniteAnimalListQuery";
 import useAnimalListQuery from "@/modules/animal/hooks/queries/useAnimalListQuery";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import MainLayout from "@/modules/common/components/layouts/MainLayout";
@@ -34,15 +35,46 @@ import type { TreeNode } from "../../services/pedigree.type";
 
 const Pedigree = () => {
   const { animalId } = Route.useSearch();
-
-  const { data: animalsData } = useAnimalListQuery({
-    options: {},
-  });
-  const animals = animalsData?.docs ?? [];
-  const currentAnimal = animals.find((animal) => animal.id === animalId);
   const navigate = useNavigate({ from: Route.fullPath });
-
   const [open, setOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Fetch the current animal directly using id_eq
+  const { data: currentAnimalData } = useAnimalListQuery({
+    query: {
+      id_eq: animalId,
+    },
+    options: {
+      enabled: !!animalId,
+    },
+  });
+
+  const currentAnimal = useMemo(
+    () => currentAnimalData?.docs?.[0] || null,
+    [currentAnimalData],
+  );
+
+  const {
+    data: infiniteAnimalsData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isLoadingAnimals,
+  } = useInfiniteAnimalListQuery({
+    query: {
+      search: searchQuery || undefined,
+    },
+  });
+
+  // Flatten the pages data for rendering the dropdown
+  const animals = useMemo(() => {
+    return infiniteAnimalsData?.pages.flatMap((page) => page.docs) || [];
+  }, [infiniteAnimalsData]);
+
+  // Handle search input
+  const handleSearchInput = useCallback((value: string) => {
+    setSearchQuery(value);
+  }, []);
 
   const { data: pedigreeTreeData } = usePedigreeTreeQuery({
     query: {
@@ -99,16 +131,22 @@ const Pedigree = () => {
                   className="w-[200px] justify-between"
                 >
                   {animalId
-                    ? animals.find((animal) => animal.id === animalId)?.name
+                    ? currentAnimal?.name || "Loading..."
                     : "Select animal..."}
                   <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-[200px] p-0">
-                <Command>
-                  <CommandInput placeholder="Search animal..." />
+              <PopoverContent className="w-[280px] p-0">
+                <Command shouldFilter={false}>
+                  <CommandInput
+                    placeholder="Search animal..."
+                    value={searchQuery}
+                    onValueChange={handleSearchInput}
+                  />
                   <CommandList>
-                    <CommandEmpty>No animal found.</CommandEmpty>
+                    <CommandEmpty>
+                      {isLoadingAnimals ? "Loading..." : "No animal found."}
+                    </CommandEmpty>
                     <CommandGroup>
                       {animals.map((animal) => (
                         <CommandItem
@@ -142,6 +180,27 @@ const Pedigree = () => {
                         </CommandItem>
                       ))}
                     </CommandGroup>
+
+                    {/* Add load more button at the bottom */}
+                    {hasNextPage && (
+                      <div className="py-2 px-1 text-center">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => fetchNextPage()}
+                          disabled={isFetchingNextPage}
+                          className="w-full"
+                        >
+                          {isFetchingNextPage ? (
+                            <div className="flex items-center">
+                              Loading more...
+                            </div>
+                          ) : (
+                            "Load more"
+                          )}
+                        </Button>
+                      </div>
+                    )}
                   </CommandList>
                 </Command>
               </PopoverContent>
