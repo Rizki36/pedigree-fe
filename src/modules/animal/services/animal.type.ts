@@ -10,6 +10,7 @@ export type GetAnimalListQuery = {
   status_eq?: "ALIVE" | "DEAD";
   limit?: number;
   cursor?: string;
+  skip?: number;
 };
 
 export type GetAnimalListResponse = {

@@ -9,7 +9,6 @@ export const animalsSearchSchema = z.object({
     z.enum([AnimalGender.MALE, AnimalGender.FEMALE, "OTHER"]).optional(),
     undefined,
   ),
-  // Change from array to single value
   status: fallback(z.nativeEnum(AnimalStatus).optional(), undefined),
   pageIndex: fallback(z.number().int().min(0).optional(), 0),
 });

@@ -15,7 +15,7 @@ import {
 } from "@/modules/common/components/ui/table";
 import { Button } from "@/modules/common/components/ui/button";
 import { Link } from "@tanstack/react-router";
-import useInfiniteAnimalListQuery from "@/modules/animal/hooks/queries/useInfiniteAnimalListQuery";
+import useAnimalListQuery from "@/modules/animal/hooks/queries/useAnimalListQuery";
 import type { Animal } from "@/modules/animal/types";
 import { useMemo, type FC } from "react";
 import { Route } from "@/routes/animals/index";
@@ -24,116 +24,114 @@ import { useNavigate } from "@tanstack/react-router";
 
 export type DataSource = Animal;
 
-export const columns: ColumnDef<DataSource>[] = [
-  {
-    id: "number",
-    header: "#",
-    cell: ({ row }) => <div>{row.index + 1}</div>,
-    maxSize: 40,
-  },
-  {
-    accessorKey: "code",
-    header: "Code",
-    cell: ({ row }) => <div>{row.getValue("code")}</div>,
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div>{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "gender",
-    header: "Gender",
-    cell: ({ row }) => (
-      <div>
-        {row.getValue("gender") === "MALE" && "Male"}
-        {row.getValue("gender") === "FEMALE" && "Female"}
-        {row.getValue("gender") === null && "-"}
-      </div>
-    ),
-  },
-  {
-    id: "action",
-    cell: ({ row }) => (
-      <Link
-        to="/animals/$animalId"
-        params={{
-          animalId: row.original.id,
-        }}
-      >
-        <Button variant="outline" size="sm">
-          Detail
-        </Button>
-      </Link>
-    ),
-    maxSize: 40,
-  },
-];
+const generateColumns = ({
+  pageIndex,
+  limit,
+}: {
+  pageIndex: number;
+  limit: number;
+}) => {
+  const columns: ColumnDef<DataSource>[] = [
+    {
+      id: "number",
+      header: "#",
+      cell: ({ row }) => <div>{row.index + 1 + pageIndex * limit}</div>,
+      maxSize: 40,
+    },
+    {
+      accessorKey: "code",
+      header: "Code",
+      cell: ({ row }) => <div>{row.getValue("code")}</div>,
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => <div>{row.getValue("name")}</div>,
+    },
+    {
+      accessorKey: "gender",
+      header: "Gender",
+      cell: ({ row }) => (
+        <div>
+          {row.getValue("gender") === "MALE" && "Male"}
+          {row.getValue("gender") === "FEMALE" && "Female"}
+          {row.getValue("gender") === null && "-"}
+        </div>
+      ),
+    },
+    {
+      id: "action",
+      cell: ({ row }) => (
+        <Link
+          to="/animals/$animalId"
+          params={{
+            animalId: row.original.id,
+          }}
+        >
+          <Button variant="outline" size="sm">
+            Detail
+          </Button>
+        </Link>
+      ),
+      maxSize: 40,
+    },
+  ];
+  return columns;
+};
 
 const AnimalsTable: FC = () => {
-  // Get pageIndex from the route search params
+  // Get cursor from the route search params instead of pageIndex
   const { gender, status, search, pageIndex = 0 } = Route.useSearch();
   const navigate = useNavigate({ from: Route.fullPath });
 
-  const {
-    data: infiniteData,
-    isLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingPreviousPage,
-  } = useInfiniteAnimalListQuery({
+  const limit = 20; // Number of items per page
+  const { data: animalListData, isLoading } = useAnimalListQuery({
     query: {
       search,
       gender_eq: gender,
       status_eq: status,
-      limit: 20, // Number of items per page
+      limit, // Number of items per page
+      skip: pageIndex * limit, // Calculate the offset based on the current page index
     },
   });
 
   // Get current page data
   const currentPageData = useMemo(() => {
-    if (!infiniteData?.pages || infiniteData.pages.length === 0) return [];
-    if (pageIndex >= infiniteData.pages.length) return [];
-    return infiniteData.pages[pageIndex].docs || [];
-  }, [infiniteData, pageIndex]);
+    return animalListData?.docs || [];
+  }, [animalListData]);
 
-  // Total number of pages available (loaded so far)
-  const pageCount = infiniteData?.pages.length || 0;
-
-  // Handle next and previous page navigation
-  const handleNextPage = async () => {
-    const nextPageIndex = Number(pageIndex) + 1;
-
-    if (nextPageIndex < pageCount) {
-      // If we have the next page already loaded, just update the URL
+  // Handle next and previous page navigation with cursors
+  const enableNextButton =
+    typeof pageIndex === "number" && animalListData?.hasMore;
+  const handleNextPage = () => {
+    if (enableNextButton) {
       navigate({
         search: (prev) => ({
           ...prev,
-          pageIndex: nextPageIndex,
-        }),
-      });
-    } else if (hasNextPage) {
-      // If we need to fetch the next page first
-      await fetchNextPage();
-      navigate({
-        search: (prev) => ({
-          ...prev,
-          pageIndex: nextPageIndex,
+          pageIndex: pageIndex + 1,
         }),
       });
     }
   };
 
+  const enablePreviousButton = typeof pageIndex === "number" && pageIndex > 0;
   const handlePreviousPage = () => {
-    const prevPageIndex = Math.max(0, Number(pageIndex) - 1);
-    navigate({
-      search: (prev) => ({
-        ...prev,
-        pageIndex: prevPageIndex,
-      }),
-    });
+    if (enablePreviousButton) {
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          pageIndex: pageIndex - 1,
+        }),
+      });
+    }
   };
+
+  const columns = useMemo(() => {
+    return generateColumns({
+      pageIndex,
+      limit, // Number of items per page
+    });
+  }, [pageIndex, limit]);
 
   const table = useReactTable({
     data: currentPageData,
@@ -223,7 +221,7 @@ const AnimalsTable: FC = () => {
                 variant="outline"
                 size="sm"
                 onClick={handlePreviousPage}
-                disabled={Number(pageIndex) === 0 || isFetchingPreviousPage}
+                disabled={!enablePreviousButton}
               >
                 <ChevronLeftIcon className="h-4 w-4 mr-1" />
                 Previous
@@ -232,10 +230,7 @@ const AnimalsTable: FC = () => {
                 variant="outline"
                 size="sm"
                 onClick={handleNextPage}
-                disabled={
-                  (!hasNextPage && Number(pageIndex) === pageCount - 1) ||
-                  isFetchingNextPage
-                }
+                disabled={!enableNextButton}
               >
                 Next
                 <ChevronRightIcon className="h-4 w-4 ml-1" />
