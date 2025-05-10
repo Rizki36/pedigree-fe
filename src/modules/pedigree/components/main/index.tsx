@@ -79,7 +79,7 @@ const Pedigree = () => {
   const { data: pedigreeTreeData } = usePedigreeTreeQuery({
     query: {
       animal_id_eq: animalId!,
-      level: 2,
+      level: 4,
     },
     options: {
       enabled: !!animalId,

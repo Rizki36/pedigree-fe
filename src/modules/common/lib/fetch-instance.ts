@@ -8,7 +8,9 @@ type Config = RequestInit & {
 };
 
 const fetchInstance = <T>(endpoint: string, config: Config) => {
-  const queryString = config.query ? `?${qs.stringify(config.query)}` : "";
+  const queryString = config.query
+    ? `?${qs.stringify(config.query, { arrayFormat: "comma" })}`
+    : "";
 
   const url = BASE_URL + endpoint + queryString;
 

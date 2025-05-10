@@ -103,7 +103,7 @@ const Tree: FC<{
 }> = ({ node, onNodeUpdate, maxDepth = 10, currentDepth = 0 }) => {
   const visitedNodes = useContext(VisitedNodesContext);
 
-  const isCircularReference = node.id ? visitedNodes.has(node.id) : false;
+  // Use the isCircular flag from the backend instead of our custom detection
   const isMaxDepthReached = currentDepth >= maxDepth;
 
   const filteredNodes = useMemo(() => {
@@ -125,7 +125,7 @@ const Tree: FC<{
     node.hasNextNodes &&
     !filteredNodes?.length &&
     !isMaxDepthReached &&
-    !isCircularReference;
+    !node.isCircular;
 
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(!needFetchNodes);
@@ -139,7 +139,11 @@ const Tree: FC<{
       setIsLoading(true);
       // Use the existing pedigreeService function
       const response = await pedigreeService.getPedigreeTree({
-        query: { animal_id_eq: node.id!, level: 2 },
+        query: {
+          animal_id_eq: node.id!,
+          level: 2,
+          visited_ids: Array.from(visitedNodes),
+        },
       });
 
       const nextNodes = response.docs || [];
@@ -168,8 +172,8 @@ const Tree: FC<{
     }
   }, [needFetchNodes, loadNextNodes]);
 
-  // If this is a circular reference, show a special indicator
-  if (isCircularReference) {
+  // If this is a circular reference, show a special indicator using the backend flag
+  if (node.isCircular) {
     return (
       <ul className="relative flex flex-col">
         <div style={{ marginBottom: `${GAP}px` }}>
