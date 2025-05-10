@@ -30,6 +30,7 @@ const Animals = () => {
         return {
           ...prev,
           search: value || undefined,
+          pageIndex: 0,
         };
       },
     });
@@ -84,6 +85,7 @@ const Animals = () => {
                           return {
                             ...prev,
                             gender: newGender,
+                            pageIndex: 0,
                           };
                         },
                       });
@@ -121,6 +123,7 @@ const Animals = () => {
                           return {
                             ...prev,
                             status: newStatus,
+                            pageIndex: 0,
                           };
                         },
                       });

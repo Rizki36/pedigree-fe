@@ -11,6 +11,7 @@ export const animalsSearchSchema = z.object({
   ),
   // Change from array to single value
   status: fallback(z.nativeEnum(AnimalStatus).optional(), undefined),
+  pageIndex: fallback(z.number().int().min(0).optional(), 0),
 });
 
 export type AnimalsSearchSchema = z.infer<typeof animalsSearchSchema>;

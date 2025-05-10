@@ -15,10 +15,12 @@ import {
 } from "@/modules/common/components/ui/table";
 import { Button } from "@/modules/common/components/ui/button";
 import { Link } from "@tanstack/react-router";
-import useAnimalListQuery from "@/modules/animal/hooks/queries/useAnimalListQuery";
+import useInfiniteAnimalListQuery from "@/modules/animal/hooks/queries/useInfiniteAnimalListQuery";
 import type { Animal } from "@/modules/animal/types";
 import { useMemo, type FC } from "react";
 import { Route } from "@/routes/animals/index";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 export type DataSource = Animal;
 
@@ -69,23 +71,72 @@ export const columns: ColumnDef<DataSource>[] = [
 ];
 
 const AnimalsTable: FC = () => {
-  const { gender, status, search } = Route.useSearch();
+  // Get pageIndex from the route search params
+  const { gender, status, search, pageIndex = 0 } = Route.useSearch();
+  const navigate = useNavigate({ from: Route.fullPath });
 
-  const { data, isLoading } = useAnimalListQuery({
+  const {
+    data: infiniteData,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingPreviousPage,
+  } = useInfiniteAnimalListQuery({
     query: {
       search,
       gender_eq: gender,
       status_eq: status,
+      limit: 20, // Number of items per page
     },
   });
 
-  const dataSource: DataSource[] = useMemo(() => {
-    if (!data?.docs?.length) return [];
-    return data?.docs;
-  }, [data?.docs]);
+  // Get current page data
+  const currentPageData = useMemo(() => {
+    if (!infiniteData?.pages || infiniteData.pages.length === 0) return [];
+    if (pageIndex >= infiniteData.pages.length) return [];
+    return infiniteData.pages[pageIndex].docs || [];
+  }, [infiniteData, pageIndex]);
+
+  // Total number of pages available (loaded so far)
+  const pageCount = infiniteData?.pages.length || 0;
+
+  // Handle next and previous page navigation
+  const handleNextPage = async () => {
+    const nextPageIndex = Number(pageIndex) + 1;
+
+    if (nextPageIndex < pageCount) {
+      // If we have the next page already loaded, just update the URL
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          pageIndex: nextPageIndex,
+        }),
+      });
+    } else if (hasNextPage) {
+      // If we need to fetch the next page first
+      await fetchNextPage();
+      navigate({
+        search: (prev) => ({
+          ...prev,
+          pageIndex: nextPageIndex,
+        }),
+      });
+    }
+  };
+
+  const handlePreviousPage = () => {
+    const prevPageIndex = Math.max(0, Number(pageIndex) - 1);
+    navigate({
+      search: (prev) => ({
+        ...prev,
+        pageIndex: prevPageIndex,
+      }),
+    });
+  };
 
   const table = useReactTable({
-    data: dataSource,
+    data: currentPageData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -118,7 +169,7 @@ const AnimalsTable: FC = () => {
           </TableHeader>
           <TableBody>
             {/* Rows */}
-            {!!dataSource.length &&
+            {!!currentPageData.length &&
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -148,7 +199,7 @@ const AnimalsTable: FC = () => {
             )}
 
             {/* No results */}
-            {!dataSource.length && !isLoading && (
+            {!currentPageData.length && !isLoading && (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
@@ -160,6 +211,38 @@ const AnimalsTable: FC = () => {
             )}
           </TableBody>
         </Table>
+
+        {/* Pagination Controls */}
+        {!isLoading && (
+          <div className="flex items-center justify-between px-4 py-2 border-t">
+            <div className="text-sm text-gray-500">
+              Page {Number(pageIndex) + 1}
+            </div>
+            <div className="flex space-x-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handlePreviousPage}
+                disabled={Number(pageIndex) === 0 || isFetchingPreviousPage}
+              >
+                <ChevronLeftIcon className="h-4 w-4 mr-1" />
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleNextPage}
+                disabled={
+                  (!hasNextPage && Number(pageIndex) === pageCount - 1) ||
+                  isFetchingNextPage
+                }
+              >
+                Next
+                <ChevronRightIcon className="h-4 w-4 ml-1" />
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
