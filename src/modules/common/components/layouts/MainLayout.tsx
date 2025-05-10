@@ -1,5 +1,6 @@
 import { Link, type LinkProps, type ReactNode } from "@tanstack/react-router";
 import { useState, type FC } from "react";
+import { useSidebar } from "@/modules/common/contexts/SidebarContext"; // Import the context hook
 
 import enFlag from "@/assets/flags/en.png";
 import { cn } from "@/modules/common/lib/utils";
@@ -54,27 +55,27 @@ const menus = [
   icon: ReactNode;
 }>;
 
-const Sidebar: FC<{
-  collapse: boolean;
-  setCollapse: (collapse: boolean) => void;
-}> = ({ collapse, setCollapse }) => {
+const Sidebar: FC = () => {
+  // Use the sidebar context instead of props
+  const { collapsed, toggleSidebar } = useSidebar();
+
   return (
     <div
       className={cn(
         "bg-neutral-50 transition-all ease-in-out fixed h-screen border-r border-gray-200",
         {
-          "w-[300px] px-4": !collapse,
-          "w-[50px] px-1": collapse,
+          "w-[300px] px-4": !collapsed,
+          "w-[50px] px-1": collapsed,
         },
       )}
     >
       <div className="mt-2.5 text-center mb-6 text-2xl font-semibold text-teal-700">
-        {!collapse ? "Pedigree" : "P"}
+        {!collapsed ? "Pedigree" : "P"}
       </div>
 
       <div
         className={cn("py-5 rounded-2xl", {
-          "px-3 border": !collapse,
+          "px-3 border": !collapsed,
         })}
       >
         {menus.map((menu) => (
@@ -84,23 +85,23 @@ const Sidebar: FC<{
             className={cn(
               "flex items-center gap-x-2 [&.active]:text-neutral-50 [&.active]:font-semibold [&.active]:bg-teal-600 py-2 rounded-full",
               {
-                "px-4": !collapse,
-                "px-2 justify-center": collapse,
+                "px-4": !collapsed,
+                "px-2 justify-center": collapsed,
               },
             )}
           >
             {menu.icon}
-            {!collapse ? menu.name : undefined}
+            {!collapsed ? menu.name : undefined}
           </Link>
         ))}
       </div>
 
       <button
         type="button"
-        onClick={() => setCollapse(!collapse)}
+        onClick={toggleSidebar} // Use context method
         className="border text-neutral-500 grid place-items-center bg-white rounded-full size-[26px] absolute top-[14px] right-[-13px]"
       >
-        {collapse ? (
+        {collapsed ? (
           <ChevronsLeftRight className="text-inherit" size={16} />
         ) : (
           <ChevronsRightLeft className="text-inherit" size={16} />
@@ -152,16 +153,17 @@ const LanguageSwitcher = () => {
 
 const MainLayout: FC<{ children: ReactNode }> = ({ children }) => {
   const { user, logout } = useAuth();
-  const [collapse, setCollapse] = useState(false);
+  // Use the sidebar context instead of local state
+  const { collapsed } = useSidebar();
 
   return (
     <div className="flex">
-      <Sidebar collapse={collapse} setCollapse={setCollapse} />
+      <Sidebar />
 
       <div
         className={cn("mr-[24px] flex-1", {
-          "ml-[calc(300px+24px)]": !collapse,
-          "ml-[calc(50px+24px)]": collapse,
+          "ml-[calc(300px+24px)]": !collapsed,
+          "ml-[calc(50px+24px)]": collapsed,
         })}
       >
         <div className="bg-neutral-50 border-b px-4 py-2 w-[calc(100%+48px)] ml-[-24px] flex justify-between items-center">

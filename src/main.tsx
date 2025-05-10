@@ -5,6 +5,7 @@ import { RouterProvider } from "@tanstack/react-router";
 import { router } from "./router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider, useAuth } from "./modules/auth/contexts/AuthContext";
+import { SidebarProvider } from "./modules/common/contexts/SidebarContext";
 
 const ReactQueryDevtools =
   process.env.NODE_ENV === "production"
@@ -27,7 +28,7 @@ declare module "@tanstack/react-router" {
 
 const InnerApp = () => {
   const auth = useAuth();
-  
+
   return (
     <RouterProvider
       router={router}
@@ -53,7 +54,9 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <InnerApp />
+        <SidebarProvider>
+          <InnerApp />
+        </SidebarProvider>
       </AuthProvider>
 
       <ReactQueryDevtools initialIsOpen={false} />
