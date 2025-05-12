@@ -428,14 +428,14 @@ const ParentSection: FC<{
 
   return (
     <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
-      <div className="mb-3 flex items-center justify-between">
+      <h2 className="mb-3 flex items-center justify-between">
         Parent
         {!isEditing && (
           <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>
             <PencilIcon />
           </Button>
         )}
-      </div>
+      </h2>
 
       {isEditing ? (
         <ParentForm

@@ -94,6 +94,7 @@ const Animals = () => {
                   <Label
                     htmlFor={`cb-gender-${currentGender}`}
                     className="capitalize text-xs flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    data-testid={`cb-gender-${currentGender}`}
                   >
                     {currentGender}
                   </Label>
@@ -132,6 +133,7 @@ const Animals = () => {
                   <Label
                     htmlFor={`cb-status-${currentStatus}`}
                     className="capitalize text-xs flex flex-col items-center justify-between rounded-md border-2 border-muted bg-transparent p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                    data-testid={`cb-status-${currentStatus}`}
                   >
                     {currentStatus}
                   </Label>

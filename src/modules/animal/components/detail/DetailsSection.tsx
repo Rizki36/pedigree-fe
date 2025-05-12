@@ -35,6 +35,7 @@ import {
 import { Calendar } from "@/modules/common/components/ui/calendar";
 import { CalendarIcon, MarsIcon, PencilIcon, VenusIcon } from "lucide-react";
 import { useEventListener } from "usehooks-ts";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
   const { data: animalTypeListData } = useAnimalTypeListQuery();
@@ -202,27 +203,24 @@ const DetailsForm: FC<{
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Animal Type</FormLabel>
-                <FormControl>
-                  <Select
-                    disabled
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                <Select
+                  disabled
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Animal type" />
                     </SelectTrigger>
-                    <SelectContent>
-                      {animalTypeListData?.docs.map((animalType) => (
-                        <SelectItem
-                          key={animalType.code}
-                          value={animalType.code}
-                        >
-                          {animalType.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+                  </FormControl>
+                  <SelectContent>
+                    {animalTypeListData?.docs.map((animalType) => (
+                      <SelectItem key={animalType.code} value={animalType.code}>
+                        {animalType.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -234,8 +232,8 @@ const DetailsForm: FC<{
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Date of Birth</FormLabel>
-                <FormControl>
-                  <Popover>
+                <Popover>
+                  <FormControl>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
@@ -252,22 +250,31 @@ const DetailsForm: FC<{
                         )}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={
-                          field.value ? dayjs(field.value).toDate() : undefined
-                        }
-                        onSelect={(day) => {
-                          field.onChange(
-                            day ? dayjs(day).format("YYYY-MM-DD") : null,
+                  </FormControl>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={
+                        field.value ? dayjs(field.value).toDate() : undefined
+                      }
+                      onSelect={(day) => {
+                        field.onChange(
+                          day ? dayjs(day).format("YYYY-MM-DD") : null,
+                        );
+                      }}
+                      initialFocus
+                      components={{
+                        DayContent: (props) => {
+                          return (
+                            <PopoverClose className="h-full w-full">
+                              {props.date.getDate()}
+                            </PopoverClose>
                           );
-                        }}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </FormControl>
+                        },
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -278,8 +285,8 @@ const DetailsForm: FC<{
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Died At</FormLabel>
-                <FormControl>
-                  <Popover>
+                <Popover>
+                  <FormControl>
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
@@ -296,22 +303,31 @@ const DetailsForm: FC<{
                         )}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={
-                          field.value ? dayjs(field.value).toDate() : undefined
-                        }
-                        onSelect={(day) => {
-                          field.onChange(
-                            day ? dayjs(day).format("YYYY-MM-DD") : null,
+                  </FormControl>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={
+                        field.value ? dayjs(field.value).toDate() : undefined
+                      }
+                      onSelect={(day) => {
+                        field.onChange(
+                          day ? dayjs(day).format("YYYY-MM-DD") : null,
+                        );
+                      }}
+                      initialFocus
+                      components={{
+                        DayContent: (props) => {
+                          return (
+                            <PopoverClose className="h-full w-full">
+                              {props.date.getDate()}
+                            </PopoverClose>
                           );
-                        }}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </FormControl>
+                        },
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
                 <FormMessage />
               </FormItem>
             )}
@@ -322,23 +338,23 @@ const DetailsForm: FC<{
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Gender</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select gender" />
                     </SelectTrigger>
-                    <SelectContent>
-                      {Object.values(AnimalGender).map((gender) => (
-                        <SelectItem key={gender} value={gender}>
-                          {gender}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
+                  </FormControl>
+                  <SelectContent>
+                    {Object.values(AnimalGender).map((gender) => (
+                      <SelectItem key={gender} value={gender}>
+                        {gender}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
@@ -365,21 +381,26 @@ const DetailsSection: FC<{ animal: Animal | undefined }> = ({ animal }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <div className="justify-between py-4 px-3 rounded-lg border border-neutral-200 bg-white">
-      <div className="mb-3 flex items-center justify-between">
+    <section className="justify-between py-4 px-3 rounded-lg border border-neutral-200 bg-white">
+      <h2 className="mb-3 flex items-center justify-between">
         Details
         {!isEditing && (
-          <Button variant="ghost" size="sm" onClick={() => setIsEditing(true)}>
+          <Button
+            data-testid="edit-button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setIsEditing(true)}
+          >
             <PencilIcon />
           </Button>
         )}
-      </div>
+      </h2>
       {isEditing ? (
         <DetailsForm animal={animal} setEditing={setIsEditing} />
       ) : (
         <DetailsView animal={animal} />
       )}
-    </div>
+    </section>
   );
 };
 
