@@ -73,7 +73,7 @@ const animalService = {
   },
   getDobRequirement: async () => {
     return fetchInstance<GetDobRequirementResponse>(
-      "/v1/animal/stat/require-to-dob",
+      "/v1/animal/stat/require-to-add-dob",
       {
         method: "GET",
       },

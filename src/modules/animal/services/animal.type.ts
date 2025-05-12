@@ -71,7 +71,7 @@ export type GetGenderRequirementResponse = {
 };
 // #endregion
 
-// #region GET /v1/animal/stat/require-to-dob
+// #region GET /v1/animal/stat/require-to-add-dob
 export type GetDobRequirementResponse = {
   doc: {
     count: number;
