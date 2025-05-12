@@ -93,9 +93,7 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
         note: values.note,
         animalId: data.animalId,
       });
-      form.reset(undefined, {
-        keepDirtyValues: true,
-      });
+      form.reset(undefined);
       setState({ open: false, mode: "add", data: null });
     } catch (error) {
       console.error(error);
@@ -120,9 +118,7 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
         issuedAt: values.issuedAt,
         note: values.note,
       });
-      form.reset(undefined, {
-        keepDirtyValues: true,
-      });
+      form.reset(undefined);
       setState({ open: false, mode: "add", data: null });
     } catch (error) {
       console.error(error);
@@ -141,6 +137,14 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
   };
 
   useEffect(() => {
+    if (!state.open) {
+      // https://github.com/shadcn-ui/ui/issues/5586
+      setTimeout(() => {
+        document.body.style.pointerEvents = "auto";
+      }, 500);
+      return;
+    }
+
     if (mode === "edit" && state.data) {
       const { achievement } = state.data;
       form.reset({
@@ -150,13 +154,15 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
         note: achievement.note || undefined,
       });
     }
-  }, [mode, state.data]);
+    if (mode === "add") {
+      form.reset(undefined);
+    }
+  }, [mode, state.open, state.data]);
 
   return (
     <Dialog
       open={open}
       onOpenChange={(open) => {
-        console.log(open);
         setState({ ...state, open });
       }}
     >
