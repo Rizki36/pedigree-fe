@@ -12,7 +12,11 @@
     "preview": "vite preview",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -54,6 +58,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@eslint/js": "^9.11.1",
+    "@playwright/test": "^1.52.0",
     "@swc/jest": "^0.2.38",
     "@tanstack/router-devtools": "^1.70.1",
     "@tanstack/router-plugin": "^1.69.1",
