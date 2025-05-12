@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 .env.local
+.env
 
 *.tsbuildinfo
 
@@ -35,3 +36,4 @@ dist-ssr
 /test-results/
 /playwright-report/
 .playwright-cache/
+tests/auth-state.json

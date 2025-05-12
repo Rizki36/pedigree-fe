@@ -4,14 +4,17 @@ import { ChevronRight } from "lucide-react";
 import { useState } from "react";
 import type { TreeNodeItem } from "../../types";
 
-const TreeNode = ({ node }: { node: TreeNodeItem }) => {
+const TreeNode = ({ node, testId }: { node: TreeNodeItem; testId: string }) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggleOpen = () => setIsOpen((prev) => !prev);
+
+  const nestedTestId = testId ? `${testId}-${node.label}` : node.label;
 
   return (
     <div className="flex items-center">
       <Link {...node.linkProps}>
         <div
+          data-testid={nestedTestId}
           className="rounded-md flex flex-col items-center justify-center w-32 h-16 relative"
           style={{ backgroundColor: node.color }}
         >
@@ -73,7 +76,7 @@ const TreeNode = ({ node }: { node: TreeNodeItem }) => {
                 </>
               )}
 
-              <TreeNode node={child} />
+              <TreeNode node={child} testId={nestedTestId} />
             </div>
           ))}
         </div>

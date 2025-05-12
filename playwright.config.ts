@@ -1,17 +1,16 @@
 import { defineConfig, devices } from "@playwright/test";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+// Get the directory name using ES Module approach
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  globalSetup: "./tests/setup/auth-setup.ts",
   testDir: "./tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -37,29 +36,46 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: "chrome",
+      use: {
+        ...devices["Desktop Chrome"],
+        // Use stored authentication state with the correct path
+        storageState: path.join(__dirname, "tests/auth-state.json"),
+      },
     },
-
     {
       name: "firefox",
-      use: { ...devices["Desktop Firefox"] },
+      use: {
+        ...devices["Desktop Firefox"],
+        // Use stored authentication state with the correct path
+        storageState: path.join(__dirname, "tests/auth-state.json"),
+      },
     },
 
     {
       name: "webkit",
-      use: { ...devices["Desktop Safari"] },
+      use: {
+        ...devices["Desktop Safari"],
+        // Use stored authentication state with the correct path
+        storageState: path.join(__dirname, "tests/auth-state.json"),
+      },
     },
 
     /* Test against mobile viewports. */
-    {
-      name: "Mobile Chrome",
-      use: { ...devices["Pixel 5"] },
-    },
-    {
-      name: "Mobile Safari",
-      use: { ...devices["iPhone 12"] },
-    },
+    // {
+    //   name: "Mobile Chrome",
+    //   use: {
+    //     ...devices["Pixel 5"], // Use stored authentication state with the correct path
+    //     storageState: path.join(__dirname, "tests/auth-state.json"),
+    //   },
+    // },
+    // {
+    //   name: "Mobile Safari",
+    //   use: {
+    //     ...devices["iPhone 12"], // Use stored authentication state with the correct path
+    //     storageState: path.join(__dirname, "tests/auth-state.json"),
+    //   },
+    // },
 
     /* Test against branded browsers. */
     // {

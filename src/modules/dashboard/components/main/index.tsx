@@ -272,7 +272,7 @@ const Dashboard = () => {
                     height: "100%",
                   }}
                 >
-                  <TreeNode node={animalData} />
+                  <TreeNode node={animalData} testId="" />
                 </TransformComponent>
               )}
             </TransformWrapper>
