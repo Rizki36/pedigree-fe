@@ -57,6 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // Call backend to clear cookie/session
       await fetchInstance("/v1/auth/logout", {
         method: "POST",
+        body: JSON.stringify({}),
       });
     } catch (error) {
       console.error("Error logging out:", error);
