@@ -70,9 +70,11 @@ const Sidebar: FC = () => {
         },
       )}
     >
-      <div className="mt-2.5 text-center mb-6 text-2xl font-semibold text-teal-700">
-        {!collapsed ? "Pedigree" : "P"}
-      </div>
+      <Link href="/">
+        <div className="mt-2.5 text-center mb-6 text-2xl font-semibold text-teal-700">
+          {!collapsed ? "Pedigree" : "P"}
+        </div>
+      </Link>
 
       <div
         className={cn("py-5 rounded-2xl", {
