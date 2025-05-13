@@ -178,12 +178,12 @@ const AnimalDetail = () => {
 
             {/* Mate section */}
             {/* <section className="py-4 px-3 rounded-lg border border-neutral-200 bg-white">
-              <div className="mb-3 flex items-center justify-between">
+              <h2 className="mb-3 flex items-center justify-between">
                 Mate
                 <Button variant="ghost" size="sm">
                   <PlusIcon />
                 </Button>
-              </div>
+              </h2>
 
               <div className="space-y-2">
                 {mates.map((mate) => (

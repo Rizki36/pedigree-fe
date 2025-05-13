@@ -106,26 +106,26 @@ const AddAnimalDialog = (props: AddAnimalDialogProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Animal Type</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Animal type" />
                         </SelectTrigger>
-                        <SelectContent>
-                          {animalTypeListData?.docs.map((animalType) => (
-                            <SelectItem
-                              key={animalType.code}
-                              value={animalType.code}
-                            >
-                              {animalType.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
+                      </FormControl>
+                      <SelectContent>
+                        {animalTypeListData?.docs.map((animalType) => (
+                          <SelectItem
+                            key={animalType.code}
+                            value={animalType.code}
+                          >
+                            {animalType.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -136,23 +136,23 @@ const AddAnimalDialog = (props: AddAnimalDialogProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Gender</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
-                        <SelectContent>
-                          {Object.values(AnimalGender).map((gender) => (
-                            <SelectItem key={gender} value={gender}>
-                              {gender}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.values(AnimalGender).map((gender) => (
+                          <SelectItem key={gender} value={gender}>
+                            {gender}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
