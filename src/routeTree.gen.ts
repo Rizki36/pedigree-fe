@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as PrivacyPolicyIndexImport } from './routes/privacy-policy/index'
 import { Route as PedigreeIndexImport } from './routes/pedigree/index'
 import { Route as AnimalsIndexImport } from './routes/animals/index'
 import { Route as AnimalsAnimalIdIndexImport } from './routes/animals/$animalId/index'
@@ -40,6 +41,13 @@ const BreedingIndexLazyRoute = BreedingIndexLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/breeding/index.lazy').then((d) => d.Route),
+)
+
+const PrivacyPolicyIndexRoute = PrivacyPolicyIndexImport.update({
+  path: '/privacy-policy/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/privacy-policy/index.lazy').then((d) => d.Route),
 )
 
 const PedigreeIndexRoute = PedigreeIndexImport.update({
@@ -86,6 +94,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PedigreeIndexImport
       parentRoute: typeof rootRoute
     }
+    '/privacy-policy/': {
+      id: '/privacy-policy/'
+      path: '/privacy-policy'
+      fullPath: '/privacy-policy'
+      preLoaderRoute: typeof PrivacyPolicyIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/breeding/': {
       id: '/breeding/'
       path: '/breeding'
@@ -116,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/animals': typeof AnimalsIndexRoute
   '/pedigree': typeof PedigreeIndexRoute
+  '/privacy-policy': typeof PrivacyPolicyIndexRoute
   '/breeding': typeof BreedingIndexLazyRoute
   '/login': typeof LoginIndexLazyRoute
   '/animals/$animalId': typeof AnimalsAnimalIdIndexRoute
@@ -125,6 +141,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/animals': typeof AnimalsIndexRoute
   '/pedigree': typeof PedigreeIndexRoute
+  '/privacy-policy': typeof PrivacyPolicyIndexRoute
   '/breeding': typeof BreedingIndexLazyRoute
   '/login': typeof LoginIndexLazyRoute
   '/animals/$animalId': typeof AnimalsAnimalIdIndexRoute
@@ -135,6 +152,7 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/animals/': typeof AnimalsIndexRoute
   '/pedigree/': typeof PedigreeIndexRoute
+  '/privacy-policy/': typeof PrivacyPolicyIndexRoute
   '/breeding/': typeof BreedingIndexLazyRoute
   '/login/': typeof LoginIndexLazyRoute
   '/animals/$animalId/': typeof AnimalsAnimalIdIndexRoute
@@ -146,6 +164,7 @@ export interface FileRouteTypes {
     | '/'
     | '/animals'
     | '/pedigree'
+    | '/privacy-policy'
     | '/breeding'
     | '/login'
     | '/animals/$animalId'
@@ -154,6 +173,7 @@ export interface FileRouteTypes {
     | '/'
     | '/animals'
     | '/pedigree'
+    | '/privacy-policy'
     | '/breeding'
     | '/login'
     | '/animals/$animalId'
@@ -162,6 +182,7 @@ export interface FileRouteTypes {
     | '/'
     | '/animals/'
     | '/pedigree/'
+    | '/privacy-policy/'
     | '/breeding/'
     | '/login/'
     | '/animals/$animalId/'
@@ -172,6 +193,7 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AnimalsIndexRoute: typeof AnimalsIndexRoute
   PedigreeIndexRoute: typeof PedigreeIndexRoute
+  PrivacyPolicyIndexRoute: typeof PrivacyPolicyIndexRoute
   BreedingIndexLazyRoute: typeof BreedingIndexLazyRoute
   LoginIndexLazyRoute: typeof LoginIndexLazyRoute
   AnimalsAnimalIdIndexRoute: typeof AnimalsAnimalIdIndexRoute
@@ -181,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AnimalsIndexRoute: AnimalsIndexRoute,
   PedigreeIndexRoute: PedigreeIndexRoute,
+  PrivacyPolicyIndexRoute: PrivacyPolicyIndexRoute,
   BreedingIndexLazyRoute: BreedingIndexLazyRoute,
   LoginIndexLazyRoute: LoginIndexLazyRoute,
   AnimalsAnimalIdIndexRoute: AnimalsAnimalIdIndexRoute,
@@ -201,6 +224,7 @@ export const routeTree = rootRoute
         "/",
         "/animals/",
         "/pedigree/",
+        "/privacy-policy/",
         "/breeding/",
         "/login/",
         "/animals/$animalId/"
@@ -214,6 +238,9 @@ export const routeTree = rootRoute
     },
     "/pedigree/": {
       "filePath": "pedigree/index.tsx"
+    },
+    "/privacy-policy/": {
+      "filePath": "privacy-policy/index.tsx"
     },
     "/breeding/": {
       "filePath": "breeding/index.lazy.tsx"

@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useAuth } from "../../modules/auth/contexts/AuthContext";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, Link } from "@tanstack/react-router";
 import { useEffect } from "react";
 
 function LoginPage() {
@@ -54,6 +54,13 @@ function LoginPage() {
           </svg>
           <span>Sign in with Google</span>
         </button>
+
+        <div className="mt-6 text-sm text-center text-gray-600">
+          By signing in, you agree to our{" "}
+          <Link to="/privacy-policy" className="text-blue-500 hover:underline">
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </div>
   );

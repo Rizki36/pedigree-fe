@@ -2,7 +2,7 @@ import { Outlet, useRouter } from "@tanstack/react-router";
 import { useAuth } from "../contexts/AuthContext";
 import { useEffect } from "react";
 
-const publicRoutes = ["/login"];
+const publicRoutes = ["/login", "/privacy-policy"];
 
 export function RouteGuard() {
   const { isAuthenticated, isLoading } = useAuth();
