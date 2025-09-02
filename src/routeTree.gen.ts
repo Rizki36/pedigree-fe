@@ -15,14 +15,17 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as PrivacyPolicyIndexImport } from './routes/privacy-policy/index'
 import { Route as PedigreeIndexImport } from './routes/pedigree/index'
+import { Route as BreedingIndexImport } from './routes/breeding/index'
 import { Route as AnimalsIndexImport } from './routes/animals/index'
+import { Route as BreedingNewImport } from './routes/breeding/new'
+import { Route as BreedingBreedingIdImport } from './routes/breeding/$breedingId'
+import { Route as BreedingBreedingIdIndexImport } from './routes/breeding/$breedingId/index'
 import { Route as AnimalsAnimalIdIndexImport } from './routes/animals/$animalId/index'
 
 // Create Virtual Routes
 
 const IndexLazyImport = createFileRoute('/')()
 const LoginIndexLazyImport = createFileRoute('/login/')()
-const BreedingIndexLazyImport = createFileRoute('/breeding/')()
 
 // Create/Update Routes
 
@@ -35,13 +38,6 @@ const LoginIndexLazyRoute = LoginIndexLazyImport.update({
   path: '/login/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/login/index.lazy').then((d) => d.Route))
-
-const BreedingIndexLazyRoute = BreedingIndexLazyImport.update({
-  path: '/breeding/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/breeding/index.lazy').then((d) => d.Route),
-)
 
 const PrivacyPolicyIndexRoute = PrivacyPolicyIndexImport.update({
   path: '/privacy-policy/',
@@ -57,10 +53,32 @@ const PedigreeIndexRoute = PedigreeIndexImport.update({
   import('./routes/pedigree/index.lazy').then((d) => d.Route),
 )
 
+const BreedingIndexRoute = BreedingIndexImport.update({
+  path: '/breeding/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/breeding/index.lazy').then((d) => d.Route),
+)
+
 const AnimalsIndexRoute = AnimalsIndexImport.update({
   path: '/animals/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/animals/index.lazy').then((d) => d.Route))
+
+const BreedingNewRoute = BreedingNewImport.update({
+  path: '/breeding/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BreedingBreedingIdRoute = BreedingBreedingIdImport.update({
+  path: '/breeding/$breedingId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const BreedingBreedingIdIndexRoute = BreedingBreedingIdIndexImport.update({
+  path: '/',
+  getParentRoute: () => BreedingBreedingIdRoute,
+} as any)
 
 const AnimalsAnimalIdIndexRoute = AnimalsAnimalIdIndexImport.update({
   path: '/animals/$animalId/',
@@ -80,11 +98,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/breeding/$breedingId': {
+      id: '/breeding/$breedingId'
+      path: '/breeding/$breedingId'
+      fullPath: '/breeding/$breedingId'
+      preLoaderRoute: typeof BreedingBreedingIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/breeding/new': {
+      id: '/breeding/new'
+      path: '/breeding/new'
+      fullPath: '/breeding/new'
+      preLoaderRoute: typeof BreedingNewImport
+      parentRoute: typeof rootRoute
+    }
     '/animals/': {
       id: '/animals/'
       path: '/animals'
       fullPath: '/animals'
       preLoaderRoute: typeof AnimalsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/breeding/': {
+      id: '/breeding/'
+      path: '/breeding'
+      fullPath: '/breeding'
+      preLoaderRoute: typeof BreedingIndexImport
       parentRoute: typeof rootRoute
     }
     '/pedigree/': {
@@ -101,13 +140,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyPolicyIndexImport
       parentRoute: typeof rootRoute
     }
-    '/breeding/': {
-      id: '/breeding/'
-      path: '/breeding'
-      fullPath: '/breeding'
-      preLoaderRoute: typeof BreedingIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/login/': {
       id: '/login/'
       path: '/login'
@@ -122,89 +154,127 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnimalsAnimalIdIndexImport
       parentRoute: typeof rootRoute
     }
+    '/breeding/$breedingId/': {
+      id: '/breeding/$breedingId/'
+      path: '/'
+      fullPath: '/breeding/$breedingId/'
+      preLoaderRoute: typeof BreedingBreedingIdIndexImport
+      parentRoute: typeof BreedingBreedingIdImport
+    }
   }
 }
 
 // Create and export the route tree
 
+interface BreedingBreedingIdRouteChildren {
+  BreedingBreedingIdIndexRoute: typeof BreedingBreedingIdIndexRoute
+}
+
+const BreedingBreedingIdRouteChildren: BreedingBreedingIdRouteChildren = {
+  BreedingBreedingIdIndexRoute: BreedingBreedingIdIndexRoute,
+}
+
+const BreedingBreedingIdRouteWithChildren =
+  BreedingBreedingIdRoute._addFileChildren(BreedingBreedingIdRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
+  '/breeding/$breedingId': typeof BreedingBreedingIdRouteWithChildren
+  '/breeding/new': typeof BreedingNewRoute
   '/animals': typeof AnimalsIndexRoute
+  '/breeding': typeof BreedingIndexRoute
   '/pedigree': typeof PedigreeIndexRoute
   '/privacy-policy': typeof PrivacyPolicyIndexRoute
-  '/breeding': typeof BreedingIndexLazyRoute
   '/login': typeof LoginIndexLazyRoute
   '/animals/$animalId': typeof AnimalsAnimalIdIndexRoute
+  '/breeding/$breedingId/': typeof BreedingBreedingIdIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
+  '/breeding/new': typeof BreedingNewRoute
   '/animals': typeof AnimalsIndexRoute
+  '/breeding': typeof BreedingIndexRoute
   '/pedigree': typeof PedigreeIndexRoute
   '/privacy-policy': typeof PrivacyPolicyIndexRoute
-  '/breeding': typeof BreedingIndexLazyRoute
   '/login': typeof LoginIndexLazyRoute
   '/animals/$animalId': typeof AnimalsAnimalIdIndexRoute
+  '/breeding/$breedingId': typeof BreedingBreedingIdIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexLazyRoute
+  '/breeding/$breedingId': typeof BreedingBreedingIdRouteWithChildren
+  '/breeding/new': typeof BreedingNewRoute
   '/animals/': typeof AnimalsIndexRoute
+  '/breeding/': typeof BreedingIndexRoute
   '/pedigree/': typeof PedigreeIndexRoute
   '/privacy-policy/': typeof PrivacyPolicyIndexRoute
-  '/breeding/': typeof BreedingIndexLazyRoute
   '/login/': typeof LoginIndexLazyRoute
   '/animals/$animalId/': typeof AnimalsAnimalIdIndexRoute
+  '/breeding/$breedingId/': typeof BreedingBreedingIdIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/breeding/$breedingId'
+    | '/breeding/new'
     | '/animals'
+    | '/breeding'
     | '/pedigree'
     | '/privacy-policy'
-    | '/breeding'
     | '/login'
     | '/animals/$animalId'
+    | '/breeding/$breedingId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/breeding/new'
     | '/animals'
+    | '/breeding'
     | '/pedigree'
     | '/privacy-policy'
-    | '/breeding'
     | '/login'
     | '/animals/$animalId'
+    | '/breeding/$breedingId'
   id:
     | '__root__'
     | '/'
+    | '/breeding/$breedingId'
+    | '/breeding/new'
     | '/animals/'
+    | '/breeding/'
     | '/pedigree/'
     | '/privacy-policy/'
-    | '/breeding/'
     | '/login/'
     | '/animals/$animalId/'
+    | '/breeding/$breedingId/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
+  BreedingBreedingIdRoute: typeof BreedingBreedingIdRouteWithChildren
+  BreedingNewRoute: typeof BreedingNewRoute
   AnimalsIndexRoute: typeof AnimalsIndexRoute
+  BreedingIndexRoute: typeof BreedingIndexRoute
   PedigreeIndexRoute: typeof PedigreeIndexRoute
   PrivacyPolicyIndexRoute: typeof PrivacyPolicyIndexRoute
-  BreedingIndexLazyRoute: typeof BreedingIndexLazyRoute
   LoginIndexLazyRoute: typeof LoginIndexLazyRoute
   AnimalsAnimalIdIndexRoute: typeof AnimalsAnimalIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
+  BreedingBreedingIdRoute: BreedingBreedingIdRouteWithChildren,
+  BreedingNewRoute: BreedingNewRoute,
   AnimalsIndexRoute: AnimalsIndexRoute,
+  BreedingIndexRoute: BreedingIndexRoute,
   PedigreeIndexRoute: PedigreeIndexRoute,
   PrivacyPolicyIndexRoute: PrivacyPolicyIndexRoute,
-  BreedingIndexLazyRoute: BreedingIndexLazyRoute,
   LoginIndexLazyRoute: LoginIndexLazyRoute,
   AnimalsAnimalIdIndexRoute: AnimalsAnimalIdIndexRoute,
 }
@@ -222,10 +292,12 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/breeding/$breedingId",
+        "/breeding/new",
         "/animals/",
+        "/breeding/",
         "/pedigree/",
         "/privacy-policy/",
-        "/breeding/",
         "/login/",
         "/animals/$animalId/"
       ]
@@ -233,8 +305,20 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.lazy.tsx"
     },
+    "/breeding/$breedingId": {
+      "filePath": "breeding/$breedingId.tsx",
+      "children": [
+        "/breeding/$breedingId/"
+      ]
+    },
+    "/breeding/new": {
+      "filePath": "breeding/new.tsx"
+    },
     "/animals/": {
       "filePath": "animals/index.tsx"
+    },
+    "/breeding/": {
+      "filePath": "breeding/index.tsx"
     },
     "/pedigree/": {
       "filePath": "pedigree/index.tsx"
@@ -242,14 +326,15 @@ export const routeTree = rootRoute
     "/privacy-policy/": {
       "filePath": "privacy-policy/index.tsx"
     },
-    "/breeding/": {
-      "filePath": "breeding/index.lazy.tsx"
-    },
     "/login/": {
       "filePath": "login/index.lazy.tsx"
     },
     "/animals/$animalId/": {
       "filePath": "animals/$animalId/index.tsx"
+    },
+    "/breeding/$breedingId/": {
+      "filePath": "breeding/$breedingId/index.tsx",
+      "parent": "/breeding/$breedingId"
     }
   }
 }
