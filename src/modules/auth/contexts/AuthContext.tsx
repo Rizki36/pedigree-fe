@@ -1,15 +1,10 @@
 import { BASE_URL } from "@/modules/common/constants";
 import fetchInstance from "@/modules/common/lib/fetch-instance";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext } from "react";
 import type { ReactNode } from "react";
-
-interface User {
-  id: string;
-  email: string;
-  name?: string;
-  profilePictureUrl?: string;
-}
+import type { User } from "../types";
+import useUserQuery from "@/modules/auth/hooks/queries/useUserQuery";
 
 export interface AuthContextType {
   user: User | null;
@@ -20,27 +15,6 @@ export interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-const useUserQuery = () => {
-  return useQuery({
-    queryKey: ["user"],
-    queryFn: async () => {
-      const data = await fetchInstance<{ user: User; authenticated: boolean }>(
-        "/v1/auth/me",
-        {
-          method: "GET",
-        },
-      );
-
-      if (data.authenticated && data.user) {
-        return data.user as User;
-      }
-
-      return undefined;
-    },
-    refetchOnMount: false,
-  });
-};
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const queryClient = useQueryClient();
