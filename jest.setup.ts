@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import { Link } from "./__mocks__/react-router";
 
 // Mock matchMedia to avoid errors in tests
 Object.defineProperty(window, "matchMedia", {
@@ -44,3 +45,37 @@ console.error = (...args) => {
   }
   originalConsoleError(...args);
 };
+
+// Mock the constants module
+jest.mock("@/modules/common/constants", () => ({
+  BASE_URL: "http://localhost:3011",
+}));
+
+// Mock the router Link component
+jest.mock("@tanstack/react-router", () => ({
+  ...jest.requireActual("@tanstack/react-router"),
+  useNavigate: jest.fn(() => jest.fn()),
+  Link: Link,
+}));
+
+// Mock useUserQuery hook from AuthContext
+jest.mock(
+  "@/modules/auth/hooks/queries/useUserQuery",
+  jest.fn(() => ({
+    data: {
+      id: "",
+      email: "",
+      name: "",
+      profilePictureUrl: "",
+    },
+    isLoading: false,
+    isError: false,
+    error: null,
+    refetch: jest.fn(),
+  })),
+);
+
+jest.mock("@/modules/auth/contexts/AuthContext", () => ({
+  useAuth: jest.fn(),
+  AuthProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
