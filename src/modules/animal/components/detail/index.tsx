@@ -23,7 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/modules/common/components/ui/dropdown-menu";
 import React, { useState, type FC } from "react";
-import dayjs from "dayjs";
+import { format } from "date-fns";
 import useAnimal from "../../hooks/useAnimal";
 import DetailsSection from "./DetailsSection";
 import ParentSection from "./ParentSection";
@@ -227,7 +227,7 @@ export const Mate: FC<{
 
         <div className="flex justify-between items-center">
           <div className="text-xs mt-1 text-neutral-400">
-            Mated at: <span>{dayjs(mate.matedAt).format("DD MMMM YYYY")}</span>
+            Mated at: <span>{format(mate.matedAt, "dd MMMM yyyy")}</span>
           </div>
           <div className="text-xs mt-1 text-neutral-400">Children: 3</div>
         </div>

@@ -25,7 +25,7 @@ import { toast } from "sonner";
 import { cn, generateServiceErrorMessage } from "@/modules/common/lib/utils";
 import useUpdateAnimalMutation from "@/modules/animal/hooks/mutations/useUpdateAnimalMutation";
 import { useState, type FC } from "react";
-import dayjs from "dayjs";
+import { differenceInYears, format, parseISO } from "date-fns";
 import { Button } from "@/modules/common/components/ui/button";
 import {
   Popover,
@@ -74,9 +74,9 @@ const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
         <div className="text-neutral-500 text-xs">Date of Birth</div>
         {animal?.dateOfBirth ? (
           <div className="space-x-1">
-            <span>{dayjs(animal.dateOfBirth).format("D MMM YYYY")}</span>
+            <span>{format(animal.dateOfBirth, "d MMM yyyy")}</span>
             <Badge variant="secondary">
-              {dayjs().diff(dayjs(animal.dateOfBirth), "year")} Years old
+              {differenceInYears(new Date(), parseISO(animal.dateOfBirth))} Years old
             </Badge>
           </div>
         ) : (
@@ -88,7 +88,7 @@ const DetailsView: FC<{ animal: Animal | undefined }> = ({ animal }) => {
         <div className="text-neutral-500 text-xs">Died at</div>
         <div>
           {animal?.diedAt ? (
-            dayjs(animal.diedAt).format("D MMM YYYY")
+            format(animal.diedAt, "d MMM yyyy")
           ) : (
             <span>Alive</span>
           )}
@@ -123,10 +123,10 @@ const DetailsForm: FC<{
       name: animal?.name,
       code: animal?.code,
       dateOfBirth: animal?.dateOfBirth
-        ? dayjs(animal?.dateOfBirth).format("YYYY-MM-DD")
+        ? format(animal?.dateOfBirth, "yyyy-MM-dd")
         : null,
       diedAt: animal?.diedAt
-        ? dayjs(animal?.diedAt).format("YYYY-MM-DD")
+        ? format(animal?.diedAt, "yyyy-MM-dd")
         : null,
       gender: animal?.gender || undefined,
     },
@@ -244,7 +244,7 @@ const DetailsForm: FC<{
                       >
                         <CalendarIcon />
                         {field.value ? (
-                          dayjs(field.value).format("DD MMM YYYY")
+                          format(field.value, "dd MMM yyyy")
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -255,11 +255,11 @@ const DetailsForm: FC<{
                     <Calendar
                       mode="single"
                       selected={
-                        field.value ? dayjs(field.value).toDate() : undefined
+                        field.value ? parseISO(field.value) : undefined
                       }
                       onSelect={(day) => {
                         field.onChange(
-                          day ? dayjs(day).format("YYYY-MM-DD") : null,
+                          day ? format(day, "yyyy-MM-dd") : null,
                         );
                       }}
                       initialFocus
@@ -297,7 +297,7 @@ const DetailsForm: FC<{
                       >
                         <CalendarIcon />
                         {field.value ? (
-                          dayjs(field.value).format("DD MMM YYYY")
+                          format(field.value, "dd MMM yyyy")
                         ) : (
                           <span>Pick a date</span>
                         )}
@@ -308,11 +308,11 @@ const DetailsForm: FC<{
                     <Calendar
                       mode="single"
                       selected={
-                        field.value ? dayjs(field.value).toDate() : undefined
+                        field.value ? parseISO(field.value) : undefined
                       }
                       onSelect={(day) => {
                         field.onChange(
-                          day ? dayjs(day).format("YYYY-MM-DD") : null,
+                          day ? format(day, "yyyy-MM-dd") : null,
                         );
                       }}
                       initialFocus

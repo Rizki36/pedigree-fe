@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/modules/common/components/ui/table";
-import dayjs from "dayjs";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -75,7 +75,7 @@ const AchievementTable = (props: AchievementTableProps) => {
         cell: ({ row }) => (
           <div>
             {row.getValue("issuedAt")
-              ? dayjs(row.getValue("issuedAt")).format("DD MMM YY")
+              ? format(row.getValue("issuedAt"), "dd MMM yy")
               : "N/A"}
           </div>
         ),

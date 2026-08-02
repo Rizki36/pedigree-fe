@@ -27,7 +27,7 @@ import useAddAchievementMutation from "@/modules/achievement/hooks/mutations/use
 import useUpdateAchievementMutation from "@/modules/achievement/hooks/mutations/useUpdateAchievementMutation";
 import type { Achievement } from "@/modules/achievement/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import dayjs from "dayjs";
+import { format, parseISO } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { useEffect, type FC } from "react";
 import { useForm } from "react-hook-form";
@@ -220,7 +220,7 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
                         >
                           <CalendarIcon />
                           {field.value ? (
-                            dayjs(field.value).format("DD MMM YYYY")
+                            format(field.value, "dd MMM yyyy")
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -234,13 +234,11 @@ const AchievementDialog: FC<AchievementDialogProps> = ({ state, setState }) => {
                         <Calendar
                           mode="single"
                           selected={
-                            field.value
-                              ? dayjs(field.value).toDate()
-                              : undefined
+                            field.value ? parseISO(field.value) : undefined
                           }
                           onSelect={(day) => {
                             field.onChange(
-                              day ? dayjs(day).format("YYYY-MM-DD") : null,
+                              day ? format(day, "yyyy-MM-dd") : null,
                             );
                           }}
                           initialFocus
