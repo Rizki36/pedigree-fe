@@ -1,16 +1,16 @@
 # Graph Report - pedigree-fe  (2026-08-02)
 
 ## Corpus Check
-- 96 files · ~19,490 words
+- 96 files · ~19,514 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 387 nodes · 816 edges · 18 communities (12 shown, 6 thin omitted)
+- 387 nodes · 811 edges · 18 communities (12 shown, 6 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.65)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `94c0cdf4`
+- Built from commit: `a5df2c39`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,7 +38,7 @@
 1. `cn()` - 45 edges
 2. `generateServiceErrorMessage()` - 13 edges
 3. `useAnimalListQuery()` - 10 edges
-4. `animalService` - 10 edges
+4. `animalService` - 9 edges
 5. `Button` - 9 edges
 6. `fetchInstance()` - 8 edges
 7. `useUpdateAnimalMutation()` - 7 edges
@@ -72,8 +72,8 @@ Cohesion: 0.09
 Nodes (21): Login(), PrivacyAgreement(), SignButton(), mockLogin, mockNavigate, publicRoutes, RouteGuard(), AuthContext (+13 more)
 
 ### Community 2 - "Animal Data Services"
-Cohesion: 0.09
-Nodes (31): UseAddAnimalMutationProps, UseDeleteAnimalMutationProps, UseUpdateAnimalMutationProps, UseAnimalListQueryProps, useDobRequirementQuery(), UseDobRequirementQueryProps, useGenderRequirementQuery(), UseGenderRequirementQueryProps (+23 more)
+Cohesion: 0.10
+Nodes (30): UseAddAnimalMutationProps, UseDeleteAnimalMutationProps, UseUpdateAnimalMutationProps, UseAnimalListQueryProps, useDobRequirementQuery(), UseDobRequirementQueryProps, useGenderRequirementQuery(), UseGenderRequirementQueryProps (+22 more)
 
 ### Community 3 - "Tables & Data Display"
 Cohesion: 0.13
@@ -88,8 +88,8 @@ Cohesion: 0.08
 Nodes (27): AchievementDialogProps, DeleteAnimalDialogProps, AchievementDialog, AnimalDetail(), DeleteAchievementDialog, DeleteAnimalDialog, MateType, useAnimal() (+19 more)
 
 ### Community 6 - "Pedigree & Parent Management"
-Cohesion: 0.13
-Nodes (20): NoteForm(), formSchema, ParentForm(), ParentSection(), useUpdateAnimalMutation(), useAnimalListQuery(), useInfiniteAnimalListQuery(), Command (+12 more)
+Cohesion: 0.12
+Nodes (21): NoteForm(), formSchema, ParentForm(), ParentSection(), useUpdateAnimalMutation(), useAnimalListQuery(), useInfiniteAnimalListQuery(), UseInfiniteAnimalListQueryProps (+13 more)
 
 ### Community 8 - "Achievement Services"
 Cohesion: 0.25
@@ -112,7 +112,7 @@ Cohesion: 0.42
 Nodes (5): UseAnimalTypeListQueryProps, animalTypeService, GetAnimalTypeListQuery, GetAnimalTypeListResponse, AnimalType
 
 ## Knowledge Gaps
-- **111 isolated node(s):** `formSchema`, `AddAnimalDialog`, `LanguageOption`, `IndexLazyRouteImport`, `BreedingIndexLazyRouteImport` (+106 more)
+- **111 isolated node(s):** `UseInfiniteAnimalListQueryProps`, `formSchema`, `AddAnimalDialog`, `LanguageOption`, `IndexLazyRouteImport` (+106 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -125,11 +125,11 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.123) - this node is a cross-community bridge._
 - **Why does `AuthProvider()` connect `App Shell & Auth` to `Routing & Generated Routes`?**
   _High betweenness centrality (0.048) - this node is a cross-community bridge._
-- **What connects `formSchema`, `AddAnimalDialog`, `LanguageOption` to the rest of the system?**
+- **What connects `UseInfiniteAnimalListQueryProps`, `formSchema`, `AddAnimalDialog` to the rest of the system?**
   _111 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Forms & UI Components` be split into smaller, more focused modules?**
   _Cohesion score 0.052614052614052616 - nodes in this community are weakly interconnected._
 - **Should `App Shell & Auth` be split into smaller, more focused modules?**
   _Cohesion score 0.0945945945945946 - nodes in this community are weakly interconnected._
 - **Should `Animal Data Services` be split into smaller, more focused modules?**
-  _Cohesion score 0.09308510638297872 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09565217391304348 - nodes in this community are weakly interconnected._

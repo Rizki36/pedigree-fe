@@ -4,15 +4,48 @@
   "graph": {},
   "nodes": [
     {
+      "label": "useInfiniteAnimalListQuery.ts",
+      "file_type": "code",
+      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
+      "community": 6,
+      "community_name": "Pedigree & Parent Management",
+      "norm_label": "useinfiniteanimallistquery.ts"
+    },
+    {
+      "label": "UseInfiniteAnimalListQueryProps",
+      "file_type": "code",
+      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistqueryprops",
+      "community": 6,
+      "community_name": "Pedigree & Parent Management",
+      "norm_label": "useinfiniteanimallistqueryprops"
+    },
+    {
+      "label": "useInfiniteAnimalListQuery()",
+      "file_type": "code",
+      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery",
+      "community": 6,
+      "community_name": "Pedigree & Parent Management",
+      "norm_label": "useinfiniteanimallistquery()"
+    },
+    {
       "label": "DeleteAnimalDialog.tsx",
       "file_type": "code",
       "source_file": "src/modules/animal/components/detail/DeleteAnimalDialog.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_modules_animal_components_detail_deleteanimaldialog",
       "community": 5,
       "community_name": "Animal Detail Views",
-      "norm_label": "deleteanimaldialog.tsx"
+      "norm_label": "deleteanimaldialog.tsx",
+      "id": "src_modules_animal_components_detail_deleteanimaldialog"
     },
     {
       "label": "DeleteAnimalDialogProps",
@@ -20,10 +53,10 @@
       "source_file": "src/modules/animal/components/detail/DeleteAnimalDialog.tsx",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialogprops",
       "community": 5,
       "community_name": "Animal Detail Views",
-      "norm_label": "deleteanimaldialogprops"
+      "norm_label": "deleteanimaldialogprops",
+      "id": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialogprops"
     },
     {
       "label": "DeleteAnimalDialog()",
@@ -31,10 +64,10 @@
       "source_file": "src/modules/animal/components/detail/DeleteAnimalDialog.tsx",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialog",
       "community": 5,
       "community_name": "Animal Detail Views",
-      "norm_label": "deleteanimaldialog()"
+      "norm_label": "deleteanimaldialog()",
+      "id": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialog"
     },
     {
       "label": "AddAnimalDialog.tsx",
@@ -42,10 +75,10 @@
       "source_file": "src/modules/animal/components/main/AddAnimalDialog.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_addanimaldialog",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "addanimaldialog.tsx"
+      "norm_label": "addanimaldialog.tsx",
+      "id": "src_modules_animal_components_main_addanimaldialog"
     },
     {
       "label": "AddAnimalDialogProps",
@@ -53,10 +86,10 @@
       "source_file": "src/modules/animal/components/main/AddAnimalDialog.tsx",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_addanimaldialog_addanimaldialogprops",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "addanimaldialogprops"
+      "norm_label": "addanimaldialogprops",
+      "id": "src_modules_animal_components_main_addanimaldialog_addanimaldialogprops"
     },
     {
       "label": "formSchema",
@@ -64,10 +97,10 @@
       "source_file": "src/modules/animal/components/main/AddAnimalDialog.tsx",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_addanimaldialog_formschema",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "formschema"
+      "norm_label": "formschema",
+      "id": "src_modules_animal_components_main_addanimaldialog_formschema"
     },
     {
       "label": "AddAnimalDialog()",
@@ -75,10 +108,10 @@
       "source_file": "src/modules/animal/components/main/AddAnimalDialog.tsx",
       "source_location": "L49",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_addanimaldialog_addanimaldialog",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "addanimaldialog()"
+      "norm_label": "addanimaldialog()",
+      "id": "src_modules_animal_components_main_addanimaldialog_addanimaldialog"
     },
     {
       "label": "animal/components/main/index.tsx",
@@ -86,10 +119,10 @@
       "source_file": "src/modules/animal/components/main/index.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_index",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "animal/components/main/index.tsx"
+      "norm_label": "animal/components/main/index.tsx",
+      "id": "src_modules_animal_components_main_index"
     },
     {
       "label": "AddAnimalDialog",
@@ -97,10 +130,10 @@
       "source_file": "src/modules/animal/components/main/index.tsx",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_index_addanimaldialog",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "addanimaldialog"
+      "norm_label": "addanimaldialog",
+      "id": "src_modules_animal_components_main_index_addanimaldialog"
     },
     {
       "label": "Animals()",
@@ -108,10 +141,10 @@
       "source_file": "src/modules/animal/components/main/index.tsx",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "src_modules_animal_components_main_index_animals",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "animals()"
+      "norm_label": "animals()",
+      "id": "src_modules_animal_components_main_index_animals"
     },
     {
       "label": "MainLayout.tsx",
@@ -119,10 +152,10 @@
       "source_file": "src/modules/common/components/layouts/MainLayout.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_modules_common_components_layouts_mainlayout",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "mainlayout.tsx"
+      "norm_label": "mainlayout.tsx",
+      "id": "src_modules_common_components_layouts_mainlayout"
     },
     {
       "label": "Sidebar()",
@@ -130,10 +163,10 @@
       "source_file": "src/modules/common/components/layouts/MainLayout.tsx",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "src_modules_common_components_layouts_mainlayout_sidebar",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "sidebar()"
+      "norm_label": "sidebar()",
+      "id": "src_modules_common_components_layouts_mainlayout_sidebar"
     },
     {
       "label": "LanguageOption",
@@ -141,10 +174,10 @@
       "source_file": "src/modules/common/components/layouts/MainLayout.tsx",
       "source_location": "L126",
       "_origin": "ast",
-      "id": "src_modules_common_components_layouts_mainlayout_languageoption",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "languageoption"
+      "norm_label": "languageoption",
+      "id": "src_modules_common_components_layouts_mainlayout_languageoption"
     },
     {
       "label": "LanguageSwitcher()",
@@ -152,10 +185,10 @@
       "source_file": "src/modules/common/components/layouts/MainLayout.tsx",
       "source_location": "L128",
       "_origin": "ast",
-      "id": "src_modules_common_components_layouts_mainlayout_languageswitcher",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "languageswitcher()"
+      "norm_label": "languageswitcher()",
+      "id": "src_modules_common_components_layouts_mainlayout_languageswitcher"
     },
     {
       "label": "MainLayout()",
@@ -163,10 +196,10 @@
       "source_file": "src/modules/common/components/layouts/MainLayout.tsx",
       "source_location": "L157",
       "_origin": "ast",
-      "id": "src_modules_common_components_layouts_mainlayout_mainlayout",
       "community": 12,
       "community_name": "Breeding Module",
-      "norm_label": "mainlayout()"
+      "norm_label": "mainlayout()",
+      "id": "src_modules_common_components_layouts_mainlayout_mainlayout"
     },
     {
       "label": "routeTree.gen.ts",
@@ -174,10 +207,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_routetree_gen",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "routetree.gen.ts"
+      "norm_label": "routetree.gen.ts",
+      "id": "src_routetree_gen"
     },
     {
       "label": "IndexLazyRouteImport",
@@ -185,10 +218,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "src_routetree_gen_indexlazyrouteimport",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "indexlazyrouteimport"
+      "norm_label": "indexlazyrouteimport",
+      "id": "src_routetree_gen_indexlazyrouteimport"
     },
     {
       "label": "BreedingIndexLazyRouteImport",
@@ -196,10 +229,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "src_routetree_gen_breedingindexlazyrouteimport",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "breedingindexlazyrouteimport"
+      "norm_label": "breedingindexlazyrouteimport",
+      "id": "src_routetree_gen_breedingindexlazyrouteimport"
     },
     {
       "label": "LoginIndexLazyRouteImport",
@@ -207,10 +240,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "src_routetree_gen_loginindexlazyrouteimport",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "loginindexlazyrouteimport"
+      "norm_label": "loginindexlazyrouteimport",
+      "id": "src_routetree_gen_loginindexlazyrouteimport"
     },
     {
       "label": "IndexLazyRoute",
@@ -218,10 +251,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "src_routetree_gen_indexlazyroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "indexlazyroute"
+      "norm_label": "indexlazyroute",
+      "id": "src_routetree_gen_indexlazyroute"
     },
     {
       "label": "AnimalsIndexRoute",
@@ -229,10 +262,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "src_routetree_gen_animalsindexroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "animalsindexroute"
+      "norm_label": "animalsindexroute",
+      "id": "src_routetree_gen_animalsindexroute"
     },
     {
       "label": "BreedingIndexLazyRoute",
@@ -240,10 +273,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "src_routetree_gen_breedingindexlazyroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "breedingindexlazyroute"
+      "norm_label": "breedingindexlazyroute",
+      "id": "src_routetree_gen_breedingindexlazyroute"
     },
     {
       "label": "LoginIndexLazyRoute",
@@ -251,10 +284,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L40",
       "_origin": "ast",
-      "id": "src_routetree_gen_loginindexlazyroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "loginindexlazyroute"
+      "norm_label": "loginindexlazyroute",
+      "id": "src_routetree_gen_loginindexlazyroute"
     },
     {
       "label": "PedigreeIndexRoute",
@@ -262,10 +295,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "src_routetree_gen_pedigreeindexroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "pedigreeindexroute"
+      "norm_label": "pedigreeindexroute",
+      "id": "src_routetree_gen_pedigreeindexroute"
     },
     {
       "label": "PrivacyPolicyIndexRoute",
@@ -273,10 +306,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "src_routetree_gen_privacypolicyindexroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "privacypolicyindexroute"
+      "norm_label": "privacypolicyindexroute",
+      "id": "src_routetree_gen_privacypolicyindexroute"
     },
     {
       "label": "AnimalsAnimalIdIndexRoute",
@@ -284,10 +317,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "src_routetree_gen_animalsanimalidindexroute",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "animalsanimalidindexroute"
+      "norm_label": "animalsanimalidindexroute",
+      "id": "src_routetree_gen_animalsanimalidindexroute"
     },
     {
       "label": "FileRoutesByFullPath",
@@ -295,10 +328,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "src_routetree_gen_fileroutesbyfullpath",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "fileroutesbyfullpath"
+      "norm_label": "fileroutesbyfullpath",
+      "id": "src_routetree_gen_fileroutesbyfullpath"
     },
     {
       "label": "FileRoutesByTo",
@@ -306,10 +339,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L76",
       "_origin": "ast",
-      "id": "src_routetree_gen_fileroutesbyto",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "fileroutesbyto"
+      "norm_label": "fileroutesbyto",
+      "id": "src_routetree_gen_fileroutesbyto"
     },
     {
       "label": "FileRoutesById",
@@ -317,10 +350,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L85",
       "_origin": "ast",
-      "id": "src_routetree_gen_fileroutesbyid",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "fileroutesbyid"
+      "norm_label": "fileroutesbyid",
+      "id": "src_routetree_gen_fileroutesbyid"
     },
     {
       "label": "FileRouteTypes",
@@ -328,10 +361,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "src_routetree_gen_fileroutetypes",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "fileroutetypes"
+      "norm_label": "fileroutetypes",
+      "id": "src_routetree_gen_fileroutetypes"
     },
     {
       "label": "RootRouteChildren",
@@ -339,10 +372,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L125",
       "_origin": "ast",
-      "id": "src_routetree_gen_rootroutechildren",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "rootroutechildren"
+      "norm_label": "rootroutechildren",
+      "id": "src_routetree_gen_rootroutechildren"
     },
     {
       "label": "@tanstack/react-router",
@@ -350,10 +383,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L135",
       "_origin": "ast",
-      "id": "src_routetree_gen_tanstack_react_router",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "@tanstack/react-router"
+      "norm_label": "@tanstack/react-router",
+      "id": "src_routetree_gen_tanstack_react_router"
     },
     {
       "label": "FileRoutesByPath",
@@ -361,10 +394,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L136",
       "_origin": "ast",
-      "id": "src_routetree_gen_fileroutesbypath",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "fileroutesbypath"
+      "norm_label": "fileroutesbypath",
+      "id": "src_routetree_gen_fileroutesbypath"
     },
     {
       "label": "routeTree",
@@ -372,10 +405,10 @@
       "source_file": "src/routeTree.gen.ts",
       "source_location": "L198",
       "_origin": "ast",
-      "id": "src_routetree_gen_routetree",
       "community": 4,
       "community_name": "Routing & Generated Routes",
-      "norm_label": "routetree"
+      "norm_label": "routetree",
+      "id": "src_routetree_gen_routetree"
     },
     {
       "label": "RouteGuard.tsx",
@@ -1421,39 +1454,6 @@
       "norm_label": "usegenderrequirementquery()",
       "community_name": "Animal Data Services",
       "id": "src_modules_animal_hooks_queries_usegenderrequirementquery_usegenderrequirementquery"
-    },
-    {
-      "label": "useInfiniteAnimalListQuery.ts",
-      "file_type": "code",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "useinfiniteanimallistquery.ts",
-      "community_name": "Animal Data Services",
-      "id": "src_modules_animal_hooks_queries_useinfiniteanimallistquery"
-    },
-    {
-      "label": "UseInfiniteAnimalListQueryProps",
-      "file_type": "code",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "useinfiniteanimallistqueryprops",
-      "community_name": "Animal Data Services",
-      "id": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistqueryprops"
-    },
-    {
-      "label": "useInfiniteAnimalListQuery()",
-      "file_type": "code",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 6,
-      "norm_label": "useinfiniteanimallistquery()",
-      "community_name": "Pedigree & Parent Management",
-      "id": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
     },
     {
       "label": "useParentRequirementQuery.ts",
@@ -4278,15 +4278,109 @@
   ],
   "links": [
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "src_modules_animal_components_detail_parentsection",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistqueryprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/pedigree/components/main/index.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "src_modules_pedigree_components_main_index",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "src_modules_animal_components_detail_parentsection",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
+      "source_location": "L146",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_animal_components_detail_parentsection_parentform",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/modules/pedigree/components/main/index.tsx",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_origin": "ast",
+      "confidence_score": 1.0,
+      "source": "src_modules_pedigree_components_main_index",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/modules/pedigree/components/main/index.tsx",
+      "source_location": "L63",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "src_modules_pedigree_components_main_index_pedigree",
+      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/animal/components/detail/DeleteAnimalDialog.tsx",
       "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_detail_deleteanimaldialog",
-      "target": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialog",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialog"
     },
     {
       "relation": "contains",
@@ -4295,9 +4389,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_detail_deleteanimaldialog",
-      "target": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialogprops",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_detail_deleteanimaldialog_deleteanimaldialogprops"
     },
     {
       "relation": "imports_from",
@@ -4330,9 +4424,9 @@
       "source_location": "L49",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_addanimaldialog",
-      "target": "src_modules_animal_components_main_addanimaldialog_addanimaldialog",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_addanimaldialog_addanimaldialog"
     },
     {
       "relation": "contains",
@@ -4341,9 +4435,9 @@
       "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_addanimaldialog",
-      "target": "src_modules_animal_components_main_addanimaldialog_addanimaldialogprops",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_addanimaldialog_addanimaldialogprops"
     },
     {
       "relation": "contains",
@@ -4352,9 +4446,9 @@
       "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_addanimaldialog",
-      "target": "src_modules_animal_components_main_addanimaldialog_formschema",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_addanimaldialog_formschema"
     },
     {
       "relation": "imports_from",
@@ -4364,9 +4458,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_index",
-      "target": "src_modules_animal_components_main_addanimaldialog",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_addanimaldialog"
     },
     {
       "relation": "imports",
@@ -4376,9 +4470,9 @@
       "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_index",
-      "target": "src_modules_animal_components_main_addanimaldialog_addanimaldialogprops",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_addanimaldialog_addanimaldialogprops"
     },
     {
       "relation": "contains",
@@ -4387,9 +4481,9 @@
       "source_location": "L15",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_index",
-      "target": "src_modules_animal_components_main_index_addanimaldialog",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_index_addanimaldialog"
     },
     {
       "relation": "contains",
@@ -4398,9 +4492,9 @@
       "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_index",
-      "target": "src_modules_animal_components_main_index_animals",
-      "confidence_score": 1.0
+      "target": "src_modules_animal_components_main_index_animals"
     },
     {
       "relation": "imports_from",
@@ -4410,9 +4504,9 @@
       "source_location": "L12",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_animal_components_main_index",
-      "target": "src_modules_common_components_layouts_mainlayout",
-      "confidence_score": 1.0
+      "target": "src_modules_common_components_layouts_mainlayout"
     },
     {
       "relation": "imports_from",
@@ -4469,9 +4563,9 @@
       "source_location": "L126",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_common_components_layouts_mainlayout",
-      "target": "src_modules_common_components_layouts_mainlayout_languageoption",
-      "confidence_score": 1.0
+      "target": "src_modules_common_components_layouts_mainlayout_languageoption"
     },
     {
       "relation": "contains",
@@ -4480,9 +4574,9 @@
       "source_location": "L128",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_common_components_layouts_mainlayout",
-      "target": "src_modules_common_components_layouts_mainlayout_languageswitcher",
-      "confidence_score": 1.0
+      "target": "src_modules_common_components_layouts_mainlayout_languageswitcher"
     },
     {
       "relation": "contains",
@@ -4491,9 +4585,9 @@
       "source_location": "L157",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_common_components_layouts_mainlayout",
-      "target": "src_modules_common_components_layouts_mainlayout_mainlayout",
-      "confidence_score": 1.0
+      "target": "src_modules_common_components_layouts_mainlayout_mainlayout"
     },
     {
       "relation": "contains",
@@ -4502,9 +4596,9 @@
       "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_modules_common_components_layouts_mainlayout",
-      "target": "src_modules_common_components_layouts_mainlayout_sidebar",
-      "confidence_score": 1.0
+      "target": "src_modules_common_components_layouts_mainlayout_sidebar"
     },
     {
       "relation": "imports_from",
@@ -4549,9 +4643,9 @@
       "source_location": "L59",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_animalsanimalidindexroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_animalsanimalidindexroute"
     },
     {
       "relation": "contains",
@@ -4560,9 +4654,9 @@
       "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_animalsindexroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_animalsindexroute"
     },
     {
       "relation": "contains",
@@ -4571,9 +4665,9 @@
       "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_breedingindexlazyroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_breedingindexlazyroute"
     },
     {
       "relation": "contains",
@@ -4582,9 +4676,9 @@
       "source_location": "L20",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_breedingindexlazyrouteimport",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_breedingindexlazyrouteimport"
     },
     {
       "relation": "contains",
@@ -4593,9 +4687,9 @@
       "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_fileroutesbyfullpath",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_fileroutesbyfullpath"
     },
     {
       "relation": "contains",
@@ -4604,9 +4698,9 @@
       "source_location": "L85",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_fileroutesbyid",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_fileroutesbyid"
     },
     {
       "relation": "contains",
@@ -4615,9 +4709,9 @@
       "source_location": "L136",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_fileroutesbypath",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_fileroutesbypath"
     },
     {
       "relation": "contains",
@@ -4626,9 +4720,9 @@
       "source_location": "L76",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_fileroutesbyto",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_fileroutesbyto"
     },
     {
       "relation": "contains",
@@ -4637,9 +4731,9 @@
       "source_location": "L95",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_fileroutetypes",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_fileroutetypes"
     },
     {
       "relation": "contains",
@@ -4648,9 +4742,9 @@
       "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_indexlazyroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_indexlazyroute"
     },
     {
       "relation": "contains",
@@ -4659,9 +4753,9 @@
       "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_indexlazyrouteimport",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_indexlazyrouteimport"
     },
     {
       "relation": "contains",
@@ -4670,9 +4764,9 @@
       "source_location": "L40",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_loginindexlazyroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_loginindexlazyroute"
     },
     {
       "relation": "contains",
@@ -4681,9 +4775,9 @@
       "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_loginindexlazyrouteimport",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_loginindexlazyrouteimport"
     },
     {
       "relation": "contains",
@@ -4692,9 +4786,9 @@
       "source_location": "L45",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_pedigreeindexroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_pedigreeindexroute"
     },
     {
       "relation": "contains",
@@ -4703,9 +4797,9 @@
       "source_location": "L52",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_privacypolicyindexroute",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_privacypolicyindexroute"
     },
     {
       "relation": "contains",
@@ -4714,9 +4808,9 @@
       "source_location": "L189",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_rootroutechildren",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_rootroutechildren"
     },
     {
       "relation": "contains",
@@ -4725,9 +4819,9 @@
       "source_location": "L198",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_routetree",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_routetree"
     },
     {
       "relation": "contains",
@@ -4736,9 +4830,9 @@
       "source_location": "L135",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "src_routetree_gen",
-      "target": "src_routetree_gen_tanstack_react_router",
-      "confidence_score": 1.0
+      "target": "src_routetree_gen_tanstack_react_router"
     },
     {
       "relation": "imports",
@@ -7421,30 +7515,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_components_detail_parentsection",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
-      "source_location": "L26",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_components_detail_parentsection",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
       "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
@@ -7727,18 +7797,6 @@
       "_origin": "ast",
       "source": "src_modules_animal_components_detail_parentsection_parentform",
       "target": "src_modules_animal_hooks_queries_useanimallistquery_useanimallistquery"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/modules/animal/components/detail/ParentSection.tsx",
-      "source_location": "L146",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_modules_animal_components_detail_parentsection_parentform",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
     },
     {
       "relation": "calls",
@@ -9000,124 +9058,6 @@
       "_origin": "ast",
       "source": "src_modules_dashboard_components_main_index_dashboard",
       "target": "src_modules_animal_hooks_queries_usegenderrequirementquery_usegenderrequirementquery"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistqueryprops"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_services_animal"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_services_animal_animalservice"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_services_animal_type"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_services_animal_type_getanimallistquery"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_animal_hooks_queries_useinfiniteanimallistquery",
-      "target": "src_modules_animal_services_animal_type_getanimallistresponse"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/pedigree/components/main/index.tsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_pedigree_components_main_index",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/modules/pedigree/components/main/index.tsx",
-      "source_location": "L29",
-      "weight": 1.0,
-      "_origin": "ast",
-      "confidence_score": 1.0,
-      "source": "src_modules_pedigree_components_main_index",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/modules/pedigree/components/main/index.tsx",
-      "source_location": "L63",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "src_modules_pedigree_components_main_index_pedigree",
-      "target": "src_modules_animal_hooks_queries_useinfiniteanimallistquery_useinfiniteanimallistquery"
     },
     {
       "relation": "contains",
@@ -13782,5 +13722,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "94c0cdf48b7fe8c24b2e2daf11bb9ba656f8fc3f"
+  "built_at_commit": "a5df2c391e61964318f5b430afeb0e51e89c6cb1"
 }

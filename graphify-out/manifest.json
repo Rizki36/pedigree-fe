@@ -40,14 +40,14 @@
     "semantic_hash": "4796506841b348eeabfb7cec294fb9f9"
   },
   "src/modules/animal/components/detail/AchievementDialog.tsx": {
-    "mtime": 1785660227.6041212,
-    "ast_hash": "acd1c2f11449ac1582af82859f2b320b",
-    "semantic_hash": "acd1c2f11449ac1582af82859f2b320b"
+    "mtime": 1785685309.833564,
+    "ast_hash": "21d714cddd76c756857d671b93d915e9",
+    "semantic_hash": ""
   },
   "src/modules/animal/components/detail/AchievementTable.tsx": {
-    "mtime": 1785660227.6043966,
-    "ast_hash": "3726c68e8b35daf91212c3f66ceb7f8a",
-    "semantic_hash": "3726c68e8b35daf91212c3f66ceb7f8a"
+    "mtime": 1785685308.374897,
+    "ast_hash": "dc6dd19bfeae2d9ec269b53cf15c1d4d",
+    "semantic_hash": ""
   },
   "src/modules/animal/components/detail/DeleteAchievementDialog.tsx": {
     "mtime": 1785660227.6045117,
@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "src/modules/animal/components/detail/DetailsSection.tsx": {
-    "mtime": 1785660227.604946,
-    "ast_hash": "27a550d0de9574d2ca15cb9e754c655e",
-    "semantic_hash": "27a550d0de9574d2ca15cb9e754c655e"
+    "mtime": 1785685325.0871856,
+    "ast_hash": "e9c963a69a38aa6c529b6c8006581cfd",
+    "semantic_hash": ""
   },
   "src/modules/animal/components/detail/NoteSection.tsx": {
     "mtime": 1785660227.6050851,
@@ -75,9 +75,9 @@
     "semantic_hash": "9af00d7b967bab99ba16e54cd4c53c1b"
   },
   "src/modules/animal/components/detail/index.tsx": {
-    "mtime": 1785683860.1818256,
-    "ast_hash": "9896bdf222f5a80d9e4c1739954b1b45",
-    "semantic_hash": "9896bdf222f5a80d9e4c1739954b1b45"
+    "mtime": 1785685310.121981,
+    "ast_hash": "9da555e312ad00cdac8b3c7e8728d5f9",
+    "semantic_hash": ""
   },
   "src/modules/animal/components/main/AddAnimalDialog.tsx": {
     "mtime": 1785683840.638842,
@@ -130,9 +130,9 @@
     "semantic_hash": "142344c7e0f9e564bd1e961b4d043c56"
   },
   "src/modules/animal/hooks/queries/useInfiniteAnimalListQuery.ts": {
-    "mtime": 1785660227.607389,
-    "ast_hash": "5d37bb01c41047bbe534e21161fca220",
-    "semantic_hash": "5d37bb01c41047bbe534e21161fca220"
+    "mtime": 1785685590.7816303,
+    "ast_hash": "153ce4181fe583b2ed6bd233c2d1c193",
+    "semantic_hash": ""
   },
   "src/modules/animal/hooks/queries/useParentRequirementQuery.ts": {
     "mtime": 1785660227.6074896,
