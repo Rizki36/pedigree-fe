@@ -8,6 +8,7 @@
   "6": "Pedigree & Parent Management",
   "7": "Layout & Navigation",
   "8": "Achievement Services",
+  "9": "select.tsx",
   "10": "Delete Confirmations",
   "11": "Pedigree Tree Visualization",
   "12": "Breeding Module",
@@ -16,5 +17,6 @@
   "15": "Vite Environment",
   "16": "Indonesian Flag Asset",
   "17": "React Logo Asset",
-  "18": "English Flag Asset"
+  "18": "English Flag Asset",
+  "19": "DeleteAnimalDialog.tsx"
 }
