@@ -1,16 +1,16 @@
 # Graph Report - pedigree-fe  (2026-08-02)
 
 ## Corpus Check
-- 96 files · ~19,526 words
+- 96 files · ~19,490 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 387 nodes · 911 edges · 19 communities (14 shown, 5 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.7)
+- 387 nodes · 816 edges · 18 communities (12 shown, 6 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.65)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6c229d30`
+- Built from commit: `94c0cdf4`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -24,7 +24,6 @@
 - Pedigree & Parent Management
 - Layout & Navigation
 - Achievement Services
-- Dashboard & Requirements
 - Delete Confirmations
 - Pedigree Tree Visualization
 - Breeding Module
@@ -36,18 +35,20 @@
 - English Flag Asset
 
 ## God Nodes (most connected - your core abstractions)
-1. `cn()` - 48 edges
-2. `generateServiceErrorMessage()` - 17 edges
-3. `Button` - 12 edges
-4. `useAnimalListQuery()` - 10 edges
-5. `animalService` - 10 edges
-6. `AnimalGender` - 10 edges
-7. `useAuth()` - 9 edges
-8. `fetchInstance()` - 8 edges
-9. `useUpdateAnimalMutation()` - 7 edges
-10. `Animal` - 7 edges
+1. `cn()` - 45 edges
+2. `generateServiceErrorMessage()` - 13 edges
+3. `useAnimalListQuery()` - 10 edges
+4. `animalService` - 10 edges
+5. `Button` - 9 edges
+6. `fetchInstance()` - 8 edges
+7. `useUpdateAnimalMutation()` - 7 edges
+8. `AnimalGender` - 7 edges
+9. `Animal` - 7 edges
+10. `useAuth()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `InnerApp()` --calls--> `useAuth()`  [EXTRACTED]
+  src/main.tsx → src/modules/auth/contexts/AuthContext.tsx
 - `Step()` --calls--> `cn()`  [EXTRACTED]
   src/modules/breeding/components/main/Steps.tsx → src/modules/common/lib/utils.ts
 - `BreadcrumbEllipsis()` --calls--> `cn()`  [EXTRACTED]
@@ -56,89 +57,79 @@
   src/modules/common/components/ui/command.tsx → src/modules/common/lib/utils.ts
 - `DropdownMenuShortcut()` --calls--> `cn()`  [EXTRACTED]
   src/modules/common/components/ui/dropdown-menu.tsx → src/modules/common/lib/utils.ts
-- `TreeNode()` --calls--> `cn()`  [EXTRACTED]
-  src/modules/dashboard/components/main/TreeNode.tsx → src/modules/common/lib/utils.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (19 total, 5 thin omitted)
+## Communities (18 total, 6 thin omitted)
 
 ### Community 0 - "Forms & UI Components"
-Cohesion: 0.06
-Nodes (59): useAddAchievementMutation(), useUpdateAchievementMutation(), AchievementDialog(), AddState, EditState, formSchema, DetailsForm(), DetailsView() (+51 more)
+Cohesion: 0.05
+Nodes (55): useAddAchievementMutation(), useUpdateAchievementMutation(), AchievementDialog(), AddState, EditState, formSchema, DetailsForm(), DetailsView() (+47 more)
 
 ### Community 1 - "App Shell & Auth"
 Cohesion: 0.09
-Nodes (23): InnerApp(), queryClient, Register, @tanstack/react-router, Login(), PrivacyAgreement(), SignButton(), mockLogin (+15 more)
+Nodes (21): Login(), PrivacyAgreement(), SignButton(), mockLogin, mockNavigate, publicRoutes, RouteGuard(), AuthContext (+13 more)
 
 ### Community 2 - "Animal Data Services"
-Cohesion: 0.14
-Nodes (22): UseAddAnimalMutationProps, UseDeleteAnimalMutationProps, UseUpdateAnimalMutationProps, UseAnimalListQueryProps, UseDobRequirementQueryProps, UseGenderRequirementQueryProps, UseInfiniteAnimalListQueryProps, UseParentRequirementQueryProps (+14 more)
+Cohesion: 0.09
+Nodes (31): UseAddAnimalMutationProps, UseDeleteAnimalMutationProps, UseUpdateAnimalMutationProps, UseAnimalListQueryProps, useDobRequirementQuery(), UseDobRequirementQueryProps, useGenderRequirementQuery(), UseGenderRequirementQueryProps (+23 more)
 
 ### Community 3 - "Tables & Data Display"
-Cohesion: 0.14
-Nodes (20): useAchievementListQuery(), Achievement, AchievementTable(), AchievementTableProps, DataSource, AnimalsTable(), DataSource, generateColumns() (+12 more)
+Cohesion: 0.13
+Nodes (21): useAchievementListQuery(), Achievement, AchievementTable(), AchievementTableProps, DataSource, AnimalsTable(), DataSource, generateColumns() (+13 more)
 
 ### Community 4 - "Routing & Generated Routes"
-Cohesion: 0.08
-Nodes (28): publicRoutes, RouteGuard(), AuthContextType, Toaster(), ToasterProps, Route, animalsSearchSchema, Route (+20 more)
+Cohesion: 0.07
+Nodes (26): InnerApp(), queryClient, Register, @tanstack/react-router, SidebarContext, SidebarContextType, SidebarProvider(), router (+18 more)
 
 ### Community 5 - "Animal Detail Views"
-Cohesion: 0.13
-Nodes (18): AchievementDialogProps, DeleteAnimalDialogProps, AchievementDialog, AnimalDetail(), DeleteAchievementDialog, DeleteAnimalDialog, MateType, useAnimal() (+10 more)
+Cohesion: 0.08
+Nodes (27): AchievementDialogProps, DeleteAnimalDialogProps, AchievementDialog, AnimalDetail(), DeleteAchievementDialog, DeleteAnimalDialog, MateType, useAnimal() (+19 more)
 
 ### Community 6 - "Pedigree & Parent Management"
-Cohesion: 0.16
-Nodes (17): formSchema, ParentForm(), ParentSection(), useUpdateAnimalMutation(), useAnimalListQuery(), useInfiniteAnimalListQuery(), Command, CommandEmpty (+9 more)
-
-### Community 7 - "Layout & Navigation"
-Cohesion: 0.14
-Nodes (16): LanguageOption, MainLayout(), Sidebar(), Avatar, AvatarFallback, AvatarImage, DropdownMenuCheckboxItem, DropdownMenuContent (+8 more)
+Cohesion: 0.13
+Nodes (20): NoteForm(), formSchema, ParentForm(), ParentSection(), useUpdateAnimalMutation(), useAnimalListQuery(), useInfiniteAnimalListQuery(), Command (+12 more)
 
 ### Community 8 - "Achievement Services"
 Cohesion: 0.25
 Nodes (13): UseAddAchievementMutationProps, UseDeleteAchievementMutationProps, UseUpdateAchievementMutationProps, UseAchievementListQueryProps, achievementService, DeleteAchievementBody, DeleteAchievementResponse, GetAchievementListQuery (+5 more)
 
-### Community 9 - "Dashboard & Requirements"
-Cohesion: 0.16
-Nodes (12): NoteForm(), useDobRequirementQuery(), useGenderRequirementQuery(), useParentRequirementQuery(), useStatusDistributionQuery(), generateServiceErrorMessage(), colors, Dashboard() (+4 more)
-
 ### Community 10 - "Delete Confirmations"
 Cohesion: 0.26
-Nodes (13): useDeleteAchievementMutation(), DeleteAchievementDialog(), DeleteAchievementDialogProps, DeleteAnimalDialog(), useDeleteAnimalMutation(), AlertDialogAction, AlertDialogCancel, AlertDialogContent (+5 more)
+Nodes (11): useDeleteAchievementMutation(), DeleteAchievementDialog(), DeleteAchievementDialogProps, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter() (+3 more)
 
 ### Community 11 - "Pedigree Tree Visualization"
-Cohesion: 0.21
-Nodes (9): TooltipContent, PedigreeNodeProps, Tree(), VisitedNodesContext, UsePedigreeTreeQueryProps, pedigreeService, GetPedigreeTreeQuery, GetPedigreeTreeResponse (+1 more)
+Cohesion: 0.19
+Nodes (10): TooltipContent, PedigreeNodeProps, Tree(), VisitedNodesContext, usePedigreeTreeQuery(), UsePedigreeTreeQueryProps, pedigreeService, GetPedigreeTreeQuery (+2 more)
 
 ### Community 12 - "Breeding Module"
-Cohesion: 0.16
-Nodes (4): MatchingResult, Step(), Steps(), Route
+Cohesion: 0.08
+Nodes (11): AddAnimalDialogProps, formSchema, AddAnimalDialog, Animals(), MatchingResult, Step(), Steps(), LanguageOption (+3 more)
 
 ### Community 13 - "Animal Type Services"
 Cohesion: 0.42
 Nodes (5): UseAnimalTypeListQueryProps, animalTypeService, GetAnimalTypeListQuery, GetAnimalTypeListResponse, AnimalType
 
 ## Knowledge Gaps
-- **103 isolated node(s):** `publicRoutes`, `@tanstack/react-router`, `queryClient`, `UseAddAchievementMutationProps`, `UseDeleteAchievementMutationProps` (+98 more)
+- **111 isolated node(s):** `formSchema`, `AddAnimalDialog`, `LanguageOption`, `IndexLazyRouteImport`, `BreedingIndexLazyRouteImport` (+106 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Forms & UI Components` to `Tables & Data Display`, `Animal Detail Views`, `Pedigree & Parent Management`, `Layout & Navigation`, `Dashboard & Requirements`, `Delete Confirmations`, `Pedigree Tree Visualization`, `Breeding Module`?**
-  _High betweenness centrality (0.125) - this node is a cross-community bridge._
-- **Why does `useAuth()` connect `App Shell & Auth` to `Layout & Navigation`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
 - **Why does `fetchInstance()` connect `App Shell & Auth` to `Achievement Services`, `Animal Data Services`, `Pedigree Tree Visualization`, `Animal Type Services`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
-- **What connects `publicRoutes`, `@tanstack/react-router`, `queryClient` to the rest of the system?**
-  _103 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.168) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Forms & UI Components` to `Animal Data Services`, `Tables & Data Display`, `Animal Detail Views`, `Pedigree & Parent Management`, `Delete Confirmations`, `Pedigree Tree Visualization`, `Breeding Module`?**
+  _High betweenness centrality (0.123) - this node is a cross-community bridge._
+- **Why does `AuthProvider()` connect `App Shell & Auth` to `Routing & Generated Routes`?**
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
+- **What connects `formSchema`, `AddAnimalDialog`, `LanguageOption` to the rest of the system?**
+  _111 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Forms & UI Components` be split into smaller, more focused modules?**
-  _Cohesion score 0.05962059620596206 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.052614052614052616 - nodes in this community are weakly interconnected._
 - **Should `App Shell & Auth` be split into smaller, more focused modules?**
-  _Cohesion score 0.0858974358974359 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0945945945945946 - nodes in this community are weakly interconnected._
 - **Should `Animal Data Services` be split into smaller, more focused modules?**
-  _Cohesion score 0.14393939393939395 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09308510638297872 - nodes in this community are weakly interconnected._
