@@ -49,7 +49,7 @@ const formSchema = z.object({
 const AddAnimalDialog = (props: AddAnimalDialogProps) => {
   const { state, setState } = props;
 
-  const navigate = useNavigate({ from: "/animals" });
+  const navigate = useNavigate({ from: "/animals/" });
 
   const { data: animalTypeListData } = useAnimalTypeListQuery();
 

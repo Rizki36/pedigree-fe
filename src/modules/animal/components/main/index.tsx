@@ -22,7 +22,7 @@ const Animals = () => {
   });
 
   const { gender, status, search } = Route.useSearch();
-  const navigate = useNavigate({ from: "/animals" });
+  const navigate = useNavigate({ from: "/animals/" });
 
   const debouncedSetSearch = useDebounceCallback((value: string) => {
     navigate({

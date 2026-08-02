@@ -1,5 +1,5 @@
-import { Link, type LinkProps, type ReactNode } from "@tanstack/react-router";
-import { useState, type FC } from "react";
+import { Link, type LinkProps } from "@tanstack/react-router";
+import { useState, type FC, type ReactNode } from "react";
 import { useSidebar } from "@/modules/common/contexts/SidebarContext"; // Import the context hook
 
 import enFlag from "@/assets/flags/en.png";
@@ -70,7 +70,7 @@ const Sidebar: FC = () => {
         },
       )}
     >
-      <Link href="/">
+      <Link to="/">
         <div className="mt-2.5 text-center mb-6 text-2xl font-semibold text-teal-700">
           {!collapsed ? "Pedigree" : "P"}
         </div>

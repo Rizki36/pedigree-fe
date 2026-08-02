@@ -24,7 +24,7 @@ export type DeleteAnimalDialogProps = {
 
 const DeleteAnimalDialog = (props: DeleteAnimalDialogProps) => {
   const { state, setState } = props;
-  const navigate = useNavigate({ from: "/animals/$animalId" });
+  const navigate = useNavigate({ from: "/animals/$animalId/" });
 
   const { mutateAsync, isPending } = useDeleteAnimalMutation({});
 

@@ -53,7 +53,6 @@ jest.mock("@/modules/common/constants", () => ({
 
 // Mock the router Link component
 jest.mock("@tanstack/react-router", () => ({
-  ...jest.requireActual("@tanstack/react-router"),
   useNavigate: jest.fn(() => jest.fn()),
   Link: Link,
 }));
