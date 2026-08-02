@@ -15,6 +15,8 @@ export function RouteGuard() {
   });
 
   useEffect(() => {
+    if (isLoading) return;
+
     // If route requires auth and user is not authenticated, redirect to login
     if (!isPublicRoute && !isAuthenticated) {
       // Save the attempted URL for redirecting back after login
@@ -26,7 +28,7 @@ export function RouteGuard() {
         search: { redirectTo: currentPath },
       });
     }
-  }, [isPublicRoute, isAuthenticated, router]);
+  }, [isPublicRoute, isAuthenticated, router,isLoading]);
 
 
   // If still loading auth state, show a loading indicator
