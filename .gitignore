@@ -41,3 +41,4 @@ tests/auth-state.json
 coverage
 
 graphify-out/cost.json
+.vercel
