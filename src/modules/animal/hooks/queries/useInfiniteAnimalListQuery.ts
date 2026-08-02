@@ -16,8 +16,7 @@ type UseInfiniteAnimalListQueryProps = {
     UseInfiniteQueryOptions<
       GetAnimalListResponse,
       unknown,
-      InfiniteData<GetAnimalListResponse>,
-      GetAnimalListResponse,
+      InfiniteData<GetAnimalListResponse, string>,
       QueryKey,
       string
     >,
