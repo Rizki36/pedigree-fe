@@ -1,18 +1,12 @@
-# Graph Report - pedigree-fe  (2026-08-02)
+# Graph Report - /Users/shiro/Documents/GitHub/pedigree-fe  (2026-08-02)
 
 ## Corpus Check
-- 96 files · ~19,526 words
-- Verdict: corpus is large enough that graph structure adds value.
+- Corpus is ~19,526 words - fits in a single context window. You may not need a graph.
 
 ## Summary
-- 387 nodes · 911 edges · 19 communities (14 shown, 5 thin omitted)
+- 387 nodes · 914 edges · 19 communities (14 shown, 5 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.7)
 - Token cost: 0 input · 0 output
-
-## Graph Freshness
-- Built from commit: `6c229d30`
-- Run `git rev-parse HEAD` and compare to check if the graph is stale.
-- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Forms & UI Components
@@ -39,10 +33,10 @@
 1. `cn()` - 48 edges
 2. `generateServiceErrorMessage()` - 17 edges
 3. `Button` - 12 edges
-4. `useAnimalListQuery()` - 10 edges
-5. `animalService` - 10 edges
-6. `AnimalGender` - 10 edges
-7. `useAuth()` - 9 edges
+4. `useAuth()` - 11 edges
+5. `useAnimalListQuery()` - 10 edges
+6. `animalService` - 10 edges
+7. `AnimalGender` - 10 edges
 8. `fetchInstance()` - 8 edges
 9. `useUpdateAnimalMutation()` - 7 edges
 10. `Animal` - 7 edges
@@ -69,8 +63,8 @@ Cohesion: 0.06
 Nodes (59): useAddAchievementMutation(), useUpdateAchievementMutation(), AchievementDialog(), AddState, EditState, formSchema, DetailsForm(), DetailsView() (+51 more)
 
 ### Community 1 - "App Shell & Auth"
-Cohesion: 0.09
-Nodes (23): InnerApp(), queryClient, Register, @tanstack/react-router, Login(), PrivacyAgreement(), SignButton(), mockLogin (+15 more)
+Cohesion: 0.07
+Nodes (29): InnerApp(), queryClient, Register, @tanstack/react-router, Login(), PrivacyAgreement(), SignButton(), mockLogin (+21 more)
 
 ### Community 2 - "Animal Data Services"
 Cohesion: 0.14
@@ -81,8 +75,8 @@ Cohesion: 0.14
 Nodes (20): useAchievementListQuery(), Achievement, AchievementTable(), AchievementTableProps, DataSource, AnimalsTable(), DataSource, generateColumns() (+12 more)
 
 ### Community 4 - "Routing & Generated Routes"
-Cohesion: 0.08
-Nodes (28): publicRoutes, RouteGuard(), AuthContextType, Toaster(), ToasterProps, Route, animalsSearchSchema, Route (+20 more)
+Cohesion: 0.10
+Nodes (22): Route, animalsSearchSchema, Route, Route, Route, AnimalsAnimalIdIndexRoute, AnimalsIndexRoute, BreedingIndexLazyImport (+14 more)
 
 ### Community 5 - "Animal Detail Views"
 Cohesion: 0.13
@@ -121,7 +115,7 @@ Cohesion: 0.42
 Nodes (5): UseAnimalTypeListQueryProps, animalTypeService, GetAnimalTypeListQuery, GetAnimalTypeListResponse, AnimalType
 
 ## Knowledge Gaps
-- **103 isolated node(s):** `publicRoutes`, `@tanstack/react-router`, `queryClient`, `UseAddAchievementMutationProps`, `UseDeleteAchievementMutationProps` (+98 more)
+- **103 isolated node(s):** `@tanstack/react-router`, `queryClient`, `UseAddAchievementMutationProps`, `UseDeleteAchievementMutationProps`, `UseUpdateAchievementMutationProps` (+98 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -129,16 +123,16 @@ Nodes (5): UseAnimalTypeListQueryProps, animalTypeService, GetAnimalTypeListQuer
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `cn()` connect `Forms & UI Components` to `Tables & Data Display`, `Animal Detail Views`, `Pedigree & Parent Management`, `Layout & Navigation`, `Dashboard & Requirements`, `Delete Confirmations`, `Pedigree Tree Visualization`, `Breeding Module`?**
-  _High betweenness centrality (0.125) - this node is a cross-community bridge._
+  _High betweenness centrality (0.126) - this node is a cross-community bridge._
 - **Why does `useAuth()` connect `App Shell & Auth` to `Layout & Navigation`?**
-  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+  _High betweenness centrality (0.048) - this node is a cross-community bridge._
 - **Why does `fetchInstance()` connect `App Shell & Auth` to `Achievement Services`, `Animal Data Services`, `Pedigree Tree Visualization`, `Animal Type Services`?**
-  _High betweenness centrality (0.031) - this node is a cross-community bridge._
-- **What connects `publicRoutes`, `@tanstack/react-router`, `queryClient` to the rest of the system?**
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **What connects `@tanstack/react-router`, `queryClient`, `UseAddAchievementMutationProps` to the rest of the system?**
   _103 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Forms & UI Components` be split into smaller, more focused modules?**
   _Cohesion score 0.05962059620596206 - nodes in this community are weakly interconnected._
 - **Should `App Shell & Auth` be split into smaller, more focused modules?**
-  _Cohesion score 0.0858974358974359 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07142857142857142 - nodes in this community are weakly interconnected._
 - **Should `Animal Data Services` be split into smaller, more focused modules?**
   _Cohesion score 0.14393939393939395 - nodes in this community are weakly interconnected._
