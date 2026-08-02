@@ -14,15 +14,6 @@ export function RouteGuard() {
     return currentPath.startsWith(route);
   });
 
-  // If still loading auth state, show a loading indicator
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading...
-      </div>
-    );
-  }
-
   useEffect(() => {
     // If route requires auth and user is not authenticated, redirect to login
     if (!isPublicRoute && !isAuthenticated) {
@@ -36,6 +27,16 @@ export function RouteGuard() {
       });
     }
   }, [isPublicRoute, isAuthenticated, router]);
+
+
+  // If still loading auth state, show a loading indicator
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        Loading...
+      </div>
+    );
+  }
 
   // Otherwise, render the route content
   return <Outlet />;
